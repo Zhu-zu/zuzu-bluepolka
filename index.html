@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="zuzu工作台">
+<meta name="theme-color" content="#dbeafe">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<title>zuzu 工作台</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg-blue: #e3f2fd;
+  --bg-blue-2: #f0f9ff;
+  --cream: #fffbf2;
+  --cream-dark: #fef3c7;
+  --sidebar: #ffffff;
+  --panel: #ffffff;
+  --card: rgba(255,255,255,0.92);
+  --border: #dbeafe;
+  --border-strong: #bfdbfe;
+  --blue: #5b9bd5;
+  --blue-dark: #3b82f6;
+  --blue-pale: #dbeafe;
+  --pink: #f9a8d4;
+  --text: #334155;
+  --text-secondary: #64748b;
+  --text-dim: #94a3b8;
+  --accent: #5b9bd5;
+  --accent2: #fbbf24;
+  --shadow: 0 4px 20px rgba(147,197,253,0.22);
+  --radius-sm: 14px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: 'Nunito', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,0.9) 2px, transparent 2px),
+    radial-gradient(circle at 55% 8%, rgba(255,255,255,0.85) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 82% 35%, rgba(255,255,255,0.8) 2px, transparent 2px),
+    radial-gradient(circle at 12% 55%, rgba(255,255,255,0.9) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 42% 68%, rgba(255,255,255,0.85) 2px, transparent 2px),
+    radial-gradient(circle at 78% 82%, rgba(255,255,255,0.9) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 30% 92%, rgba(255,255,255,0.8) 2px, transparent 2px),
+    radial-gradient(circle at 88% 12%, rgba(255,255,255,0.8) 2px, transparent 2px),
+    linear-gradient(165deg, #e3f2fd 0%, #f0f9ff 60%, #fff7ed 100%);
+  background-attachment: fixed;
+  background-size: 80px 80px, 100px 100px, 90px 90px, 70px 70px, 110px 110px, 85px 85px, 95px 95px, 75px 75px, cover;
+  color: var(--text);
+  display: flex;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+  user-select: none; -webkit-user-select: none;
+}
+
+/* ─── 侧边栏 ─── */
+.sidebar {
+  width: 260px; flex-shrink: 0; background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  box-shadow: 8px 0 24px rgba(147,197,253,0.12);
+  z-index: 10;
+}
+.sidebar-header {
+  padding: 24px 20px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-header .logo {
+  font-size: 22px; font-weight: 800; color: var(--blue);
+  display: flex; align-items: center; gap: 8px;
+}
+.sidebar-header .logo .avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #bfdbfe, #fed7aa);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.sidebar-header .sub { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+.nav { padding: 10px 12px; flex: 1; overflow-y: auto; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--radius-md);
+  margin-bottom: 6px; cursor: pointer; font-size: 14px;
+  transition: all .15s; color: var(--text-secondary);
+  font-weight: 600;
+}
+.nav-item:hover { background: var(--bg-blue-2); color: var(--text); }
+.nav-item.active {
+  background: linear-gradient(135deg, #5b9bd5, #7bb3e0);
+  color: #fff; box-shadow: 0 4px 12px rgba(91,155,213,0.3);
+}
+.nav-item .nav-icon { font-size: 18px; width: 24px; text-align: center; }
+.nav-item .nav-name { flex: 1; }
+.nav-item .nav-num {
+  font-size: 10px; color: var(--text-dim); background: var(--bg-blue);
+  padding: 2px 8px; border-radius: 10px;
+}
+.nav-item.active .nav-num { background: rgba(255,255,255,0.25); color: #fff; }
+
+/* ─── 主内容区 ─── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+.main-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 28px; flex-shrink: 0;
+}
+.main-header .page-title { font-size: 24px; font-weight: 800; color: var(--text); }
+.main-header .page-sub { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.main-header .date-pill {
+  background: var(--panel); border: 1px solid var(--border);
+  padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 700;
+  color: var(--blue); box-shadow: var(--shadow);
+}
+.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 28px 28px; }
+
+/* ─── 顶部统计卡片 ─── */
+.stats-row { display: flex; gap: 16px; margin-bottom: 20px; }
+.stat-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 18px 22px;
+  box-shadow: var(--shadow); flex: 1; min-width: 0;
+}
+.stat-card .stat-label { font-size: 12px; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-card .stat-value { font-size: 32px; font-weight: 800; color: var(--blue); margin-top: 4px; }
+.stat-card .stat-sub { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+/* 进度圆环 */
+.progress-ring-card {
+  flex: 0 0 140px; display: flex; align-items: center; justify-content: center;
+}
+.progress-ring {
+  width: 110px; height: 110px; transform: rotate(-90deg);
+}
+.progress-ring-bg { fill: none; stroke: var(--bg-blue); stroke-width: 10; }
+.progress-ring-fill { fill: none; stroke: url(#ringGradient); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset .6s; }
+
+/* ─── 白色内容卡片 ─── */
+.white-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 20px;
+  box-shadow: var(--shadow); margin-bottom: 16px;
+}
+.white-card .card-title {
+  font-size: 16px; font-weight: 700; color: var(--text);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+
+/* ─── 任务输入 ─── */
+.add-row {
+  display: flex; gap: 10px; margin-bottom: 16px;
+}
+.add-row input {
+  flex: 1; background: var(--bg-blue-2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 16px; font-size: 14px;
+  color: var(--text); font-family: inherit;
+  user-select: text; -webkit-user-select: text;
+}
+.add-row input:focus { outline: none; border-color: var(--blue); }
+.add-row input::placeholder { color: var(--text-dim); }
+.add-row button {
+  background: var(--accent); color: #fff; border: none;
+  border-radius: var(--radius-sm); padding: 12px 22px;
+  font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit;
+  box-shadow: 0 2px 8px rgba(91,155,213,0.3);
+}
+.add-row button:active { transform: scale(0.96); }
+
+/* ─── 任务项 ─── */
+.task-list { display: flex; flex-direction: column; gap: 8px; }
+.task-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; background: var(--bg-blue-2);
+  border-radius: var(--radius-sm); cursor: pointer;
+  transition: all .15s; border: 2px solid transparent;
+}
+.task-item:hover { border-color: var(--border-strong); }
+.task-item.done { background: #f1f5f9; opacity: 0.7; }
+.task-item input[type="checkbox"] {
+  width: 20px; height: 20px; accent-color: var(--blue);
+  cursor: pointer; flex-shrink: 0;
+}
+.task-item .task-label { flex: 1; font-size: 15px; font-weight: 600; }
+.task-item.done .task-label { text-decoration: line-through; color: var(--text-dim); }
+.task-item .task-tag {
+  font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 12px;
+  background: var(--cream-dark); color: #b45309;
+}
+.task-item .task-delete {
+  background: none; border: none; color: #cbd5e0; font-size: 18px;
+  cursor: pointer; padding: 4px 8px; transition: color .15s;
+}
+.task-item .task-delete:hover { color: #ef4444; }
+
+/* ─── 笔记区 ─── */
+.note-editor textarea {
+  width: 100%; min-height: 260px; background: var(--bg-blue-2);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px; font-size: 14px; line-height: 1.8; color: var(--text);
+  resize: vertical; font-family: inherit;
+  user-select: text; -webkit-user-select: text;
+}
+.note-editor textarea:focus { outline: none; border-color: var(--blue); }
+.note-editor textarea::placeholder { color: var(--text-dim); }
+
+/* ─── 周复盘 ─── */
+.week-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.week-card {
+  background: var(--bg-blue-2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px;
+}
+.week-card h4 { font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+.week-card textarea {
+  width: 100%; min-height: 120px; background: transparent; border: none;
+  color: var(--text); font-size: 14px; line-height: 1.7; resize: none;
+  font-family: inherit; user-select: text; -webkit-user-select: text;
+}
+.week-card textarea:focus { outline: none; }
+.week-card textarea::placeholder { color: var(--text-dim); }
+
+/* ─── 选题灵感入口 ─── */
+.insp-row { display: flex; gap: 14px; margin-bottom: 16px; }
+.insp-card {
+  flex: 1; padding: 20px; border-radius: var(--radius-md);
+  text-align: center; text-decoration: none; color: #fff;
+  transition: transform .15s, box-shadow .15s;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.insp-card:hover { transform: translateY(-2px); }
+.insp-card .insp-icon { font-size: 32px; }
+.insp-card .insp-name { font-size: 15px; font-weight: 700; }
+.insp-douyin { background: linear-gradient(135deg, #1a1a2e, #2d2d44); }
+.insp-xhs { background: linear-gradient(135deg, #ff2442, #ff6080); }
+
+/* ─── 习惯打卡 ─── */
+.habit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.habit-btn {
+  aspect-ratio: 1; border-radius: var(--radius-sm); border: 2px dashed var(--border-strong);
+  background: var(--bg-blue-2); cursor: pointer; font-family: inherit;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  transition: all .15s;
+}
+.habit-btn:hover { background: var(--bg-blue); }
+.habit-btn.active { border-style: solid; border-color: var(--blue); background: var(--bg-blue); }
+.habit-btn .h-emoji { font-size: 26px; }
+.habit-btn .h-name { font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+
+/* ─── 滚动条 ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+/* ─── 响应式：平板竖屏/手机 ─── */
+@media (max-width: 900px) {
+  body { flex-direction: column; }
+  .sidebar {
+    width: 100%; height: auto; flex-direction: row; overflow-x: auto;
+    border-right: none; border-bottom: 1px solid var(--border); padding: var(--safe-top) 8px 0;
+  }
+  .sidebar-header { display: none; }
+  .nav { display: flex; padding: 8px 4px; gap: 6px; }
+  .nav-item {
+    margin-bottom: 0; padding: 10px 14px; border-radius: var(--radius-sm);
+    white-space: nowrap; font-size: 13px;
+  }
+  .nav-item .nav-num { display: none; }
+  .main-header { padding: 14px 18px; }
+  .main-header .page-title { font-size: 18px; }
+  .content { padding: 0 16px 20px; }
+  .stats-row { flex-direction: column; }
+  .progress-ring-card { flex: 0 0 auto; }
+  .week-grid { grid-template-columns: 1fr; }
+  .insp-row { flex-direction: column; }
+  .habit-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ─── 模态框 ─── */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35); display: none;
+  align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 22px; max-width: 360px; width: 90%;
+  text-align: center; box-shadow: var(--shadow);
+}
+.modal h3 { color: var(--blue); margin-bottom: 10px; }
+.modal p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+.modal button {
+  background: var(--blue); color: #fff; border: none;
+  border-radius: 10px; padding: 8px 20px; font-size: 14px; cursor: pointer;
+  font-family: inherit;
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#93c5fd" />
+      <stop offset="100%" stop-color="#5b9bd5" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- 侧边栏 -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo"><span class="avatar">🦓</span> zuzu</div>
+    <div class="sub">个人工作台 · 奶油蓝</div>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+
+<!-- 主内容 -->
+<div class="main">
+  <div class="main-header">
+    <div>
+      <div class="page-title" id="pageTitle">📋 每日计划</div>
+      <div class="page-sub" id="pageSub">完成今天的任务，给zuzu加油</div>
+    </div>
+    <div class="date-pill" id="headerDate"></div>
+  </div>
+  <div class="content" id="content"></div>
+</div>
+
+<!-- 模态框 -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modalTitle">提示</h3>
+    <p id="modalMsg"></p>
+    <button onclick="closeModal()">确定</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+//  板块定义
+// ═══════════════════════════════════════
+const SECTIONS = [
+  { id: "plan",        name: "每日计划",     icon: "📋", sub: "完成今天的任务，给zuzu加油" },
+  { id: "inspiration", name: "选题每日灵感", icon: "💡", sub: "捕捉每日灵感火花" },
+  { id: "workReview",  name: "工作复盘",     icon: "💼", sub: "记录工作得失" },
+  { id: "lifeReview",  name: "生活复盘",     icon: "🌿", sub: "记录生活点滴" },
+  { id: "reading",     name: "读书笔记",     icon: "📚", sub: "书海拾贝" },
+  { id: "toread",      name: "待读书单",     icon: "📖", sub: "想读的书单" },
+  { id: "quotes",      name: "好句笔记",     icon: "✨", sub: "收藏打动人心的句子" },
+  { id: "exercise",    name: "运动打卡",     icon: "🏃", sub: "坚持运动，保持健康" },
+  { id: "studyReport", name: "每日学习汇报", icon: "📝", sub: "今日学了什么" },
+  { id: "mood",        name: "心情日记",     icon: "🌈", sub: "记录心情天气" },
+  { id: "weekReview",  name: "周复盘",       icon: "📅", sub: "每周总结与展望" },
+];
+
+let currentSection = "plan";
+
+// ═══════════════════════════════════════
+//  存储
+// ═══════════════════════════════════════
+function sKey(section, suffix) {
+  return `zuzu_${section}${suffix ? '_' + suffix : ''}`;
+}
+function loadData(key) {
+  try { return JSON.parse(localStorage.getItem(key) || 'null'); }
+  catch(e) { return null; }
+}
+function saveData(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+function loadText(key) { return localStorage.getItem(key) || ''; }
+function saveText(key, val) { localStorage.setItem(key, val); }
+
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function getWeekId(date) {
+  const d = new Date(date);
+  d.setHours(0,0,0,0);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(d.setDate(diff));
+  const year = monday.getFullYear();
+  const jan1 = new Date(year, 0, 1);
+  const firstMonday = new Date(jan1);
+  firstMonday.setDate(jan1.getDate() - (jan1.getDay() || 7) + 1);
+  const weekNum = Math.floor((monday - firstMonday) / 604800000) + 1;
+  return `${year}-W${String(weekNum).padStart(2,'0')}`;
+}
+
+function getCurrentWeekId() { return getWeekId(new Date()); }
+
+function getWeekRange(weekId) {
+  const [year, w] = weekId.split('-W');
+  const jan1 = new Date(parseInt(year), 0, 1);
+  const firstMonday = new Date(jan1);
+  firstMonday.setDate(jan1.getDate() - (jan1.getDay() || 7) + 1);
+  const monday = new Date(firstMonday);
+  monday.setDate(firstMonday.getDate() + (parseInt(w) - 1) * 7);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  const fmt = d => `${d.getMonth()+1}月${d.getDate()}日`;
+  return `${fmt(monday)} ~ ${fmt(sunday)}`;
+}
+
+// ═══════════════════════════════════════
+//  侧边栏
+// ═══════════════════════════════════════
+function renderNav() {
+  const nav = document.getElementById('nav');
+  nav.innerHTML = SECTIONS.map((s, i) => `
+    <div class="nav-item ${s.id === currentSection ? 'active' : ''}" onclick="switchSection('${s.id}')">
+      <span class="nav-icon">${s.icon}</span>
+      <span class="nav-name">${s.name}</span>
+      <span class="nav-num">${i + 1}</span>
+    </div>
+  `).join('');
+}
+
+function switchSection(id) {
+  currentSection = id;
+  renderNav();
+  renderContent();
+}
+
+// ═══════════════════════════════════════
+//  渲染主内容
+// ═══════════════════════════════════════
+function renderContent() {
+  const s = SECTIONS.find(x => x.id === currentSection);
+  document.getElementById('pageTitle').textContent = `${s.icon} ${s.name}`;
+  document.getElementById('pageSub').textContent = s.sub;
+  const content = document.getElementById('content');
+
+  switch(currentSection) {
+    case 'plan': renderPlan(content); break;
+    case 'inspiration': renderInspiration(content); break;
+    case 'weekReview': renderWeekReview(content); break;
+    default: renderNote(content, currentSection); break;
+  }
+}
+
+// ═══════════════════════════════════════
+//  1. 每日计划（核心）
+// ═══════════════════════════════════════
+const DEFAULT_TASKS = [
+  { id: 'p1', label: '计划任务', tag: '计划', preset: true },
+  { id: 'p2', label: '喝水 8 杯', tag: '健康', preset: true },
+  { id: 'p3', label: '锻炼 30 分钟', tag: '运动', preset: true },
+  { id: 'p4', label: '备忘录检查', tag: '备忘', preset: true },
+  { id: 'p5', label: '复盘今日', tag: '复盘', preset: true },
+];
+
+function renderPlan(el) {
+  const today = todayStr();
+  const key = sKey('plan', today);
+  let tasks = loadData(key);
+  if (tasks === null) {
+    tasks = DEFAULT_TASKS.map((t, i) => ({ id: Date.now() + i, text: t.label, done: false, preset: true, tag: t.tag }));
+    saveData(key, tasks);
+  }
+
+  const doneCount = tasks.filter(t => t.done).length;
+  const pct = tasks.length ? Math.round(doneCount / tasks.length * 100) : 0;
+  const circumference = 2 * Math.PI * 45;
+  const offset = circumference - (pct / 100) * circumference;
+
+  el.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">完成率</div>
+        <div class="stat-value" style="color:#5b9bd5">${pct}%</div>
+        <div class="stat-sub">${doneCount}/${tasks.length} 项任务</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">今日进度</div>
+        <div class="stat-value" style="color:#f59e0b">${doneCount}</div>
+        <div class="stat-sub">已完成任务</div>
+      </div>
+      <div class="stat-card progress-ring-card">
+        <svg class="progress-ring" viewBox="0 0 110 110">
+          <circle class="progress-ring-bg" cx="55" cy="55" r="45"></circle>
+          <circle class="progress-ring-fill" cx="55" cy="55" r="45"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"></circle>
+        </svg>
+      </div>
+    </div>
+
+    <div class="white-card">
+      <div class="card-title">📝 任务清单</div>
+      <div class="add-row">
+        <input type="text" id="newTaskInput" placeholder="添加新任务..." onkeypress="if(event.key==='Enter')addTask()">
+        <button onclick="addTask()">添加</button>
+      </div>
+      <div class="task-list" id="taskList"></div>
+    </div>
+  `;
+  renderTaskList(tasks, key);
+}
+
+function renderTaskList(tasks, key) {
+  const list = document.getElementById('taskList');
+  if (!list) return;
+  if (tasks.length === 0) {
+    list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:30px;font-size:13px;">✨ 暂无任务，添加一个吧</div>`;
+    return;
+  }
+  list.innerHTML = tasks.map((t, i) => `
+    <div class="task-item ${t.done ? 'done' : ''}" onclick="toggleTask('${key}',${t.id})">
+      <input type="checkbox" ${t.done ? 'checked' : ''} onclick="event.stopPropagation();toggleTask('${key}',${t.id})">
+      <span class="task-label">${escapeHtml(t.text)}</span>
+      ${t.tag ? `<span class="task-tag">${t.tag}</span>` : ''}
+      <button class="task-delete" onclick="event.stopPropagation();deleteTask('${key}',${t.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+function addTask() {
+  const input = document.getElementById('newTaskInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const key = sKey('plan', todayStr());
+  let tasks = loadData(key) || [];
+  tasks.push({ id: Date.now(), text, done: false, preset: false, tag: '自定义' });
+  saveData(key, tasks);
+  input.value = '';
+  renderPlan(document.getElementById('content'));
+}
+
+function toggleTask(key, id) {
+  let tasks = loadData(key) || [];
+  tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
+  saveData(key, tasks);
+  renderPlan(document.getElementById('content'));
+}
+
+function deleteTask(key, id) {
+  let tasks = loadData(key) || [];
+  tasks = tasks.filter(t => t.id !== id);
+  saveData(key, tasks);
+  renderPlan(document.getElementById('content'));
+}
+
+// ═══════════════════════════════════════
+//  2. 选题灵感
+// ═══════════════════════════════════════
+function renderInspiration(el) {
+  const key = sKey('inspiration', todayStr());
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title">💡 内容参考入口</div>
+      <div class="insp-row">
+        <a class="insp-card insp-douyin" href="https://www.douyin.com" target="_blank" rel="noopener">
+          <span class="insp-icon">🎵</span>
+          <span class="insp-name">抖音</span>
+        </a>
+        <a class="insp-card insp-xhs" href="https://www.xiaohongshu.com" target="_blank" rel="noopener">
+          <span class="insp-icon">📕</span>
+          <span class="insp-name">小红书</span>
+        </a>
+      </div>
+      <div class="note-editor">
+        <textarea id="inspNote" placeholder="记录今日灵感..." oninput="saveText('${key}',this.value)">${escapeHtml(loadText(key))}</textarea>
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════
+//  3. 周复盘
+// ═══════════════════════════════════════
+let currentWeek = null;
+function renderWeekReview(el) {
+  if (!currentWeek) currentWeek = getCurrentWeekId();
+  const range = getWeekRange(currentWeek);
+  const isCurrent = currentWeek === getCurrentWeekId();
+
+  const sections = [
+    { id: 'done', title: '✅ 完成了什么', ph: '本周完成的事项...' },
+    { id: 'block', title: '🚧 问题 & 阻碍', ph: '遇到的困难...' },
+    { id: 'improve', title: '🚀 下周改进', ph: '下周要怎么调整...' },
+    { id: 'highlight', title: '⭐ 高光时刻', ph: '本周最难忘的瞬间...' },
+  ];
+
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title" style="justify-content:space-between">
+        <span>📅 ${currentWeek} · ${range}</span>
+        <div style="display:flex;gap:8px">
+          <button onclick="shiftWeek(-1)" style="background:var(--bg-blue);border:none;border-radius:8px;padding:6px 12px;font-family:inherit;color:var(--blue);cursor:pointer;font-weight:700">◀</button>
+          <button onclick="shiftWeek(1)" ${isCurrent?'disabled style="opacity:0.4"':''} style="background:var(--bg-blue);border:none;border-radius:8px;padding:6px 12px;font-family:inherit;color:var(--blue);cursor:pointer;font-weight:700">▶</button>
+        </div>
+      </div>
+      <div class="week-grid">
+        ${sections.map(s => {
+          const k = sKey('weekReview', `${currentWeek}_${s.id}`);
+          const v = loadText(k);
+          return `
+            <div class="week-card">
+              <h4>${s.title}</h4>
+              <textarea placeholder="${s.ph}" oninput="saveText('${k}',this.value)">${escapeHtml(v)}</textarea>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function shiftWeek(dir) {
+  const [year, w] = currentWeek.split('-W');
+  const jan1 = new Date(parseInt(year), 0, 1);
+  const firstMonday = new Date(jan1);
+  firstMonday.setDate(jan1.getDate() - (jan1.getDay() || 7) + 1);
+  const monday = new Date(firstMonday);
+  monday.setDate(firstMonday.getDate() + (parseInt(w) - 1) * 7);
+  monday.setDate(monday.getDate() + dir * 7);
+  const newId = getWeekId(monday);
+  if (dir > 0 && newId > getCurrentWeekId()) return;
+  currentWeek = newId;
+  renderContent();
+}
+
+// ═══════════════════════════════════════
+//  通用笔记板块
+// ═══════════════════════════════════════
+const TEMPLATES = {
+  workReview:  '💼 今日工作：\n\n做得好的：\n\n待改进的：\n\n明日重点：',
+  lifeReview:  '🌿 今日生活：\n\n饮食/睡眠/精力：\n\n开心的事：\n\n想调整的：',
+  reading:     '📖 书名：\n\n核心观点：\n\n金句：\n\n我的思考：\n\n行动：',
+  toread:      '📚 想读清单：\n1. \n2. \n3. \n\n优先级：',
+  quotes:      '✨ 好句：\n\n出处：\n\n为什么打动我：',
+  exercise:    '🏃 今日运动：\n\n时长：\n\n感受：\n\n消耗：',
+  studyReport: '📝 今日学习内容：\n\n学到了什么：\n\n疑问：\n\n明日计划：',
+  mood:        '🌈 今日心情：\n\n发生了什么：\n\n我的感受：\n\n想对自己说：',
+};
+
+function renderNote(el, sectionId) {
+  const today = todayStr();
+  const key = sKey(sectionId, today);
+  const tpl = TEMPLATES[sectionId] || '记录...';
+
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title">${SECTIONS.find(s=>s.id===sectionId).icon} 笔记区</div>
+      <div class="note-editor">
+        <textarea id="noteArea" placeholder="${tpl.replace(/"/g,'&quot;').replace(/\n/g,'&#10;')}" oninput="saveText('${key}',this.value)">${escapeHtml(loadText(key))}</textarea>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--text-dim);text-align:right" id="noteStat">${loadText(key).length} 字</div>
+    </div>
+  `;
+
+  const ta = document.getElementById('noteArea');
+  ta.addEventListener('input', () => {
+    document.getElementById('noteStat').textContent = `${ta.value.length} 字`;
+  });
+}
+
+// ═══════════════════════════════════════
+//  工具
+// ═══════════════════════════════════════
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function showModal(title, msg) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalMsg').textContent = msg;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+// ═══════════════════════════════════════
+//  初始化
+// ═══════════════════════════════════════
+document.getElementById('headerDate').textContent = new Date().toLocaleDateString('zh-CN', {month:'short', day:'numeric', weekday:'short'});
+renderNav();
+renderContent();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
