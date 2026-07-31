@@ -181,26 +181,43 @@ body {
 .task-item {
   display: flex; align-items: center; gap: 12px;
   padding: 14px 16px; background: var(--bg-blue-2);
-  border-radius: var(--radius-sm); cursor: pointer;
-  transition: all .15s; border: 2px solid transparent;
+  border-radius: var(--radius-sm); cursor: default;
+  transition: all .15s, transform .05s; border: 2px solid transparent;
+  user-select: none; -webkit-user-select: none;
 }
 .task-item:hover { border-color: var(--border-strong); }
 .task-item.done { background: #f1f5f9; opacity: 0.7; }
+.task-item.dragging {
+  opacity: 0.5; border-style: dashed; border-color: var(--blue);
+  transform: scale(0.96); background: var(--bg-blue);
+}
+.task-item.drag-over { border-color: var(--blue); border-style: solid; background: #e0f0ff; }
+.task-item .drag-handle {
+  cursor: grab; color: var(--text-dim); font-size: 16px;
+  padding: 4px 2px; line-height: 1; flex-shrink: 0;
+  user-select: none; -webkit-user-select: none;
+  transition: color .15s;
+}
+.task-item .drag-handle:active { cursor: grabbing; color: var(--blue); }
 .task-item input[type="checkbox"] {
   width: 20px; height: 20px; accent-color: var(--blue);
   cursor: pointer; flex-shrink: 0;
 }
-.task-item .task-label { flex: 1; font-size: 15px; font-weight: 600; }
+.task-item .task-label { flex: 1; font-size: 15px; font-weight: 600; pointer-events: none; }
 .task-item.done .task-label { text-decoration: line-through; color: var(--text-dim); }
 .task-item .task-tag {
   font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 12px;
-  background: var(--cream-dark); color: #b45309;
+  background: var(--cream-dark); color: #b45309; pointer-events: none;
 }
 .task-item .task-delete {
   background: none; border: none; color: #cbd5e0; font-size: 18px;
-  cursor: pointer; padding: 4px 8px; transition: color .15s;
+  cursor: pointer; padding: 4px 8px; transition: color .15s; flex-shrink: 0;
 }
 .task-item .task-delete:hover { color: #ef4444; }
+.drag-hint {
+  font-size: 11px; color: var(--text-dim); text-align: center;
+  padding: 4px 0 2px; margin-top: 2px;
+}
 
 /* ─── 笔记区 ─── */
 .note-editor textarea {
@@ -517,13 +534,19 @@ function renderTaskList(tasks, key) {
     return;
   }
   list.innerHTML = tasks.map((t, i) => `
-    <div class="task-item ${t.done ? 'done' : ''}" onclick="toggleTask('${key}',${t.id})">
+    <div class="task-item ${t.done ? 'done' : ''}" draggable="true" data-id="${t.id}" data-key="${key}" data-index="${i}"
+         ondragstart="handleDragStart(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)" ondragend="handleDragEnd(event)">
+      <span class="drag-handle" title="拖拽排序">⠿</span>
       <input type="checkbox" ${t.done ? 'checked' : ''} onclick="event.stopPropagation();toggleTask('${key}',${t.id})">
       <span class="task-label">${escapeHtml(t.text)}</span>
       ${t.tag ? `<span class="task-tag">${t.tag}</span>` : ''}
       <button class="task-delete" onclick="event.stopPropagation();deleteTask('${key}',${t.id})">✕</button>
     </div>
   `).join('');
+  // 拖拽提示
+  if (tasks.length > 1) {
+    list.insertAdjacentHTML('beforeend', `<div class="drag-hint">💡 拖动左侧 ⠿ 可调整顺序</div>`);
+  }
 }
 
 function addTask() {
@@ -679,6 +702,68 @@ function showModal(title, msg) {
   document.getElementById('modal').classList.add('show');
 }
 function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+// ═══════════════════════════════════════
+//  拖拽排序
+// ═══════════════════════════════════════
+let dragSrcIndex = null;
+
+function handleDragStart(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') {
+    e.preventDefault();
+    return;
+  }
+  dragSrcIndex = parseInt(e.target.dataset.index);
+  e.target.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', e.target.dataset.id);
+  // 移动端触摸拖拽兼容
+  if (e.target.style.opacity !== '') e.target.style.opacity = '0.4';
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  const target = e.target.closest('.task-item');
+  if (target && !target.classList.contains('dragging')) {
+    target.classList.add('drag-over');
+  }
+}
+
+function handleDragLeave(e) {
+  const target = e.target.closest('.task-item');
+  if (target) target.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const target = e.target.closest('.task-item');
+  if (!target) return;
+  target.classList.remove('drag-over');
+
+  const srcId = parseInt(e.dataTransfer.getData('text/plain'));
+  const dstId = parseInt(target.dataset.id);
+  if (!srcId || !dstId || srcId === dstId) return;
+
+  const key = sKey('plan', todayStr());
+  let tasks = loadData(key) || [];
+  const srcIdx = tasks.findIndex(t => t.id === srcId);
+  const dstIdx = tasks.findIndex(t => t.id === dstId);
+  if (srcIdx === -1 || dstIdx === -1) return;
+
+  const [moved] = tasks.splice(srcIdx, 1);
+  tasks.splice(dstIdx, 0, moved);
+  saveData(key, tasks);
+  renderPlan(document.getElementById('content'));
+}
+
+function handleDragEnd(e) {
+  e.target.classList.remove('dragging');
+  e.target.style.opacity = '';
+  document.querySelectorAll('.task-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+  dragSrcIndex = null;
+}
 
 // ═══════════════════════════════════════
 //  初始化
