@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="zuzu的工作台">
 <meta name="theme-color" content="#6bb6ff">
-<link rel="manifest" href="manifest.json?v=8">
-<link rel="apple-touch-icon" href="icon-192.png?v=8">
-<link rel="icon" href="icon-192.png?v=8">
+<link rel="manifest" href="manifest.json?v=9">
+<link rel="apple-touch-icon" href="icon-192.png?v=9">
+<link rel="icon" href="icon-192.png?v=9">
 <title>zuzu的工作台 · 蜡笔小新</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
@@ -1544,23 +1544,17 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // ═══════════════════════════════════════
-//  Service Worker 注册 + 自动更新 + 强制清除旧缓存
+//  Service Worker — 仅用于 PWA 安装支持，不做缓存
 // ═══════════════════════════════════════
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.getRegistrations().then(regs => { regs.forEach(r => r.unregister()); });
-    navigator.serviceWorker.register('sw7.js').then(reg => {
-      reg.addEventListener('updatefound', () => {
-        const newSW = reg.installing;
-        if (newSW) {
-          newSW.addEventListener('statechange', () => {
-            if (newSW.state === 'installed' && navigator.serviceWorker.controller) newSW.postMessage('skipWaiting');
-          });
-        }
-      });
+    // 先注销所有旧 SW
+    navigator.serviceWorker.getRegistrations().then(regs => {
+      return Promise.all(regs.map(r => r.unregister()));
+    }).then(() => {
+      // 注册新的无害 SW（仅用于 PWA 安装）
+      return navigator.serviceWorker.register('sw.js?v=9');
     }).catch(() => {});
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => { if (!refreshing) { refreshing = true; window.location.reload(); } });
   });
 }
 

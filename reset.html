@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="zuzu的工作台">
+<meta name="theme-color" content="#6bb6ff">
+<link rel="manifest" href="manifest.json?v=8">
+<link rel="apple-touch-icon" href="icon-192.png?v=8">
+<link rel="icon" href="icon-192.png?v=8">
+<title>zuzu的工作台</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(160deg, #d6eeff, #eef7ff, #fffaf0);
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  text-align: center;
+}
+.loading { padding: 40px 20px; }
+h1 { font-size: 28px; font-weight: 900; color: #4a90d9; margin-bottom: 8px; }
+p { font-size: 14px; color: #5a6c7d; margin-bottom: 24px; }
+.spinner {
+  width: 40px; height: 40px; border: 4px solid #d6eeff;
+  border-top-color: #6bb6ff; border-radius: 50%;
+  animation: spin .8s linear infinite; margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.status { font-size: 12px; color: #a0b8cc; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="loading">
+  <div class="spinner"></div>
+  <h1>zuzu的工作台</h1>
+  <p>正在清理旧缓存并加载最新版本...</p>
+  <div class="status" id="status"></div>
+</div>
+<script>
+// 这个页面没有任何缓存，它会：
+// 1. 注销所有旧 Service Worker
+// 2. 清除所有旧缓存
+// 3. 跳转到真正的工作台
+
+const log = (msg) => { document.getElementById('status').textContent = msg; };
+
+async function reset() {
+  // 步骤1：注销所有旧的 Service Worker
+  if ('serviceWorker' in navigator) {
+    log('正在注销旧的 Service Worker...');
+    const regs = await navigator.serviceWorker.getRegistrations();
+    for (const r of regs) {
+      await r.unregister();
+      log(`已注销: ${r.scope}`);
+    }
+  }
+
+  // 步骤2：清除所有缓存
+  if ('caches' in window) {
+    log('正在清除所有缓存...');
+    const keys = await caches.keys();
+    for (const k of keys) {
+      await caches.delete(k);
+      log(`已清除缓存: ${k}`);
+    }
+  }
+
+  // 步骤3：清除所有 zuzu 相关的 localStorage（可选，保留用户数据）
+  // 不删除用户数据
+
+  log('清理完成！正在加载工作台...');
+
+  // 步骤4：等待一小会儿确保所有操作完成
+  setTimeout(() => {
+    // 跳转到真正的工作台，加上时间戳确保不走任何缓存
+    window.location.replace('index.html?t=' + Date.now());
+  }, 500);
+}
+
+// 立即执行
+reset().catch(err => {
+  log('出错了，尝试直接加载...');
+  setTimeout(() => window.location.replace('index.html?t=' + Date.now()), 1000);
+});
+</script>
+</body>
+</html>

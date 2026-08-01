@@ -2,7 +2,7 @@
   "name": "zuzu的工作台 · 蜡笔小新",
   "short_name": "zuzu的工作台",
   "description": "zuzu的个人工作台 - 计划/学生管理/账本/笔记",
-  "start_url": "./index.html?v=8",
+  "start_url": "./index.html?v=9",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#4a90d9",
