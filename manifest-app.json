@@ -1,0 +1,14 @@
+{
+  "name": "zuzu的工作台 · 蜡笔小新",
+  "short_name": "zuzu的工作台",
+  "description": "zuzu的个人工作台 - 计划/学生管理/账本/笔记",
+  "start_url": "./app.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#6bb6ff",
+  "theme_color": "#5b9bd5",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

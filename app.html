@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="zuzu的工作台">
+<meta name="theme-color" content="#6bb6ff">
+<link rel="manifest" href="manifest-app.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<title>zuzu的工作台 · 蜡笔小新</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --blue: #6bb6ff;
+  --blue-deep: #4a90d9;
+  --blue-light: #9fd4ff;
+  --blue-pale: #d6eeff;
+  --blue-bg: #eef7ff;
+  --blue-soft: #f5fbff;
+  --white: #ffffff;
+  --cream: #fffaf0;
+  --cream-pink: #fff0f5;
+  --pink: #ff9eb5;
+  --pink-soft: #ffd6e3;
+  --green: #95e1b8;
+  --yellow: #ffe066;
+  --yellow-deep: #f5b800;
+  --orange: #ffb366;
+  --red: #ff6b6b;
+  --text: #2c3e50;
+  --text-secondary: #5a6c7d;
+  --text-dim: #a0b8cc;
+  --outline: #2c3e50;
+  --shadow: 3px 3px 0px rgba(44,62,80,0.18);
+  --shadow-sm: 2px 2px 0px rgba(44,62,80,0.12);
+  --shadow-lg: 4px 4px 0px rgba(44,62,80,0.2);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 24px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: 'Nunito', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background:
+    /* 白色波点 */
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.95) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 50% 10%, rgba(255,255,255,0.85) 2px, transparent 2px),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.95) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 25% 60%, rgba(255,255,255,0.85) 2px, transparent 2px),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.95) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 40% 90%, rgba(255,255,255,0.85) 2px, transparent 2px),
+    radial-gradient(circle at 90% 50%, rgba(255,255,255,0.8) 1.5px, transparent 1.5px),
+    /* 小新腮红 */
+    radial-gradient(circle at 95% 85%, rgba(255,200,210,0.5) 30px, transparent 30px),
+    radial-gradient(circle at 5% 5%, rgba(255,200,210,0.4) 25px, transparent 25px),
+    /* 浅蓝奶油渐变底 */
+    linear-gradient(160deg, #d6eeff 0%, #eef7ff 40%, #f5fbff 70%, #fffaf0 100%);
+  background-size: 60px 60px, 80px 80px, 70px 70px, 90px 90px, 65px 65px, 75px 75px, 50px 50px, 100% 100%, 100% 100%, cover;
+  background-attachment: fixed;
+  color: var(--text);
+  display: flex;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+  user-select: none; -webkit-user-select: none;
+}
+
+/* 漂浮的蜡笔小新装饰元素 */
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+@keyframes twinkle {
+  0%,100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.15); }
+}
+.deco {
+  position: fixed; pointer-events: none; z-index: 0;
+  animation: float 5s ease-in-out infinite;
+  font-size: 36px;
+}
+.deco-shiro { top: 8%; right: 2%; opacity: 0.6; animation-delay: 0s; }
+.deco-croc { bottom: 14%; right: 3%; opacity: 0.55; animation-delay: 1s; }
+.deco-burger { top: 18%; right: 6%; opacity: 0.55; animation-delay: 2s; }
+.deco-star1 { top: 6%; left: 46%; opacity: 0.6; animation: twinkle 3s ease-in-out infinite; }
+.deco-star2 { bottom: 20%; left: 28%; opacity: 0.55; animation: twinkle 4s ease-in-out infinite; animation-delay: 1.5s; }
+.deco-heart { top: 30%; right: 1%; opacity: 0.6; animation: twinkle 3.5s ease-in-out infinite; animation-delay: 0.8s; }
+.deco-flower { bottom: 8%; right: 10%; opacity: 0.5; animation: float 6s ease-in-out infinite; animation-delay: 2.5s; }
+.deco-carrot { top: 40%; right: 4%; opacity: 0.5; animation: float 4.5s ease-in-out infinite; animation-delay: 1.2s; }
+.deco-chocobi { top: 55%; right: 8%; opacity: 0.55; animation: float 5.5s ease-in-out infinite; animation-delay: 3s; }
+.deco-dino { bottom: 35%; left: 3%; opacity: 0.5; animation: float 7s ease-in-out infinite; animation-delay: 0.5s; }
+.deco-sun { top: 3%; left: 5%; opacity: 0.5; animation: twinkle 5s ease-in-out infinite; }
+
+/* ─── 侧边栏 ─── */
+.sidebar {
+  width: 255px; flex-shrink: 0;
+  background: linear-gradient(180deg, #ffffff 0%, #f5fbff 100%);
+  border-right: 3px solid var(--outline);
+  display: flex; flex-direction: column;
+  box-shadow: 4px 0 0 rgba(107,182,255,0.15);
+  z-index: 10;
+  position: relative;
+}
+.sidebar::after {
+  content: ''; position: absolute; bottom: 6px; right: 8px;
+  width: 42px; height: 42px; opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='22' r='14' fill='%236bb6ff'/%3E%3Crect x='12' y='6' width='16' height='8' rx='8' fill='%232c3e50'/%3E%3C/svg%3E");
+  background-size: contain; background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* 蜡笔小新头像区 */
+.shinchan-header {
+  padding: 22px 16px 16px;
+  border-bottom: 3px solid var(--outline);
+  background: linear-gradient(135deg, #d6eeff, #fff0f5);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.shinchan-header::before {
+  content: ''; position: absolute; top: -10px; left: -10px;
+  width: 50px; height: 50px; border-radius: 50%;
+  background: rgba(255,217,102,0.3);
+}
+.shinchan-header::after {
+  content: ''; position: absolute; bottom: -15px; right: -10px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,158,181,0.25);
+}
+
+.shinchan-avatar {
+  width: 74px; height: 74px; margin: 0 auto 10px;
+  position: relative; z-index: 1;
+}
+.sc-face {
+  width: 74px; height: 74px;
+  border-radius: 50%;
+  background: #fde68a;
+  border: 3px solid var(--outline);
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+.sc-cheek { position: absolute; top: 42px; width: 12px; height: 7px; border-radius: 50%; background: rgba(255,158,181,0.6); }
+.sc-cheek.left { left: 6px; }
+.sc-cheek.right { right: 6px; }
+.sc-brow { position: absolute; top: 13px; width: 17px; height: 5px; background: var(--outline); border-radius: 3px; }
+.sc-brow.left { left: 11px; transform: rotate(-5deg); }
+.sc-brow.right { right: 11px; transform: rotate(5deg); }
+.sc-eye { position: absolute; top: 23px; width: 6px; height: 6px; background: var(--outline); border-radius: 50%; }
+.sc-eye.left { left: 19px; }
+.sc-eye.right { right: 19px; }
+.sc-nose { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); width: 10px; height: 6px; background: var(--outline); border-radius: 50% 50% 60% 60%; }
+.sc-mouth { position: absolute; bottom: 13px; left: 50%; transform: translateX(-50%); width: 16px; height: 7px; border: 2.5px solid var(--outline); border-top: none; border-radius: 0 0 16px 16px; background: var(--red); }
+.sc-hair { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 46px; height: 16px; background: var(--outline); border-radius: 23px 23px 4px 4px; z-index: -1; }
+.sc-hair::before, .sc-hair::after { content: ''; position: absolute; top: 8px; width: 8px; height: 10px; background: var(--outline); border-radius: 50%; }
+.sc-hair::before { left: -5px; transform: rotate(-20deg); }
+.sc-hair::after { right: -5px; transform: rotate(20deg); }
+
+.shinchan-name { font-size: 19px; font-weight: 900; color: var(--blue-deep); letter-spacing: -0.5px; position: relative; z-index: 1; }
+.shinchan-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 700; position: relative; z-index: 1; }
+.shinchan-quote {
+  font-size: 10px; color: var(--blue-deep); margin-top: 8px; font-weight: 800;
+  background: var(--white); padding: 4px 12px; border-radius: 12px;
+  border: 2px solid var(--outline); display: inline-block;
+  box-shadow: var(--shadow-sm); position: relative; z-index: 1; max-width: 180px;
+}
+.shinchan-quote::before { content: ''; position: absolute; bottom: -7px; left: 20px; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid var(--outline); }
+.shinchan-quote::after { content: ''; position: absolute; bottom: -4px; left: 22px; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid var(--white); }
+
+/* 导航 */
+.nav { padding: 10px 10px; flex: 1; overflow-y: auto; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 12px; border-radius: var(--radius-sm);
+  margin-bottom: 6px; cursor: pointer; font-size: 14px;
+  font-weight: 800; color: var(--text-secondary);
+  border: 2.5px solid transparent;
+  transition: all .12s;
+  position: relative;
+  background: transparent;
+}
+.nav-item:hover { background: var(--blue-pale); border-color: var(--blue-light); }
+.nav-item.active {
+  background: var(--blue); color: var(--white);
+  border: 2.5px solid var(--outline);
+  box-shadow: var(--shadow-sm);
+}
+.nav-item .drag-handle { cursor: grab; color: var(--text-dim); font-size: 14px; flex-shrink: 0; user-select: none; }
+.nav-item.active .drag-handle { color: rgba(255,255,255,0.6); }
+.nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; flex-shrink: 0; }
+.nav-item .nav-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav-item .nav-delete {
+  background: var(--white); border: 1.5px solid var(--outline);
+  color: #e53e3e; font-size: 11px; cursor: pointer;
+  padding: 1px 5px; border-radius: 6px; flex-shrink: 0;
+  opacity: 0.45; transition: opacity .15s; line-height: 1.2; font-weight: 800;
+}
+.nav-item .nav-delete:hover { opacity: 1; background: #fee2e2; }
+.nav-item.dragging { opacity: 0.4; border-style: dashed; }
+.nav-item.drag-over { border-color: var(--blue); background: var(--blue-pale); }
+
+/* 添加板块 */
+.nav-add {
+  margin: 6px 4px; padding: 10px; border-radius: var(--radius-sm);
+  border: 2.5px dashed var(--blue-light); background: var(--blue-bg);
+  cursor: pointer; font-size: 13px; font-weight: 800;
+  color: var(--blue-deep); text-align: center; transition: all .12s;
+}
+.nav-add:hover { background: var(--blue-pale); border-color: var(--blue); border-style: solid; }
+
+/* 侧边栏底部 */
+.sidebar-footer {
+  padding: 10px 12px; border-top: 2px solid var(--blue-pale);
+  display: flex; gap: 6px;
+}
+.sidebar-footer button {
+  flex: 1; background: var(--white); border: 2px solid var(--outline);
+  border-radius: 10px; padding: 6px 8px; font-size: 11px; font-weight: 800;
+  color: var(--text); cursor: pointer; font-family: inherit;
+  box-shadow: var(--shadow-sm); transition: all .1s;
+}
+.sidebar-footer button:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 rgba(44,62,80,0.1); }
+.sidebar-footer button.active { background: var(--blue); color: var(--white); }
+.sidebar-footer .wake-toggle.active { background: var(--yellow); color: var(--outline); }
+
+/* ─── 主内容区 ─── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; position: relative; z-index: 1; }
+.main-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px; flex-shrink: 0;
+}
+.main-header .page-title { font-size: 24px; font-weight: 900; color: var(--text); }
+.main-header .page-sub { font-size: 13px; color: var(--text-secondary); margin-top: 2px; font-weight: 700; }
+.main-header .date-pill {
+  background: var(--white); border: 2.5px solid var(--outline);
+  padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 800;
+  color: var(--blue-deep); box-shadow: var(--shadow-sm);
+}
+.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 24px 24px; }
+
+/* ─── 统计卡片 ─── */
+.stats-row { display: flex; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+.stat-card {
+  background: var(--white); border: 2.5px solid var(--outline);
+  border-radius: var(--radius); padding: 16px 20px;
+  box-shadow: var(--shadow); flex: 1; min-width: 120px;
+  transition: transform .1s;
+}
+.stat-card:active { transform: translate(1px,1px); }
+.stat-card .stat-label { font-size: 11px; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; }
+.stat-card .stat-value { font-size: 28px; font-weight: 900; color: var(--blue-deep); margin-top: 2px; }
+.stat-card .stat-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.progress-ring-card { flex: 0 0 120px; display: flex; align-items: center; justify-content: center; }
+.progress-ring { width: 100px; height: 100px; transform: rotate(-90deg); }
+.progress-ring-bg { fill: none; stroke: var(--blue-pale); stroke-width: 9; }
+.progress-ring-fill { fill: none; stroke: var(--blue); stroke-width: 9; stroke-linecap: round; transition: stroke-dashoffset .6s; }
+
+/* ─── 白色内容卡片 ─── */
+.white-card {
+  background: var(--white); border: 2.5px solid var(--outline);
+  border-radius: var(--radius); padding: 20px;
+  box-shadow: var(--shadow); margin-bottom: 16px;
+  position: relative;
+}
+.white-card .card-title {
+  font-size: 16px; font-weight: 900; color: var(--text);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+
+/* ─── 任务输入 ─── */
+.add-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.add-row input {
+  flex: 1; background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 11px 14px; font-size: 14px;
+  color: var(--text); font-family: inherit; font-weight: 700;
+  user-select: text; -webkit-user-select: text;
+}
+.add-row input:focus { outline: none; background: var(--white); border-color: var(--blue); }
+.add-row input::placeholder { color: var(--text-dim); }
+.add-row button {
+  background: var(--blue); color: var(--white); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 11px 20px;
+  font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
+  box-shadow: var(--shadow-sm); transition: all .1s;
+}
+.add-row button:active { transform: translate(2px,2px); box-shadow: none; }
+
+/* ─── 任务项 ─── */
+.task-list { display: flex; flex-direction: column; gap: 8px; }
+.task-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 14px; background: var(--blue-bg);
+  border: 2px solid var(--outline); border-radius: var(--radius-sm);
+  cursor: default; transition: all .12s;
+  user-select: none;
+}
+.task-item:hover { background: var(--blue-pale); }
+.task-item.done { background: #f0f4f8; opacity: 0.6; }
+.task-item.dragging { opacity: 0.4; border-style: dashed; }
+.task-item.drag-over { border-color: var(--blue); background: #cce4f7; }
+.task-item .drag-handle { cursor: grab; color: var(--text-dim); font-size: 16px; flex-shrink: 0; }
+.task-item .drag-handle:active { cursor: grabbing; }
+.task-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--blue); cursor: pointer; flex-shrink: 0; }
+.task-item .task-label { flex: 1; font-size: 15px; font-weight: 700; pointer-events: none; }
+.task-item.done .task-label { text-decoration: line-through; color: var(--text-dim); }
+.task-item .task-tag {
+  font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 10px;
+  background: var(--yellow); color: #92400e; border: 1.5px solid var(--outline);
+  pointer-events: none;
+}
+.task-item .task-delete { background: none; border: none; color: #cbd5e0; font-size: 18px; cursor: pointer; padding: 2px 6px; flex-shrink: 0; }
+.task-item .task-delete:hover { color: #e53e3e; }
+.drag-hint { font-size: 11px; color: var(--text-dim); text-align: center; padding: 4px 0; }
+
+/* ─── 笔记区 ─── */
+.note-editor textarea {
+  width: 100%; min-height: 280px; background: var(--blue-bg);
+  border: 2px solid var(--outline); border-radius: var(--radius-sm);
+  padding: 16px; font-size: 14px; line-height: 1.8; color: var(--text);
+  resize: vertical; font-family: inherit; font-weight: 600;
+  user-select: text; -webkit-user-select: text;
+}
+.note-editor textarea:focus { outline: none; background: var(--white); border-color: var(--blue); }
+.note-editor textarea::placeholder { color: var(--text-dim); }
+
+/* ─── 账本 ─── */
+.acct-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.acct-row select, .acct-row input {
+  background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 9px 12px; font-size: 13px;
+  color: var(--text); font-family: inherit; font-weight: 700;
+}
+.acct-row select { flex: 0 0 80px; }
+.acct-row input[type="number"] { flex: 0 0 100px; }
+.acct-row input[type="text"] { flex: 1; min-width: 100px; }
+.acct-row button {
+  background: var(--blue); color: var(--white); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 9px 16px; font-size: 13px;
+  font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm);
+}
+.acct-row button:active { transform: translate(2px,2px); box-shadow: none; }
+.acct-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.acct-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+  background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); font-size: 13px; font-weight: 700;
+}
+.acct-item .acct-type { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 8px; border: 1.5px solid var(--outline); }
+.acct-item .acct-type.in { background: var(--green); }
+.acct-item .acct-type.out { background: var(--pink-soft); }
+.acct-item .acct-amount { font-weight: 900; margin-left: auto; }
+.acct-item .acct-amount.in { color: #059669; }
+.acct-item .acct-amount.out { color: #e53e3e; }
+.acct-item .acct-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 16px; }
+.acct-item .acct-del:hover { color: #e53e3e; }
+.acct-summary { display: flex; gap: 16px; margin-top: 14px; padding: 12px 16px; background: var(--cream); border: 2px solid var(--outline); border-radius: var(--radius-sm); font-weight: 800; font-size: 14px; }
+.acct-summary span { color: var(--blue-deep); }
+
+/* ─── 日历 ─── */
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-header .cal-month { font-size: 18px; font-weight: 900; color: var(--blue-deep); }
+.cal-header button { background: var(--white); border: 2px solid var(--outline); border-radius: 10px; padding: 5px 14px; font-family: inherit; font-weight: 800; color: var(--blue-deep); cursor: pointer; box-shadow: var(--shadow-sm); font-size: 16px; }
+.cal-header button:active { transform: translate(1px,1px); box-shadow: none; }
+.cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
+.cal-weekdays div { text-align: center; font-size: 11px; font-weight: 800; color: var(--text-dim); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: all .12s; position: relative; color: var(--text); }
+.cal-day:hover { background: var(--blue-pale); border-color: var(--blue-light); }
+.cal-day.other-month { color: var(--text-dim); opacity: 0.4; }
+.cal-day.today { background: var(--blue); color: var(--white); border: 2px solid var(--outline); box-shadow: var(--shadow-sm); }
+.cal-day.has-event::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--red); }
+.cal-day.today.has-event::after { background: var(--yellow); }
+.cal-day.selected { border-color: var(--blue); border-width: 2.5px; background: var(--blue-pale); }
+.cal-day.today.selected { background: var(--blue); color: var(--white); }
+.cal-events { margin-top: 16px; }
+.cal-events h4 { font-size: 14px; font-weight: 900; color: var(--text); margin-bottom: 10px; }
+.cal-event-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--blue-bg); border: 2px solid var(--outline); border-radius: var(--radius-sm); margin-bottom: 6px; font-size: 13px; font-weight: 700; }
+.cal-event-item .ev-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+.cal-event-item .ev-text { flex: 1; }
+.cal-event-item .ev-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 15px; }
+.cal-event-item .ev-del:hover { color: #e53e3e; }
+.cal-event-add { display: flex; gap: 8px; margin-top: 10px; }
+.cal-event-add input { flex: 1; background: var(--blue-soft); border: 1.5px solid var(--outline); border-radius: 8px; padding: 7px 10px; font-size: 12px; color: var(--text); font-family: inherit; font-weight: 600; }
+.cal-event-add input:focus { outline: none; background: var(--white); }
+.cal-event-add button { background: var(--blue); color: var(--white); border: 1.5px solid var(--outline); border-radius: 8px; padding: 7px 10px; font-size: 11px; font-weight: 800; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.cal-event-add button:active { transform: translate(1px,1px); }
+
+/* ─── 学生管理 ─── */
+.stu-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.stu-search { flex: 1; min-width: 140px; background: var(--blue-bg); border: 2px solid var(--outline); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px; color: var(--text); font-family: inherit; font-weight: 600; }
+.stu-search:focus { outline: none; background: var(--white); border-color: var(--blue); }
+.stu-add-btn { background: var(--blue); color: var(--white); border: 2px solid var(--outline); border-radius: var(--radius-sm); padding: 10px 18px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm); white-space: nowrap; }
+.stu-add-btn:active { transform: translate(2px,2px); box-shadow: none; }
+.stu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.stu-card { background: var(--white); border: 2.5px solid var(--outline); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); transition: transform .1s; position: relative; }
+.stu-card:active { transform: translate(1px,1px); }
+.stu-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.stu-avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; border: 2.5px solid var(--outline); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: var(--white); }
+.stu-info { flex: 1; min-width: 0; }
+.stu-name { font-size: 16px; font-weight: 900; color: var(--text); }
+.stu-meta { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.stu-actions { display: flex; gap: 6px; }
+.stu-actions button { background: var(--blue-bg); border: 1.5px solid var(--outline); border-radius: 8px; padding: 4px 8px; font-size: 11px; font-weight: 800; cursor: pointer; font-family: inherit; color: var(--text); }
+.stu-actions button:hover { background: var(--blue-pale); }
+.stu-actions button.danger:hover { background: #fee2e2; color: #e53e3e; }
+.stu-records { margin-top: 10px; border-top: 2px dashed var(--blue-pale); padding-top: 10px; }
+.stu-records-title { font-size: 11px; font-weight: 800; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; }
+.stu-record-item { background: var(--blue-bg); border: 1.5px solid var(--outline); border-radius: 8px; padding: 8px 10px; margin-bottom: 4px; font-size: 12px; font-weight: 600; display: flex; align-items: flex-start; gap: 6px; }
+.stu-record-item .rec-date { color: var(--blue-deep); font-weight: 800; font-size: 10px; flex-shrink: 0; min-width: 72px; }
+.stu-record-item .rec-text { flex: 1; color: var(--text); }
+.stu-record-item .rec-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 13px; flex-shrink: 0; }
+.stu-record-item .rec-del:hover { color: #e53e3e; }
+.stu-record-add { display: flex; gap: 6px; margin-top: 6px; }
+.stu-record-add input { flex: 1; background: var(--blue-soft); border: 1.5px solid var(--outline); border-radius: 8px; padding: 7px 10px; font-size: 12px; color: var(--text); font-family: inherit; font-weight: 600; }
+.stu-record-add input:focus { outline: none; background: var(--white); }
+.stu-record-add button { background: var(--blue); color: var(--white); border: 1.5px solid var(--outline); border-radius: 8px; padding: 7px 10px; font-size: 11px; font-weight: 800; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.stu-record-add button:active { transform: translate(1px,1px); }
+.stu-empty { text-align: center; color: var(--text-dim); padding: 40px 20px; font-size: 14px; font-weight: 700; }
+.stu-modal-fields { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.stu-modal-fields .field-row { display: flex; gap: 10px; }
+.stu-modal-fields .field-row > * { flex: 1; }
+.stu-modal-fields label { font-size: 11px; font-weight: 800; color: var(--text-secondary); margin-bottom: 3px; display: block; }
+.stu-color-pick { display: flex; gap: 6px; flex-wrap: wrap; }
+.stu-color-pick button { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--outline); cursor: pointer; padding: 0; }
+.stu-color-pick button.selected { box-shadow: 0 0 0 3px var(--blue); }
+
+/* ─── 练琴模块 ─── */
+.piano-week-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.piano-week-bar button {
+  background: var(--white); border: 2px solid var(--outline); border-radius: 10px;
+  padding: 6px 12px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit;
+  box-shadow: var(--shadow-sm); color: var(--text);
+}
+.piano-week-bar button.active { background: var(--blue); color: var(--white); }
+.piano-week-bar button:active { transform: translate(1px,1px); box-shadow: none; }
+
+.piano-block { background: var(--white); border: 2.5px solid var(--outline); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); }
+.piano-block-title { font-size: 15px; font-weight: 900; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.piano-block-sub { font-size: 11px; color: var(--text-secondary); font-weight: 700; margin-bottom: 12px; }
+.piano-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px; background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); margin-bottom: 8px; transition: all .1s;
+}
+.piano-item.done { opacity: 0.55; background: #f0f4f8; }
+.piano-item.done .pi-text { text-decoration: line-through; color: var(--text-dim); }
+.piano-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+.piano-item .pi-content { flex: 1; }
+.piano-item .pi-title { font-size: 13px; font-weight: 800; color: var(--text); }
+.piano-item .pi-desc { font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 600; line-height: 1.4; }
+.piano-item .pi-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 16px; flex-shrink: 0; }
+.piano-item .pi-del:hover { color: #e53e3e; }
+
+.piano-add-row { display: flex; gap: 8px; margin-top: 10px; }
+.piano-add-row input { flex: 1; background: var(--blue-soft); border: 1.5px solid var(--outline); border-radius: 8px; padding: 8px 12px; font-size: 13px; color: var(--text); font-family: inherit; font-weight: 600; }
+.piano-add-row input:focus { outline: none; background: var(--white); }
+.piano-add-row button { background: var(--blue); color: var(--white); border: 1.5px solid var(--outline); border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit; }
+.piano-add-row button:active { transform: translate(1px,1px); }
+
+.piano-progress-card { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.piano-piece {
+  flex: 1; min-width: 150px; background: var(--white); border: 2.5px solid var(--outline);
+  border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow);
+}
+.piano-piece .pp-name { font-size: 13px; font-weight: 900; color: var(--text); }
+.piano-piece .pp-status { font-size: 11px; color: var(--text-secondary); margin-top: 4px; font-weight: 700; }
+.piano-piece .pp-bar { height: 8px; background: var(--blue-pale); border-radius: 4px; margin-top: 8px; border: 1px solid var(--outline); overflow: hidden; }
+.piano-piece .pp-fill { height: 100%; background: var(--blue); border-radius: 4px; transition: width .3s; }
+
+/* ─── 模态框 ─── */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,62,80,0.45); display: none;
+  align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--white); border: 3px solid var(--outline);
+  border-radius: var(--radius); padding: 24px; max-width: 380px; width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+.modal h3 { color: var(--blue-deep); margin-bottom: 14px; font-size: 18px; font-weight: 900; }
+.modal input, .modal select {
+  width: 100%; background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px;
+  color: var(--text); font-family: inherit; font-weight: 600; margin-bottom: 10px;
+}
+.modal input:focus, .modal select:focus { outline: none; background: var(--white); }
+.modal .emoji-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-bottom: 14px; }
+.modal .emoji-grid button { font-size: 20px; background: var(--blue-bg); border: 2px solid transparent; border-radius: 8px; padding: 6px; cursor: pointer; font-family: inherit; }
+.modal .emoji-grid button:hover { background: var(--blue-pale); }
+.modal .emoji-grid button.selected { border-color: var(--blue); background: var(--blue-pale); }
+.modal .modal-btns { display: flex; gap: 10px; }
+.modal .modal-btns button { flex: 1; border: 2px solid var(--outline); border-radius: var(--radius-sm); padding: 10px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm); }
+.modal .btn-confirm { background: var(--blue); color: var(--white); }
+.modal .btn-cancel { background: var(--white); color: var(--text); }
+.modal .modal-btns button:active { transform: translate(2px,2px); box-shadow: none; }
+
+/* ─── 滚动条 ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 3px; }
+
+/* ─── 响应式（侧边栏始终在左侧） ─── */
+@media (max-width: 900px) {
+  .sidebar { width: 200px; }
+  .deco { display: none; }
+  .shinchan-header { padding: 16px 10px 12px; }
+  .shinchan-avatar { width: 58px; height: 58px; }
+  .sc-face { width: 58px; height: 58px; }
+  .sc-brow { width: 13px; height: 4px; top: 10px; }
+  .sc-brow.left { left: 9px; }
+  .sc-brow.right { right: 9px; }
+  .sc-eye { width: 5px; height: 5px; top: 18px; }
+  .sc-eye.left { left: 15px; }
+  .sc-eye.right { right: 15px; }
+  .sc-nose { top: 27px; width: 8px; height: 5px; }
+  .sc-mouth { bottom: 10px; width: 13px; height: 6px; }
+  .sc-cheek { top: 33px; width: 10px; height: 6px; }
+  .sc-hair { width: 38px; height: 14px; top: -6px; }
+  .shinchan-name { font-size: 16px; }
+  .shinchan-quote { font-size: 9px; max-width: 150px; }
+  .nav-item { padding: 9px 10px; font-size: 13px; gap: 7px; }
+  .nav-item .nav-icon { font-size: 16px; width: 18px; }
+  .nav-item .nav-name { font-size: 13px; }
+  .nav-add { font-size: 12px; padding: 8px; }
+  .sidebar-footer { flex-direction: column; gap: 4px; }
+  .sidebar-footer button { font-size: 10px; padding: 5px 6px; }
+  .main-header { padding: 12px 14px; }
+  .main-header .page-title { font-size: 18px; }
+  .content { padding: 0 14px 20px; }
+  .stats-row { flex-direction: column; }
+  .progress-ring-card { flex: 0 0 auto; }
+  .piano-progress-card { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- 漂浮蜡笔小新装饰元素 -->
+<div class="deco deco-shiro">🐶</div>
+<div class="deco deco-croc">🐊</div>
+<div class="deco deco-burger">🍔</div>
+<div class="deco deco-star1">⭐</div>
+<div class="deco deco-star2">🌟</div>
+<div class="deco deco-heart">💖</div>
+<div class="deco deco-flower">🌸</div>
+<div class="deco deco-carrot">🥕</div>
+<div class="deco deco-chocobi">🍫</div>
+<div class="deco deco-dino">🦕</div>
+<div class="deco deco-sun">🌞</div>
+
+<!-- 侧边栏 -->
+<div class="sidebar">
+  <div class="shinchan-header">
+    <div class="shinchan-avatar">
+      <div class="sc-face">
+        <div class="sc-hair"></div>
+        <div class="sc-brow left"></div>
+        <div class="sc-brow right"></div>
+        <div class="sc-eye left"></div>
+        <div class="sc-eye right"></div>
+        <div class="sc-nose"></div>
+        <div class="sc-cheek left"></div>
+        <div class="sc-cheek right"></div>
+        <div class="sc-mouth"></div>
+      </div>
+    </div>
+    <div class="shinchan-name">zuzu的工作台</div>
+    <div class="shinchan-sub">🐶 个人工作台 · 蜡笔小新 🖍️</div>
+    <div class="shinchan-quote" id="quote">动感超人！</div>
+  </div>
+  <div class="nav" id="nav"></div>
+  <div class="nav-add" onclick="openAddSectionModal()">➕ 添加板块</div>
+  <div class="sidebar-footer">
+    <button class="wake-toggle" id="wakeBtn" onclick="toggleWakeLock()">☕ 不休眠</button>
+    <button onclick="exportAll()">📤 导出</button>
+    <button onclick="importAll()">📥 导入</button>
+  </div>
+</div>
+
+<!-- 主内容 -->
+<div class="main">
+  <div class="main-header">
+    <div>
+      <div class="page-title" id="pageTitle">📋 每日计划</div>
+      <div class="page-sub" id="pageSub">完成今天的任务！</div>
+    </div>
+    <div class="date-pill" id="headerDate"></div>
+  </div>
+  <div class="content" id="content"></div>
+</div>
+
+<!-- 添加板块模态框 -->
+<div class="modal-overlay" id="addSectionModal">
+  <div class="modal">
+    <h3>➕ 添加新板块</h3>
+    <input type="text" id="newSectionName" placeholder="板块名称（如：旅行计划）" maxlength="10">
+    <div class="emoji-grid" id="emojiGrid"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeAddSectionModal()">取消</button>
+      <button class="btn-confirm" onclick="confirmAddSection()">添加</button>
+    </div>
+  </div>
+</div>
+
+<!-- 通用模态框 -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modalTitle">提示</h3>
+    <p id="modalMsg" style="font-size:14px;color:var(--text-secondary);margin-bottom:14px;font-weight:600"></p>
+    <div class="modal-btns">
+      <button class="btn-confirm" onclick="closeModal()" style="flex:1">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 学生编辑模态框 -->
+<div class="modal-overlay" id="stuModal">
+  <div class="modal" style="max-width:420px">
+    <h3 id="stuModalTitle">👤 添加学生</h3>
+    <div class="stu-modal-fields">
+      <div><label>学生姓名</label><input type="text" id="stuName" placeholder="如：张小明" maxlength="10"></div>
+      <div class="field-row">
+        <div><label>年级/班级</label><input type="text" id="stuGrade" placeholder="如：六年级" maxlength="12"></div>
+        <div><label>科目</label><input type="text" id="stuSubject" placeholder="如：钢琴" maxlength="10"></div>
+      </div>
+      <div><label>头像颜色</label><div class="stu-color-pick" id="stuColorPick"></div></div>
+      <div><label>备注</label><input type="text" id="stuNote" placeholder="如：每周二、四上课" maxlength="30"></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeStuModal()">取消</button>
+      <button class="btn-confirm" onclick="saveStudent()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+//  默认板块
+// ═══════════════════════════════════════
+const DEFAULT_SECTIONS = [
+  { id: "plan",     name: "每日计划", icon: "📋", sub: "完成今天的任务！", type: "plan" },
+  { id: "calendar", name: "日历",     icon: "📅", sub: "查看日期与事件", type: "calendar" },
+  { id: "piano",    name: "练琴",     icon: "🎹", sub: "每日练琴计划", type: "piano" },
+  { id: "diet",     name: "饮食",     icon: "🍱", sub: "记录三餐饮食", type: "note" },
+  { id: "account",  name: "账本",     icon: "💰", sub: "记账本", type: "account" },
+  { id: "work",     name: "工作",     icon: "💼", sub: "学生管理工作台", type: "student" },
+  { id: "life",     name: "生活",     icon: "🌿", sub: "生活点滴", type: "note" },
+  { id: "exercise", name: "运动",     icon: "🏃", sub: "运动打卡", type: "note" },
+  { id: "memo",     name: "备忘录",   icon: "📌", sub: "别忘了这些事", type: "note" },
+];
+
+const EMOJI_CHOICES = ['📋','💡','💼','🌿','📚','📖','✨','🏃','📝','🌈','📅','🎹','💰','🍱','📌','🎨','🎵','✈️','🎮','🏠','❤️','⭐','🔥','🍀','🎯','📱','💻','🛒','☕','🌸','🐶','🐱'];
+const QUOTES = ['动感超人！','我要吃小熊饼干！','大姐姐你好漂亮！','今天也要加油！','不肥不行啊！','懒懒散散才是人生！','小白！过来！','哈哈哈～'];
+let selectedEmoji = '📌';
+let currentSection = "plan";
+
+// ═══════════════════════════════════════
+//  存储层
+// ═══════════════════════════════════════
+function loadData(key) { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch(e) { return null; } }
+function saveData(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+function loadText(key) { return localStorage.getItem(key) || ''; }
+function saveText(key, val) { localStorage.setItem(key, val); }
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function getWeekday() { return new Date().getDay(); }
+
+// 板块管理
+function getSections() {
+  let s = loadData('zuzu_sections');
+  if (!s) { s = DEFAULT_SECTIONS; saveData('zuzu_sections', s); }
+  return s;
+}
+function saveSections(s) { saveData('zuzu_sections', s); }
+
+// ═══════════════════════════════════════
+//  侧边栏渲染
+// ═══════════════════════════════════════
+function renderNav() {
+  const sections = getSections();
+  const nav = document.getElementById('nav');
+  nav.innerHTML = sections.map((s, i) => `
+    <div class="nav-item ${s.id === currentSection ? 'active' : ''}" draggable="true" data-id="${s.id}"
+         onclick="switchSection('${s.id}')"
+         ondragstart="navDragStart(event)" ondragover="navDragOver(event)" ondragleave="navDragLeave(event)" ondrop="navDrop(event)" ondragend="navDragEnd(event)">
+      <span class="drag-handle" onclick="event.stopPropagation()">⠿</span>
+      <span class="nav-icon">${s.icon}</span>
+      <span class="nav-name">${s.name}</span>
+      <button class="nav-delete" onclick="event.stopPropagation();deleteSection('${s.id}')">✕</button>
+    </div>
+  `).join('');
+}
+
+function switchSection(id) { currentSection = id; renderNav(); renderContent(); }
+
+// 板块拖拽
+let navDragId = null;
+function navDragStart(e) {
+  navDragId = e.target.dataset.id || e.target.closest('.nav-item').dataset.id;
+  const item = e.target.closest('.nav-item');
+  if (item) item.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function navDragOver(e) {
+  e.preventDefault();
+  const target = e.target.closest('.nav-item');
+  if (target && target.dataset.id !== navDragId) target.classList.add('drag-over');
+}
+function navDragLeave(e) {
+  const target = e.target.closest('.nav-item');
+  if (target) target.classList.remove('drag-over');
+}
+function navDrop(e) {
+  e.preventDefault(); e.stopPropagation();
+  const target = e.target.closest('.nav-item');
+  if (!target || !navDragId) return;
+  const dstId = target.dataset.id;
+  if (dstId === navDragId) return;
+  let sections = getSections();
+  const srcIdx = sections.findIndex(s => s.id === navDragId);
+  const dstIdx = sections.findIndex(s => s.id === dstId);
+  if (srcIdx === -1 || dstIdx === -1) return;
+  const [moved] = sections.splice(srcIdx, 1);
+  sections.splice(dstIdx, 0, moved);
+  saveSections(sections);
+  renderNav();
+}
+function navDragEnd(e) {
+  document.querySelectorAll('.nav-item').forEach(el => { el.classList.remove('dragging'); el.classList.remove('drag-over'); });
+  navDragId = null;
+}
+
+// 添加/删除板块
+function openAddSectionModal() {
+  document.getElementById('newSectionName').value = '';
+  selectedEmoji = '📌';
+  const grid = document.getElementById('emojiGrid');
+  grid.innerHTML = EMOJI_CHOICES.map(e => `<button onclick="selectEmoji('${e}')" class="${e===selectedEmoji?'selected':''}">${e}</button>`).join('');
+  document.getElementById('addSectionModal').classList.add('show');
+}
+function closeAddSectionModal() { document.getElementById('addSectionModal').classList.remove('show'); }
+function selectEmoji(e) {
+  selectedEmoji = e;
+  document.querySelectorAll('#emojiGrid button').forEach(b => b.classList.remove('selected'));
+  event.target.classList.add('selected');
+}
+function confirmAddSection() {
+  const name = document.getElementById('newSectionName').value.trim();
+  if (!name) { showModal('⚠️', '请输入板块名称'); return; }
+  const id = 'custom_' + Date.now();
+  let sections = getSections();
+  sections.push({ id, name, icon: selectedEmoji, sub: name + '记录', type: 'note' });
+  saveSections(sections);
+  closeAddSectionModal();
+  currentSection = id;
+  renderNav(); renderContent();
+}
+function deleteSection(id) {
+  let sections = getSections();
+  if (sections.length <= 1) { showModal('⚠️', '至少保留一个板块'); return; }
+  if (!confirm('删除这个板块吗？')) return;
+  sections = sections.filter(s => s.id !== id);
+  saveSections(sections);
+  if (currentSection === id) currentSection = sections[0].id;
+  renderNav(); renderContent();
+}
+
+// ═══════════════════════════════════════
+//  主内容渲染
+// ═══════════════════════════════════════
+function renderContent() {
+  const sections = getSections();
+  const s = sections.find(x => x.id === currentSection) || sections[0];
+  document.getElementById('pageTitle').textContent = `${s.icon} ${s.name}`;
+  document.getElementById('pageSub').textContent = s.sub;
+  const content = document.getElementById('content');
+
+  switch(s.type) {
+    case 'plan': renderPlan(content); break;
+    case 'calendar': renderCalendar(content); break;
+    case 'piano': renderPiano(content); break;
+    case 'account': renderAccount(content); break;
+    case 'student': renderStudent(content); break;
+    default: renderNote(content, s); break;
+  }
+}
+
+// ═══════════════════════════════════════
+//  每日计划
+// ═══════════════════════════════════════
+const DEFAULT_TASKS = [
+  { label: '计划任务', tag: '计划' },
+  { label: '喝水 8 杯', tag: '健康' },
+  { label: '锻炼 30 分钟', tag: '运动' },
+  { label: '复盘今日', tag: '复盘' },
+];
+
+function renderPlan(el) {
+  const today = todayStr();
+  const key = `zuzu_plan_${today}`;
+  let tasks = loadData(key);
+  if (tasks === null) {
+    tasks = DEFAULT_TASKS.map((t, i) => ({ id: Date.now()+i, text: t.label, done: false, tag: t.tag }));
+    saveData(key, tasks);
+  }
+  const done = tasks.filter(t => t.done).length;
+  const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
+  const C = 2*Math.PI*42; const offset = C - (pct/100)*C;
+
+  el.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-label">完成率</div><div class="stat-value">${pct}%</div><div class="stat-sub">${done}/${tasks.length} 项</div></div>
+      <div class="stat-card"><div class="stat-label">已完成</div><div class="stat-value" style="color:#f5b800">${done}</div><div class="stat-sub">任务数</div></div>
+      <div class="stat-card progress-ring-card"><svg class="progress-ring" viewBox="0 0 100 100"><circle class="progress-ring-bg" cx="50" cy="50" r="42"></circle><circle class="progress-ring-fill" cx="50" cy="50" r="42" stroke-dasharray="${C}" stroke-dashoffset="${offset}"></circle></svg></div>
+    </div>
+    <div class="white-card">
+      <div class="card-title">📝 任务清单</div>
+      <div class="add-row"><input type="text" id="newTaskInput" placeholder="添加新任务..." onkeypress="if(event.key==='Enter')addTask()"><button onclick="addTask()">添加</button></div>
+      <div class="task-list" id="taskList"></div>
+    </div>
+  `;
+  renderTaskList(tasks, key);
+}
+
+function renderTaskList(tasks, key) {
+  const list = document.getElementById('taskList');
+  if (!list) return;
+  if (!tasks.length) { list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:30px;font-size:13px">✨ 暂无任务</div>`; return; }
+  list.innerHTML = tasks.map((t, i) => `
+    <div class="task-item ${t.done?'done':''}" draggable="true" data-id="${t.id}" data-key="${key}"
+         ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)" ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
+      <span class="drag-handle">⠿</span>
+      <input type="checkbox" ${t.done?'checked':''} onclick="event.stopPropagation();toggleTask('${key}',${t.id})">
+      <span class="task-label">${escapeHtml(t.text)}</span>
+      ${t.tag?`<span class="task-tag">${t.tag}</span>`:''}
+      <button class="task-delete" onclick="event.stopPropagation();deleteTask('${key}',${t.id})">✕</button>
+    </div>
+  `).join('');
+  if (tasks.length > 1) list.insertAdjacentHTML('beforeend', `<div class="drag-hint">💡 拖动 ⠿ 调整顺序</div>`);
+}
+
+function addTask() {
+  const input = document.getElementById('newTaskInput');
+  const text = input.value.trim(); if (!text) return;
+  const key = `zuzu_plan_${todayStr()}`;
+  let tasks = loadData(key) || [];
+  tasks.push({ id: Date.now(), text, done: false, tag: '自定义' });
+  saveData(key, tasks); input.value = '';
+  renderPlan(document.getElementById('content'));
+}
+function toggleTask(key, id) {
+  let tasks = loadData(key) || [];
+  tasks = tasks.map(t => t.id===id ? {...t, done:!t.done} : t);
+  saveData(key, tasks); renderPlan(document.getElementById('content'));
+}
+function deleteTask(key, id) {
+  let tasks = loadData(key) || [];
+  tasks = tasks.filter(t => t.id !== id);
+  saveData(key, tasks); renderPlan(document.getElementById('content'));
+}
+
+// 任务拖拽
+let taskDragId = null;
+function taskDragStart(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') { e.preventDefault(); return; }
+  const item = e.target.closest('.task-item');
+  taskDragId = item.dataset.id;
+  item.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function taskDragOver(e) { e.preventDefault(); const t = e.target.closest('.task-item'); if (t && t.dataset.id !== taskDragId) t.classList.add('drag-over'); }
+function taskDragLeave(e) { const t = e.target.closest('.task-item'); if (t) t.classList.remove('drag-over'); }
+function taskDrop(e) {
+  e.preventDefault(); const t = e.target.closest('.task-item'); if (!t || !taskDragId) return;
+  const dstId = t.dataset.id; if (dstId === taskDragId) return;
+  const key = t.dataset.key;
+  let tasks = loadData(key) || [];
+  const srcIdx = tasks.findIndex(x => String(x.id) === taskDragId);
+  const dstIdx = tasks.findIndex(x => String(x.id) === dstId);
+  if (srcIdx === -1 || dstIdx === -1) return;
+  const [m] = tasks.splice(srcIdx, 1); tasks.splice(dstIdx, 0, m);
+  saveData(key, tasks); renderPlan(document.getElementById('content'));
+}
+function taskDragEnd(e) {
+  document.querySelectorAll('.task-item').forEach(el => { el.classList.remove('dragging'); el.classList.remove('drag-over'); });
+  taskDragId = null;
+}
+
+// ═══════════════════════════════════════
+//  练琴计划
+// ═══════════════════════════════════════
+let pianoCurrentWeek = 1;
+const PIANO_PLAN = {
+  1: {
+    scale: { key: '降G大调 + 降e小调', note: '对应黑键练习曲' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '右手前16小节慢练 ♩=60，手腕放平贴键', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '攻克最弱段落 + 旋律rubato', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '完整演奏一遍 + 力度对比打磨', time: '10-15分钟' }
+    ],
+    chord: 'C调5条基础和弦进行：① I-V-vi-IV ② I-vi-IV-V ③ vi-IV-I-V ④ I-IV-V-I ⑤ IV-V-iii-vi',
+    accompaniment: '伴奏型①八度根音交替 + ②分解1-5-10，用进行①循环',
+    song: '《月亮代表我的心》建立信心',
+    rhythm: '节拍器♩=60~100，弹和弦拍子踩准',
+    sight: '10分钟陌生和弦谱视奏，不许停'
+  },
+  2: {
+    scale: { key: '降A大调 + f小调', note: '对应降A大调即兴曲' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '右手通篇慢速流畅，难点段落反复', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '旋律线条流畅 + 装饰音处理', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '维持手感 + 音乐表现', time: '10-15分钟' }
+    ],
+    chord: 'C调5条进行转位连接，追求最近距离；每条3种弹法',
+    accompaniment: '伴奏型③分解1-3-5-3 + ④琶音上下行',
+    song: '《小幸运》+《好久不见》两首不同风格',
+    rhythm: '节拍器继续，加入八分音符切分',
+    sight: '随机和弦谱视奏10分钟'
+  },
+  3: {
+    scale: { key: 'D大调 + b小调', note: '对应D大调奏鸣曲' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '左手单独练熟：柱式和弦 + 八度跳进', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '中段跑动段落 + 踏板呼吸', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '阿尔贝蒂低音模式观察', time: '10-15分钟' }
+    ],
+    chord: '加入七和弦：Cmaj7/Dm7/Em7/Fmaj7/G7/Am7/Bm7b5；练习原位+转位',
+    accompaniment: '伴奏型⑤半分解（根+柱式）+ ⑥摇滚八度',
+    song: '《童话》副歌情绪推进',
+    rhythm: '十六分音符 Funk 节奏',
+    sight: '视奏10分钟'
+  },
+  4: {
+    scale: { key: '自由复习弱项调', note: '周日重点' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '双手慢合开始，段落衔接处', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '完整演奏 + 录音打磨', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '打磨完成', time: '10-15分钟' }
+    ],
+    chord: '挂留和弦 Csus4/Gsus4；七和弦转位连接',
+    accompaniment: '伴奏型⑦切分节奏 + 复习①~④，一首歌内切换2种型',
+    song: '《那些年》前奏间奏处理',
+    rhythm: '反拍（雷鬼/Ska）',
+    sight: '视奏10分钟'
+  },
+  5: {
+    scale: { key: 'G调、F调、D调', note: '12调移调开始' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '中速合手，逐步提速至♩=72', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '难点攻克，完整有音乐性', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '维持 + 细节打磨', time: '10-15分钟' }
+    ],
+    chord: '用 I→V→vi→IV 攻克 G/F/D 调；嘴唱级数',
+    accompaniment: '七种伴奏型混合练习',
+    song: '《演员》Bb调实战',
+    rhythm: '跟鼓机/drum track 100bpm',
+    sight: '视奏10分钟'
+  },
+  6: {
+    scale: { key: 'Bb调、A调、Eb调', note: '累计6个调' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '提速至♩=72，追求流畅', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '完整演奏录音', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '打磨完成', time: '10-15分钟' }
+    ],
+    chord: 'Bb/A/Eb调 I→V→vi→IV，三个调之间不中断切换',
+    accompaniment: '七种伴奏型 + 风格切换',
+    song: '《说好不哭》+ 自选1首',
+    rhythm: '三连音 Shuffle 感',
+    sight: '视奏10分钟'
+  },
+  7: {
+    scale: { key: 'E调、Ab调、B调', note: '累计9个调' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '提速打磨，接近♩=80', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '有音乐性的完整演奏', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '最终打磨', time: '10-15分钟' }
+    ],
+    chord: 'E/Ab/B调进行，挑战多升降号',
+    accompaniment: '全部七种 + 移调',
+    song: '《起风了》多调性切换',
+    rhythm: '节拍器只响2、4拍',
+    sight: '新歌和弦谱10分钟上手'
+  },
+  8: {
+    scale: { key: 'Db调、Gb/F#调 + 复习全部', note: '12调通关' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '接近原速80%（♩=80~90）', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '完成 ✅', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '完成 ✅', time: '10-15分钟' }
+    ],
+    chord: 'Db/Gb/F#调，12调全部通关',
+    accompaniment: '全部七种在不同调上熟练切换',
+    song: '自选3首复习 + 综合验收',
+    rhythm: '节拍器只响第1拍',
+    sight: '视奏10分钟'
+  }
+};
+
+const PIANO_PROGRESS = [
+  { id: 'blackkey', name: '黑键练习曲', weeks: 8, color: '#6bb6ff' },
+  { id: 'impromptu', name: '降A大调即兴曲', weeks: 8, color: '#ffd966' },
+  { id: 'sonata', name: '贝多芬 D大调奏鸣曲', weeks: 8, color: '#95e1b8' }
+];
+
+function getPianoState() { return loadData('zuzu_piano_state') || { week: 1, records: {} }; }
+function savePianoState(state) { saveData('zuzu_piano_state', state); }
+
+function renderPiano(el) {
+  const state = getPianoState();
+  pianoCurrentWeek = state.week || 1;
+  const plan = PIANO_PLAN[pianoCurrentWeek];
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key);
+
+  if (tasks === null) {
+    tasks = buildPianoTasks(plan, pianoCurrentWeek, today);
+    saveData(key, tasks);
+  }
+
+  const done = tasks.filter(t => t.done).length;
+  const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
+
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title">🎹 第 ${pianoCurrentWeek} 周练琴计划</div>
+      <div class="piano-week-bar" id="weekBar"></div>
+      <div class="piano-progress-card" id="pianoProgress"></div>
+      <div class="piano-block">
+        <div class="piano-block-title">🎼 古典维持（60~75分钟）</div>
+        <div class="piano-block-sub">今日调性：${plan.scale.key} — ${plan.scale.note}</div>
+        <div id="classicalList"></div>
+      </div>
+      <div class="piano-block">
+        <div class="piano-block-title">🎛️ 和弦 + 移调（60~75分钟）</div>
+        <div id="chordList"></div>
+      </div>
+      <div class="piano-block">
+        <div class="piano-block-title">🥁 伴奏 / 扒歌 / 实战 / 节奏</div>
+        <div id="otherList"></div>
+      </div>
+      <div class="white-card" style="margin-top:14px">
+        <div class="card-title">✅ 今日完成 ${done}/${tasks.length} 项 · ${pct}%</div>
+        <div id="pianoTaskList"></div>
+      </div>
+    </div>
+  `;
+
+  // 周选择按钮
+  const bar = document.getElementById('weekBar');
+  bar.innerHTML = Array.from({length:8}, (_, i) => i+1).map(w =>
+    `<button class="${w===pianoCurrentWeek?'active':''}" onclick="setPianoWeek(${w})">第${w}周</button>`
+  ).join('');
+
+  // 进度卡片
+  document.getElementById('pianoProgress').innerHTML = PIANO_PROGRESS.map(p => {
+    const pct = Math.min(100, Math.round((pianoCurrentWeek / p.weeks) * 100));
+    return `
+      <div class="piano-piece">
+        <div class="pp-name">${p.name}</div>
+        <div class="pp-status">第 ${pianoCurrentWeek}/8 周</div>
+        <div class="pp-bar"><div class="pp-fill" style="width:${pct}%;background:${p.color}"></div></div>
+      </div>`;
+  }).join('');
+
+  // 分类渲染任务
+  renderPianoTasksByCategory(tasks, key, plan);
+}
+
+function buildPianoTasks(plan, week, date) {
+  const tasks = [];
+  plan.classical.forEach(c => {
+    tasks.push({ id: 'cls_'+Date.now()+Math.random(), cat:'classical', title: c.title, desc: `${c.focus} · ${c.time}`, done: false });
+  });
+  tasks.push({ id: 'chord_'+Date.now(), cat:'chord', title: '和弦/移调训练', desc: plan.chord, done: false });
+  tasks.push({ id: 'acc_'+Date.now(), cat:'other', title: '左手伴奏型', desc: plan.accompaniment, done: false });
+  tasks.push({ id: 'song_'+Date.now(), cat:'other', title: '歌曲实战', desc: plan.song, done: false });
+  tasks.push({ id: 'rhythm_'+Date.now(), cat:'other', title: '节奏训练', desc: plan.rhythm, done: false });
+  tasks.push({ id: 'sight_'+Date.now(), cat:'other', title: '视奏训练', desc: plan.sight, done: false });
+  return tasks;
+}
+
+function renderPianoTasksByCategory(tasks, key, plan) {
+  const classicalList = document.getElementById('classicalList');
+  const chordList = document.getElementById('chordList');
+  const otherList = document.getElementById('otherList');
+  const pianoTaskList = document.getElementById('pianoTaskList');
+
+  classicalList.innerHTML = plan.classical.map(c => `
+    <div class="piano-item">
+      <input type="checkbox" onchange="togglePianoByText('${escapeHtml(c.title)}')">
+      <div class="pi-content"><div class="pi-title">${escapeHtml(c.title)}</div><div class="pi-desc">${escapeHtml(c.focus)} · ${escapeHtml(c.time)}</div></div>
+    </div>
+  `).join('');
+
+  chordList.innerHTML = `<div class="piano-item"><input type="checkbox" onchange="togglePianoByText('和弦/移调训练')"><div class="pi-content"><div class="pi-title">和弦与移调</div><div class="pi-desc">${escapeHtml(plan.chord)}</div></div></div>`;
+
+  otherList.innerHTML = [
+    { title: '左手伴奏型', desc: plan.accompaniment },
+    { title: '歌曲实战', desc: plan.song },
+    { title: '节奏训练', desc: plan.rhythm },
+    { title: '视奏训练', desc: plan.sight }
+  ].map(o => `
+    <div class="piano-item"><input type="checkbox" onchange="togglePianoByText('${escapeHtml(o.title)}')">
+      <div class="pi-content"><div class="pi-title">${escapeHtml(o.title)}</div><div class="pi-desc">${escapeHtml(o.desc)}</div></div>
+    </div>
+  `).join('');
+
+  if (!tasks.length) {
+    pianoTaskList.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:13px">✨ 暂无任务</div>`;
+    return;
+  }
+  pianoTaskList.innerHTML = tasks.map(t => `
+    <div class="piano-item ${t.done?'done':''}" data-id="${t.id}">
+      <input type="checkbox" ${t.done?'checked':''} onchange="togglePianoTask('${t.id}')">
+      <div class="pi-content"><div class="pi-title">${escapeHtml(t.title)}</div><div class="pi-desc">${escapeHtml(t.desc)}</div></div>
+      <button class="pi-del" onclick="deletePianoTask('${t.id}')">✕</button>
+    </div>
+  `).join('') + `
+    <div class="piano-add-row">
+      <input type="text" id="pianoCustomInput" placeholder="添加自定义练习..." onkeypress="if(event.key==='Enter')addPianoCustom()">
+      <button onclick="addPianoCustom()">添加</button>
+    </div>
+  `;
+}
+
+function togglePianoByText(title) {
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  const found = tasks.find(t => t.title === title);
+  if (found) {
+    found.done = !found.done;
+  } else {
+    tasks.push({ id: 'custom_'+Date.now(), cat:'custom', title, desc:'从分类区勾选', done:true });
+  }
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function togglePianoTask(id) {
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  tasks = tasks.map(t => t.id === id ? {...t, done: !t.done} : t);
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function deletePianoTask(id) {
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  tasks = tasks.filter(t => t.id !== id);
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function addPianoCustom() {
+  const input = document.getElementById('pianoCustomInput');
+  const text = input.value.trim(); if (!text) return;
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  tasks.push({ id: 'custom_'+Date.now(), cat:'custom', title: text, desc:'自定义练习', done:false });
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function setPianoWeek(w) {
+  let state = getPianoState();
+  state.week = w;
+  savePianoState(state);
+  renderPiano(document.getElementById('content'));
+}
+
+// ═══════════════════════════════════════
+//  日历
+// ═══════════════════════════════════════
+let calDate = new Date();
+let calSelectedDate = todayStr();
+
+function renderCalendar(el) {
+  const year = calDate.getFullYear();
+  const month = calDate.getMonth();
+  const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const startWeekday = firstDay.getDay();
+  const daysInMonth = lastDay.getDate();
+  const prevMonthLast = new Date(year, month, 0).getDate();
+
+  let cells = [];
+  for (let i = startWeekday - 1; i >= 0; i--) cells.push({ day: prevMonthLast - i, otherMonth: true, date: null });
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    cells.push({ day: d, otherMonth: false, date: ds });
+  }
+  const remaining = 7 - (cells.length % 7);
+  if (remaining < 7) for (let d = 1; d <= remaining; d++) cells.push({ day: d, otherMonth: true, date: null });
+
+  const today = todayStr();
+  const events = loadData('zuzu_calendar_events') || {};
+  const weekdays = ['日','一','二','三','四','五','六'];
+
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="cal-header"><button onclick="calPrevMonth()">‹</button><span class="cal-month">${year}年 ${monthNames[month]}</span><button onclick="calNextMonth()">›</button></div>
+      <div class="cal-weekdays">${weekdays.map(w => `<div>${w}</div>`).join('')}</div>
+      <div class="cal-grid">${cells.map(c => {
+        const isToday = c.date === today;
+        const isSelected = c.date === calSelectedDate;
+        const hasEvent = c.date && events[c.date] && events[c.date].length > 0;
+        const cls = ['cal-day', c.otherMonth ? 'other-month' : '', isToday ? 'today' : '', isSelected ? 'selected' : '', hasEvent ? 'has-event' : ''].filter(Boolean).join(' ');
+        return `<div class="${cls}" ${c.date ? `onclick="calSelectDate('${c.date}')"` : ''}>${c.day}</div>`;
+      }).join('')}</div>
+    </div>
+    <div class="white-card">
+      <div class="cal-events"><h4>📌 ${calSelectedDate} 的事件</h4><div id="calEventList"></div>
+        <div class="cal-event-add"><input type="text" id="calEventInput" placeholder="添加事件（如：练琴2小时）" onkeypress="if(event.key==='Enter')calAddEvent()"><button onclick="calAddEvent()">添加</button></div>
+      </div>
+    </div>`;
+  calRenderEvents(events);
+}
+function calRenderEvents(events) {
+  const list = document.getElementById('calEventList');
+  if (!list) return;
+  const evs = events[calSelectedDate] || [];
+  if (!evs.length) { list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:16px;font-size:13px">✨ 这天暂无事件</div>`; return; }
+  list.innerHTML = evs.map((e, i) => `
+    <div class="cal-event-item"><span class="ev-dot"></span><span class="ev-text">${escapeHtml(e)}</span><button class="ev-del" onclick="calDelEvent(${i})">✕</button></div>
+  `).join('');
+}
+function calSelectDate(date) { calSelectedDate = date; renderCalendar(document.getElementById('content')); }
+function calPrevMonth() { calDate.setMonth(calDate.getMonth() - 1); renderCalendar(document.getElementById('content')); }
+function calNextMonth() { calDate.setMonth(calDate.getMonth() + 1); renderCalendar(document.getElementById('content')); }
+function calAddEvent() {
+  const input = document.getElementById('calEventInput');
+  const text = input.value.trim(); if (!text) return;
+  let events = loadData('zuzu_calendar_events') || {};
+  if (!events[calSelectedDate]) events[calSelectedDate] = [];
+  events[calSelectedDate].push(text);
+  saveData('zuzu_calendar_events', events);
+  input.value = '';
+  renderCalendar(document.getElementById('content'));
+}
+function calDelEvent(idx) {
+  let events = loadData('zuzu_calendar_events') || {};
+  if (!events[calSelectedDate]) return;
+  events[calSelectedDate].splice(idx, 1);
+  if (events[calSelectedDate].length === 0) delete events[calSelectedDate];
+  saveData('zuzu_calendar_events', events);
+  renderCalendar(document.getElementById('content'));
+}
+
+// ═══════════════════════════════════════
+//  账本
+// ═══════════════════════════════════════
+function renderAccount(el) {
+  const today = todayStr();
+  const key = `zuzu_account_${today}`;
+  let entries = loadData(key) || [];
+  let income = entries.filter(e => e.type==='in').reduce((s,e) => s+e.amount, 0);
+  let expense = entries.filter(e => e.type==='out').reduce((s,e) => s+e.amount, 0);
+  let balance = income - expense;
+
+  el.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-label">收入</div><div class="stat-value" style="color:#059669">+${income}</div></div>
+      <div class="stat-card"><div class="stat-label">支出</div><div class="stat-value" style="color:#e53e3e">-${expense}</div></div>
+      <div class="stat-card"><div class="stat-label">结余</div><div class="stat-value">${balance}</div></div>
+    </div>
+    <div class="white-card">
+      <div class="card-title">💰 记一笔 · ${today}</div>
+      <div class="acct-row">
+        <select id="acctType"><option value="out">支出</option><option value="in">收入</option></select>
+        <input type="number" id="acctAmount" placeholder="金额" min="0">
+        <input type="text" id="acctNote" placeholder="备注（如：午餐）">
+        <button onclick="addAccount()">记一笔</button>
+      </div>
+      <div class="acct-list" id="acctList"></div>
+      <div class="acct-summary"><div>收入：<span>+${income}</span></div><div>支出：<span>-${expense}</span></div><div>结余：<span>${balance}</span></div></div>
+    </div>`;
+  const list = document.getElementById('acctList');
+  if (!entries.length) { list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:13px">📭 今天还没记账</div>`; return; }
+  list.innerHTML = entries.map((e, i) => `
+    <div class="acct-item"><span class="acct-type ${e.type}">${e.type==='in'?'收入':'支出'}</span><span>${escapeHtml(e.note||'无备注')}</span><span class="acct-amount ${e.type}">${e.type==='in'?'+':'-'}${e.amount}</span><button class="acct-del" onclick="delAccount(${i})">✕</button></div>
+  `).join('');
+}
+function addAccount() {
+  const type = document.getElementById('acctType').value;
+  const amount = parseFloat(document.getElementById('acctAmount').value);
+  const note = document.getElementById('acctNote').value.trim();
+  if (!amount || amount <= 0) { showModal('⚠️', '请输入金额'); return; }
+  const key = `zuzu_account_${todayStr()}`;
+  let entries = loadData(key) || [];
+  entries.push({ id: Date.now(), type, amount, note });
+  saveData(key, entries);
+  renderAccount(document.getElementById('content'));
+}
+function delAccount(i) {
+  const key = `zuzu_account_${todayStr()}`;
+  let entries = loadData(key) || [];
+  entries.splice(i, 1);
+  saveData(key, entries);
+  renderAccount(document.getElementById('content'));
+}
+
+// ═══════════════════════════════════════
+//  学生管理
+// ═══════════════════════════════════════
+const STU_COLORS = ['#5b9bd5','#ff9eb5','#95e1b8','#ffd966','#ffa94d','#c89bef','#6fc8e8','#ff8e7a'];
+let stuEditingId = null;
+let stuSelectedColor = STU_COLORS[0];
+
+function getStudents() { return loadData('zuzu_students') || []; }
+function saveStudents(list) { saveData('zuzu_students', list); }
+
+function renderStudent(el) {
+  const students = getStudents();
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title">💼 学生管理工作台</div>
+      <div class="stu-toolbar"><input type="text" class="stu-search" id="stuSearch" placeholder="🔍 搜索学生姓名..." oninput="filterStudents()"><button class="stu-add-btn" onclick="openStuModal()">➕ 添加学生</button></div>
+      <div class="stu-grid" id="stuGrid"></div>
+    </div>`;
+  renderStudentGrid(students);
+}
+function renderStudentGrid(students) {
+  const grid = document.getElementById('stuGrid');
+  if (!grid) return;
+  if (!students.length) { grid.innerHTML = `<div class="stu-empty">📭 还没有学生档案<br><span style="font-size:12px;color:var(--text-dim)">点击「添加学生」开始记录</span></div>`; return; }
+  grid.innerHTML = students.map(s => {
+    const initial = s.name ? s.name.charAt(0) : '?';
+    const records = loadData(`zuzu_stu_records_${s.id}`) || [];
+    const recHtml = records.map((r, i) => `
+      <div class="stu-record-item"><span class="rec-date">${r.date}</span><span class="rec-text">${escapeHtml(r.text)}</span><button class="rec-del" onclick="delStuRecord('${s.id}',${i})">✕</button></div>
+    `).join('');
+    return `
+      <div class="stu-card">
+        <div class="stu-card-header">
+          <div class="stu-avatar" style="background:${s.color || STU_COLORS[0]}">${escapeHtml(initial)}</div>
+          <div class="stu-info"><div class="stu-name">${escapeHtml(s.name)}</div><div class="stu-meta">${escapeHtml(s.grade||'未设置')} · ${escapeHtml(s.subject||'未设置科目')}</div>${s.note ? `<div class="stu-meta" style="margin-top:1px">📝 ${escapeHtml(s.note)}</div>` : ''}</div>
+          <div class="stu-actions"><button onclick="openStuModal('${s.id}')">✏️</button><button class="danger" onclick="delStudent('${s.id}')">🗑</button></div>
+        </div>
+        <div class="stu-records"><div class="stu-records-title">📚 学习记录 (${records.length})</div>${recHtml || '<div style="font-size:12px;color:var(--text-dim);padding:6px 0">暂无学习记录</div>'}
+          <div class="stu-record-add"><input type="text" placeholder="记录学习情况..." onclick="event.stopPropagation()"><button onclick="addStuRecordFromBtn('${s.id}')">记录</button></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+function filterStudents() {
+  const q = (document.getElementById('stuSearch')?.value || '').trim().toLowerCase();
+  let students = getStudents();
+  if (q) students = students.filter(s => s.name.toLowerCase().includes(q));
+  renderStudentGrid(students);
+}
+function openStuModal(id) {
+  stuEditingId = id || null;
+  document.getElementById('stuModalTitle').textContent = id ? '✏️ 编辑学生' : '👤 添加学生';
+  const pick = document.getElementById('stuColorPick');
+  stuSelectedColor = STU_COLORS[0];
+  if (id) {
+    const s = getStudents().find(x => x.id === id);
+    if (s) {
+      document.getElementById('stuName').value = s.name || '';
+      document.getElementById('stuGrade').value = s.grade || '';
+      document.getElementById('stuSubject').value = s.subject || '';
+      document.getElementById('stuNote').value = s.note || '';
+      stuSelectedColor = s.color || STU_COLORS[0];
+    }
+  } else {
+    document.getElementById('stuName').value = '';
+    document.getElementById('stuGrade').value = '';
+    document.getElementById('stuSubject').value = '';
+    document.getElementById('stuNote').value = '';
+  }
+  pick.innerHTML = STU_COLORS.map(c => `<button class="${c===stuSelectedColor?'selected':''}" style="background:${c}" onclick="selectStuColor('${c}')"></button>`).join('');
+  document.getElementById('stuModal').classList.add('show');
+}
+function closeStuModal() { document.getElementById('stuModal').classList.remove('show'); }
+function selectStuColor(c) { stuSelectedColor = c; document.querySelectorAll('#stuColorPick button').forEach(b => b.classList.remove('selected')); event.target.classList.add('selected'); }
+function saveStudent() {
+  const name = document.getElementById('stuName').value.trim();
+  if (!name) { showModal('⚠️', '请输入学生姓名'); return; }
+  const grade = document.getElementById('stuGrade').value.trim();
+  const subject = document.getElementById('stuSubject').value.trim();
+  const note = document.getElementById('stuNote').value.trim();
+  let students = getStudents();
+  if (stuEditingId) students = students.map(s => s.id === stuEditingId ? { ...s, name, grade, subject, note, color: stuSelectedColor } : s);
+  else students.push({ id: 'stu_' + Date.now(), name, grade, subject, note, color: stuSelectedColor });
+  saveStudents(students);
+  closeStuModal();
+  renderStudent(document.getElementById('content'));
+}
+function delStudent(id) {
+  if (!confirm('删除这个学生档案吗？学习记录也会一起删除。')) return;
+  let students = getStudents().filter(s => s.id !== id);
+  saveStudents(students);
+  localStorage.removeItem(`zuzu_stu_records_${id}`);
+  renderStudent(document.getElementById('content'));
+}
+function addStuRecord(id, inputEl) {
+  const text = inputEl.value.trim();
+  if (!text) return;
+  const key = `zuzu_stu_records_${id}`;
+  let records = loadData(key) || [];
+  records.unshift({ date: todayStr(), text });
+  saveData(key, records);
+  inputEl.value = '';
+  renderStudent(document.getElementById('content'));
+}
+function addStuRecordFromBtn(id) {
+  const cards = document.querySelectorAll('.stu-card');
+  for (const card of cards) {
+    const input = card.querySelector('.stu-record-add input');
+    if (input) { addStuRecord(id, input); break; }
+  }
+}
+function delStuRecord(stuId, idx) {
+  const key = `zuzu_stu_records_${stuId}`;
+  let records = loadData(key) || [];
+  records.splice(idx, 1);
+  saveData(key, records);
+  renderStudent(document.getElementById('content'));
+}
+
+// ═══════════════════════════════════════
+//  通用笔记
+// ═══════════════════════════════════════
+function renderNote(el, section) {
+  const key = `zuzu_note_${section.id}_${todayStr()}`;
+  const ph = `记录${section.name}...\n\n今天的内容：\n\n感想/备注：`;
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title">${section.icon} ${section.name} · ${todayStr()}</div>
+      <div class="note-editor"><textarea id="noteArea" placeholder="${ph}" oninput="saveText('${key}',this.value);updateNoteStat()">${escapeHtml(loadText(key))}</textarea></div>
+      <div style="margin-top:8px;font-size:12px;color:var(--text-dim);text-align:right" id="noteStat">${loadText(key).length} 字</div>
+    </div>`;
+}
+function updateNoteStat() { const ta = document.getElementById('noteArea'); if (ta) document.getElementById('noteStat').textContent = `${ta.value.length} 字`; }
+
+// ═══════════════════════════════════════
+//  工具
+// ═══════════════════════════════════════
+function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function showModal(title, msg) { document.getElementById('modalTitle').textContent = title; document.getElementById('modalMsg').textContent = msg; document.getElementById('modal').classList.add('show'); }
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+function exportAll() {
+  const data = {};
+  Object.keys(localStorage).filter(k => k.startsWith('zuzu_')).forEach(k => data[k] = localStorage.getItem(k));
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `zuzu工作台_${todayStr()}.json`; a.click();
+  URL.revokeObjectURL(url);
+}
+function importAll() {
+  const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
+  input.onchange = function(e) {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        const data = JSON.parse(ev.target.result);
+        Object.keys(data).forEach(k => { if (k.startsWith('zuzu_')) localStorage.setItem(k, data[k]); });
+        showModal('✅', '导入成功！'); renderNav(); renderContent();
+      } catch(err) { showModal('❌', '文件格式错误'); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// ═══════════════════════════════════════
+//  屏幕不休眠（Wake Lock API）
+// ═══════════════════════════════════════
+let wakeLock = null;
+let wakeLockOn = false;
+
+async function requestWakeLock() {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLockOn = true;
+    wakeLock.addEventListener('release', () => { wakeLockOn = false; updateWakeBtn(); });
+    updateWakeBtn();
+  } catch(err) { wakeLockOn = false; updateWakeBtn(); }
+}
+function releaseWakeLock() {
+  if (wakeLock) {
+    wakeLock.release().then(() => { wakeLock = null; wakeLockOn = false; updateWakeBtn(); }).catch(() => {});
+  } else { wakeLockOn = false; updateWakeBtn(); }
+}
+function updateWakeBtn() {
+  const btn = document.getElementById('wakeBtn');
+  if (!btn) return;
+  if (wakeLockOn) { btn.classList.add('active'); btn.textContent = '☕ 不休眠中'; }
+  else { btn.classList.remove('active'); btn.textContent = '☕ 不休眠'; }
+}
+function toggleWakeLock() { if (wakeLockOn) releaseWakeLock(); else requestWakeLock(); }
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && wakeLockOn && !wakeLock) requestWakeLock();
+});
+
+// ═══════════════════════════════════════
+//  清理旧 Service Worker（不注册新的，避免缓存问题）
+//  PWA 添加到桌面只需要 manifest.json，不需要 SW
+// ═══════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
+  }).catch(() => {});
+}
+
+// ═══════════════════════════════════════
+//  初始化
+// ═══════════════════════════════════════
+document.getElementById('headerDate').textContent = new Date().toLocaleDateString('zh-CN', {month:'short',day:'numeric',weekday:'short'});
+document.getElementById('quote').textContent = QUOTES[Math.floor(Math.random()*QUOTES.length)];
+renderNav();
+renderContent();
+</script>
+</body>
+</html>
