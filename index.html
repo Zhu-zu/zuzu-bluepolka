@@ -6,34 +6,41 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="zuzu工作台">
-<meta name="theme-color" content="#4a90d9">
-<link rel="manifest" href="manifest.json?v=5">
-<link rel="apple-touch-icon" href="icon-192.png?v=5">
-<link rel="icon" href="icon-192.png?v=5">
-<title>zuzu 工作台 · 蜡笔小新</title>
+<meta name="apple-mobile-web-app-title" content="zuzu的工作台">
+<meta name="theme-color" content="#5b9bd5">
+<link rel="manifest" href="manifest.json?v=7">
+<link rel="apple-touch-icon" href="icon-192.png?v=7">
+<link rel="icon" href="icon-192.png?v=7">
+<title>zuzu的工作台 · 蜡笔小新</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
-  --blue: #4a90d9;
-  --blue-light: #7eb5e8;
-  --blue-pale: #e3f2fd;
-  --blue-bg: #f0f8ff;
+  --blue: #5b9bd5;
+  --blue-deep: #3a7bbf;
+  --blue-light: #8ec5e8;
+  --blue-pale: #d6ebfa;
+  --blue-bg: #eef7fd;
+  --blue-soft: #f5fbff;
   --white: #ffffff;
-  --cream: #fff8e7;
-  --cream-dark: #ffe9b0;
-  --pink: #ffb3ba;
-  --green: #a8e6cf;
-  --yellow: #ffd93d;
-  --text: #2d3748;
-  --text-secondary: #4a5568;
-  --text-dim: #a0aec0;
-  --outline: #2d3748;
-  --shadow: 3px 3px 0px rgba(45,55,72,0.15);
-  --shadow-sm: 2px 2px 0px rgba(45,55,72,0.1);
-  --radius: 16px;
+  --cream: #fff9f0;
+  --cream-pink: #fff0f3;
+  --pink: #ff9eb5;
+  --pink-soft: #ffd6df;
+  --green: #95e1b8;
+  --yellow: #ffd966;
+  --yellow-deep: #f5b800;
+  --orange: #ffa94d;
+  --red: #ff6b6b;
+  --text: #2c3e50;
+  --text-secondary: #5a6c7d;
+  --text-dim: #b0c0d0;
+  --outline: #2c3e50;
+  --shadow: 3px 3px 0px rgba(44,62,80,0.18);
+  --shadow-sm: 2px 2px 0px rgba(44,62,80,0.12);
+  --shadow-lg: 4px 4px 0px rgba(44,62,80,0.2);
+  --radius: 18px;
   --radius-sm: 12px;
   --radius-lg: 24px;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -43,14 +50,20 @@ html, body { height: 100%; overflow: hidden; }
 body {
   font-family: 'Nunito', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.8) 2px, transparent 2px),
-    radial-gradient(circle at 50% 10%, rgba(255,255,255,0.7) 1.5px, transparent 1.5px),
-    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.8) 2px, transparent 2px),
-    radial-gradient(circle at 25% 60%, rgba(255,255,255,0.7) 1.5px, transparent 1.5px),
-    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.8) 2px, transparent 2px),
-    radial-gradient(circle at 40% 90%, rgba(255,255,255,0.7) 1.5px, transparent 1.5px),
-    linear-gradient(160deg, #e3f2fd 0%, #f0f8ff 50%, #fff8e7 100%);
-  background-size: 60px 60px, 80px 80px, 70px 70px, 90px 90px, 65px 65px, 75px 75px, cover;
+    /* 白色波点 */
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.9) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 50% 10%, rgba(255,255,255,0.8) 2px, transparent 2px),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.9) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 25% 60%, rgba(255,255,255,0.8) 2px, transparent 2px),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.9) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 40% 90%, rgba(255,255,255,0.8) 2px, transparent 2px),
+    radial-gradient(circle at 90% 50%, rgba(255,255,255,0.7) 1.5px, transparent 1.5px),
+    /* 小新腮红装饰 */
+    radial-gradient(circle at 95% 85%, rgba(255,200,210,0.5) 30px, transparent 30px),
+    radial-gradient(circle at 5% 5%, rgba(255,200,210,0.4) 25px, transparent 25px),
+    /* 浅蓝渐变底 */
+    linear-gradient(160deg, #d6ebfa 0%, #eef7fd 40%, #f5fbff 70%, #fff9f0 100%);
+  background-size: 60px 60px, 80px 80px, 70px 70px, 90px 90px, 65px 65px, 75px 75px, 50px 50px, 100% 100%, 100% 100%, cover;
   background-attachment: fixed;
   color: var(--text);
   display: flex;
@@ -61,83 +74,153 @@ body {
 
 /* ─── 侧边栏 ─── */
 .sidebar {
-  width: 250px; flex-shrink: 0; background: var(--white);
+  width: 255px; flex-shrink: 0;
+  background: linear-gradient(180deg, #ffffff 0%, #f5fbff 100%);
   border-right: 3px solid var(--outline);
   display: flex; flex-direction: column;
-  box-shadow: 4px 0 0 rgba(45,55,72,0.08);
+  box-shadow: 4px 0 0 rgba(91,155,213,0.12);
   z-index: 10;
-}
-
-/* 蜡笔小新头像 */
-.shinchan-header {
-  padding: 20px 16px 14px;
-  border-bottom: 3px solid var(--outline);
-  background: linear-gradient(135deg, var(--blue-pale), var(--cream));
-  text-align: center;
-}
-.shinchan-avatar {
-  width: 56px; height: 56px; margin: 0 auto 8px;
   position: relative;
 }
-.shinchan-face {
-  width: 56px; height: 56px; border-radius: 50%;
+/* 侧边栏底部小新涂鸦 */
+.sidebar::after {
+  content: ''; position: absolute; bottom: 0; right: 8px;
+  width: 40px; height: 40px; opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='22' r='14' fill='%235b9bd5'/%3E%3Crect x='12' y='6' width='16' height='8' rx='8' fill='%232c3e50'/%3E%3C/svg%3E");
+  background-size: contain; background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* ─── 蜡笔小新头像区 ─── */
+.shinchan-header {
+  padding: 22px 16px 16px;
+  border-bottom: 3px solid var(--outline);
+  background: linear-gradient(135deg, var(--blue-pale), var(--cream-pink));
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+/* 头像区背景装饰 */
+.shinchan-header::before {
+  content: ''; position: absolute; top: -10px; left: -10px;
+  width: 50px; height: 50px; border-radius: 50%;
+  background: rgba(255,217,102,0.3);
+}
+.shinchan-header::after {
+  content: ''; position: absolute; bottom: -15px; right: -10px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,158,181,0.25);
+}
+
+/* 蜡笔小新头像 — 更还原的大饼脸版 */
+.shinchan-avatar {
+  width: 72px; height: 72px; margin: 0 auto 10px;
+  position: relative; z-index: 1;
+}
+/* 大饼脸 */
+.sc-face {
+  width: 72px; height: 72px;
+  border-radius: 50%;
   background: #fde68a;
   border: 3px solid var(--outline);
   position: relative;
   box-shadow: var(--shadow-sm);
 }
-/* 眉毛 */
-.shinchan-face::before {
-  content: ''; position: absolute; top: 14px; left: 10px;
-  width: 12px; height: 3px; background: var(--outline); border-radius: 2px;
-  box-shadow: 22px 0 0 var(--outline);
+/* 腮红 */
+.sc-cheek {
+  position: absolute; top: 40px;
+  width: 12px; height: 7px; border-radius: 50%;
+  background: rgba(255,158,181,0.6);
 }
+.sc-cheek.left { left: 6px; }
+.sc-cheek.right { right: 6px; }
+/* 粗眉毛 */
+.sc-brow {
+  position: absolute; top: 12px;
+  width: 16px; height: 5px; background: var(--outline);
+  border-radius: 3px; transform: rotate(-5deg);
+}
+.sc-brow.left { left: 10px; }
+.sc-brow.right { right: 10px; transform: rotate(5deg); }
 /* 眼睛 */
-.shinchan-face::after {
-  content: ''; position: absolute; top: 20px; left: 16px;
-  width: 5px; height: 5px; background: var(--outline); border-radius: 50%;
-  box-shadow: 18px 0 0 var(--outline);
+.sc-eye {
+  position: absolute; top: 22px;
+  width: 6px; height: 6px; background: var(--outline);
+  border-radius: 50%;
+}
+.sc-eye.left { left: 18px; }
+.sc-eye.right { right: 18px; }
+/* 土豆鼻子 */
+.sc-nose {
+  position: absolute; top: 32px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 6px; background: var(--outline);
+  border-radius: 50% 50% 60% 60%;
 }
 /* 嘴巴 */
-.shinchan-mouth {
-  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
-  width: 14px; height: 6px; border: 2px solid var(--outline);
-  border-top: none; border-radius: 0 0 14px 14px; background: #ff6b6b;
+.sc-mouth {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  width: 16px; height: 7px; border: 2.5px solid var(--outline);
+  border-top: none; border-radius: 0 0 16px 16px; background: var(--red);
 }
-/* 头发 */
-.shinchan-hair {
-  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-  width: 30px; height: 12px; background: var(--outline);
-  border-radius: 15px 15px 0 0; z-index: -1;
+/* 头发 — 萝莉头 */
+.sc-hair {
+  position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+  width: 44px; height: 16px; background: var(--outline);
+  border-radius: 22px 22px 4px 4px; z-index: -1;
 }
+/* 头发两侧翘起 */
+.sc-hair::before, .sc-hair::after {
+  content: ''; position: absolute; top: 8px;
+  width: 8px; height: 10px; background: var(--outline);
+  border-radius: 50%;
+}
+.sc-hair::before { left: -5px; transform: rotate(-20deg); }
+.sc-hair::after { right: -5px; transform: rotate(20deg); }
+
 .shinchan-name {
-  font-size: 20px; font-weight: 900; color: var(--blue);
-  letter-spacing: -0.5px;
+  font-size: 21px; font-weight: 900; color: var(--blue-deep);
+  letter-spacing: -0.5px; position: relative; z-index: 1;
 }
 .shinchan-sub {
-  font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 600;
+  font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 700;
+  position: relative; z-index: 1;
 }
+/* 蜡笔小新台词气泡 */
 .shinchan-quote {
-  font-size: 10px; color: var(--blue); margin-top: 6px; font-weight: 700;
-  background: var(--cream); padding: 3px 10px; border-radius: 10px;
-  border: 1.5px solid var(--outline); display: inline-block;
+  font-size: 10px; color: var(--blue-deep); margin-top: 8px; font-weight: 800;
+  background: var(--white); padding: 4px 12px; border-radius: 12px;
+  border: 2px solid var(--outline); display: inline-block;
+  box-shadow: var(--shadow-sm);
+  position: relative; z-index: 1;
+  max-width: 180px;
+}
+.shinchan-quote::before {
+  content: ''; position: absolute; bottom: -7px; left: 20px;
+  width: 0; height: 0; border-left: 6px solid transparent;
+  border-right: 6px solid transparent; border-top: 7px solid var(--outline);
+}
+.shinchan-quote::after {
+  content: ''; position: absolute; bottom: -4px; left: 22px;
+  width: 0; height: 0; border-left: 4px solid transparent;
+  border-right: 4px solid transparent; border-top: 5px solid var(--white);
 }
 
-/* 导航 */
+/* ─── 导航 ─── */
 .nav { padding: 10px 10px; flex: 1; overflow-y: auto; }
 .nav-item {
   display: flex; align-items: center; gap: 10px;
   padding: 11px 12px; border-radius: var(--radius-sm);
   margin-bottom: 6px; cursor: pointer; font-size: 14px;
-  font-weight: 700; color: var(--text-secondary);
-  border: 2px solid transparent;
+  font-weight: 800; color: var(--text-secondary);
+  border: 2.5px solid transparent;
   transition: all .12s;
   position: relative;
+  background: transparent;
 }
 .nav-item:hover { background: var(--blue-pale); border-color: var(--blue-light); }
 .nav-item.active {
   background: var(--blue); color: var(--white);
-  border: 2px solid var(--outline);
+  border: 2.5px solid var(--outline);
   box-shadow: var(--shadow-sm);
 }
 .nav-item .drag-handle {
@@ -149,9 +232,9 @@ body {
 .nav-item .nav-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nav-item .nav-delete {
   background: var(--white); border: 1.5px solid var(--outline);
-  color: #e53e3e; font-size: 12px; cursor: pointer;
+  color: #e53e3e; font-size: 11px; cursor: pointer;
   padding: 1px 5px; border-radius: 6px; flex-shrink: 0;
-  opacity: 0.5; transition: opacity .15s; line-height: 1.2;
+  opacity: 0.45; transition: opacity .15s; line-height: 1.2; font-weight: 800;
 }
 .nav-item .nav-delete:hover { opacity: 1; background: #fee2e2; }
 .nav-item.dragging { opacity: 0.4; border-style: dashed; }
@@ -160,11 +243,11 @@ body {
 /* 添加板块 */
 .nav-add {
   margin: 6px 4px; padding: 10px; border-radius: var(--radius-sm);
-  border: 2px dashed var(--blue-light); background: var(--blue-bg);
-  cursor: pointer; font-size: 13px; font-weight: 700;
-  color: var(--blue); text-align: center; transition: all .12s;
+  border: 2.5px dashed var(--blue-light); background: var(--blue-bg);
+  cursor: pointer; font-size: 13px; font-weight: 800;
+  color: var(--blue-deep); text-align: center; transition: all .12s;
 }
-.nav-add:hover { background: var(--blue-pale); border-color: var(--blue); }
+.nav-add:hover { background: var(--blue-pale); border-color: var(--blue); border-style: solid; }
 
 /* 侧边栏底部 */
 .sidebar-footer {
@@ -173,28 +256,36 @@ body {
 }
 .sidebar-footer button {
   flex: 1; background: var(--white); border: 2px solid var(--outline);
-  border-radius: 10px; padding: 6px 8px; font-size: 11px; font-weight: 700;
+  border-radius: 10px; padding: 6px 8px; font-size: 11px; font-weight: 800;
   color: var(--text); cursor: pointer; font-family: inherit;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm); transition: all .1s;
 }
-.sidebar-footer button:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 rgba(45,55,72,0.1); }
+.sidebar-footer button:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 rgba(44,62,80,0.1); }
 .sidebar-footer button.active { background: var(--blue); color: var(--white); }
 .sidebar-footer .wake-toggle.active { background: var(--yellow); color: var(--outline); }
 
 /* ─── 主内容区 ─── */
-.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; position: relative; }
+/* 主内容区右上角小新装饰 */
+.main::before {
+  content: ''; position: absolute; top: 10px; right: 20px;
+  width: 60px; height: 60px; opacity: 0.04; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='32' r='20' fill='%235b9bd5'/%3E%3Crect x='18' y='6' width='24' height='12' rx='6' fill='%232c3e50'/%3E%3C/svg%3E");
+  background-size: contain; background-repeat: no-repeat;
+  pointer-events: none;
+}
 .main-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 24px; flex-shrink: 0;
+  padding: 18px 24px; flex-shrink: 0; position: relative; z-index: 1;
 }
 .main-header .page-title { font-size: 24px; font-weight: 900; color: var(--text); }
-.main-header .page-sub { font-size: 13px; color: var(--text-secondary); margin-top: 2px; font-weight: 600; }
+.main-header .page-sub { font-size: 13px; color: var(--text-secondary); margin-top: 2px; font-weight: 700; }
 .main-header .date-pill {
-  background: var(--white); border: 2px solid var(--outline);
+  background: var(--white); border: 2.5px solid var(--outline);
   padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 800;
-  color: var(--blue); box-shadow: var(--shadow-sm);
+  color: var(--blue-deep); box-shadow: var(--shadow-sm);
 }
-.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 24px 24px; }
+.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 24px 24px; position: relative; z-index: 1; }
 
 /* ─── 统计卡片 ─── */
 .stats-row { display: flex; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
@@ -202,9 +293,11 @@ body {
   background: var(--white); border: 2.5px solid var(--outline);
   border-radius: var(--radius); padding: 16px 20px;
   box-shadow: var(--shadow); flex: 1; min-width: 120px;
+  transition: transform .1s;
 }
+.stat-card:active { transform: translate(1px,1px); }
 .stat-card .stat-label { font-size: 11px; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; }
-.stat-card .stat-value { font-size: 28px; font-weight: 900; color: var(--blue); margin-top: 2px; }
+.stat-card .stat-value { font-size: 28px; font-weight: 900; color: var(--blue-deep); margin-top: 2px; }
 .stat-card .stat-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
 .progress-ring-card { flex: 0 0 120px; display: flex; align-items: center; justify-content: center; }
 .progress-ring { width: 100px; height: 100px; transform: rotate(-90deg); }
@@ -216,6 +309,7 @@ body {
   background: var(--white); border: 2.5px solid var(--outline);
   border-radius: var(--radius); padding: 20px;
   box-shadow: var(--shadow); margin-bottom: 16px;
+  position: relative;
 }
 .white-card .card-title {
   font-size: 16px; font-weight: 900; color: var(--text);
@@ -227,16 +321,16 @@ body {
 .add-row input {
   flex: 1; background: var(--blue-bg); border: 2px solid var(--outline);
   border-radius: var(--radius-sm); padding: 11px 14px; font-size: 14px;
-  color: var(--text); font-family: inherit; font-weight: 600;
+  color: var(--text); font-family: inherit; font-weight: 700;
   user-select: text; -webkit-user-select: text;
 }
-.add-row input:focus { outline: none; background: var(--white); }
+.add-row input:focus { outline: none; background: var(--white); border-color: var(--blue); }
 .add-row input::placeholder { color: var(--text-dim); }
 .add-row button {
   background: var(--blue); color: var(--white); border: 2px solid var(--outline);
   border-radius: var(--radius-sm); padding: 11px 20px;
   font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm); transition: all .1s;
 }
 .add-row button:active { transform: translate(2px,2px); box-shadow: none; }
 
@@ -250,9 +344,9 @@ body {
   user-select: none;
 }
 .task-item:hover { background: var(--blue-pale); }
-.task-item.done { background: #f1f5f9; opacity: 0.6; }
+.task-item.done { background: #f0f4f8; opacity: 0.6; }
 .task-item.dragging { opacity: 0.4; border-style: dashed; }
-.task-item.drag-over { border-color: var(--blue); background: #d6eaff; }
+.task-item.drag-over { border-color: var(--blue); background: #cce4f7; }
 .task-item .drag-handle { cursor: grab; color: var(--text-dim); font-size: 16px; flex-shrink: 0; }
 .task-item .drag-handle:active { cursor: grabbing; }
 .task-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--blue); cursor: pointer; flex-shrink: 0; }
@@ -260,7 +354,7 @@ body {
 .task-item.done .task-label { text-decoration: line-through; color: var(--text-dim); }
 .task-item .task-tag {
   font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 10px;
-  background: var(--cream-dark); color: #92400e; border: 1.5px solid var(--outline);
+  background: var(--yellow); color: #92400e; border: 1.5px solid var(--outline);
   pointer-events: none;
 }
 .task-item .task-delete {
@@ -278,7 +372,7 @@ body {
   resize: vertical; font-family: inherit; font-weight: 600;
   user-select: text; -webkit-user-select: text;
 }
-.note-editor textarea:focus { outline: none; background: var(--white); }
+.note-editor textarea:focus { outline: none; background: var(--white); border-color: var(--blue); }
 .note-editor textarea::placeholder { color: var(--text-dim); }
 
 /* ─── 账本 ─── */
@@ -286,7 +380,7 @@ body {
 .acct-row select, .acct-row input {
   background: var(--blue-bg); border: 2px solid var(--outline);
   border-radius: var(--radius-sm); padding: 9px 12px; font-size: 13px;
-  color: var(--text); font-family: inherit; font-weight: 600;
+  color: var(--text); font-family: inherit; font-weight: 700;
 }
 .acct-row select { flex: 0 0 80px; }
 .acct-row input[type="number"] { flex: 0 0 100px; }
@@ -308,7 +402,7 @@ body {
   border: 1.5px solid var(--outline);
 }
 .acct-item .acct-type.in { background: var(--green); }
-.acct-item .acct-type.out { background: var(--pink); }
+.acct-item .acct-type.out { background: var(--pink-soft); }
 .acct-item .acct-amount { font-weight: 900; margin-left: auto; }
 .acct-item .acct-amount.in { color: #059669; }
 .acct-item .acct-amount.out { color: #e53e3e; }
@@ -319,88 +413,16 @@ body {
   background: var(--cream); border: 2px solid var(--outline);
   border-radius: var(--radius-sm); font-weight: 800; font-size: 14px;
 }
-.acct-summary span { color: var(--blue); }
-
-/* ─── 选题灵感 ─── */
-.insp-row { display: flex; gap: 14px; margin-bottom: 16px; }
-.insp-card {
-  flex: 1; padding: 20px; border-radius: var(--radius);
-  text-align: center; text-decoration: none; color: #fff;
-  border: 2.5px solid var(--outline); box-shadow: var(--shadow-sm);
-  transition: transform .12s;
-}
-.insp-card:active { transform: translate(2px,2px); box-shadow: none; }
-.insp-card .insp-icon { font-size: 32px; }
-.insp-card .insp-name { font-size: 15px; font-weight: 900; margin-top: 4px; }
-.insp-douyin { background: linear-gradient(135deg, #1a1a2e, #2d2d44); }
-.insp-xhs { background: linear-gradient(135deg, #ff2442, #ff6080); }
-
-/* ─── 周复盘 ─── */
-.week-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.week-card { background: var(--blue-bg); border: 2px solid var(--outline); border-radius: var(--radius-sm); padding: 14px; }
-.week-card h4 { font-size: 14px; font-weight: 900; color: var(--blue); margin-bottom: 8px; }
-.week-card textarea {
-  width: 100%; min-height: 110px; background: transparent; border: none;
-  color: var(--text); font-size: 14px; line-height: 1.7; resize: none;
-  font-family: inherit; font-weight: 600;
-}
-.week-card textarea:focus { outline: none; }
-.week-card textarea::placeholder { color: var(--text-dim); }
-.week-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-.week-nav button {
-  background: var(--white); border: 2px solid var(--outline);
-  border-radius: 10px; padding: 6px 14px; font-family: inherit;
-  font-weight: 800; color: var(--blue); cursor: pointer; box-shadow: var(--shadow-sm);
-}
-.week-nav button:active { transform: translate(1px,1px); box-shadow: none; }
-.week-nav .week-label { font-size: 16px; font-weight: 900; color: var(--blue); }
-
-/* ─── 模态框 ─── */
-.modal-overlay {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(45,55,72,0.4); display: none;
-  align-items: center; justify-content: center; z-index: 1000;
-}
-.modal-overlay.show { display: flex; }
-.modal {
-  background: var(--white); border: 3px solid var(--outline);
-  border-radius: var(--radius); padding: 24px; max-width: 380px; width: 90%;
-  box-shadow: var(--shadow);
-}
-.modal h3 { color: var(--blue); margin-bottom: 14px; font-size: 18px; font-weight: 900; }
-.modal input, .modal select {
-  width: 100%; background: var(--blue-bg); border: 2px solid var(--outline);
-  border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px;
-  color: var(--text); font-family: inherit; font-weight: 600; margin-bottom: 10px;
-}
-.modal input:focus, .modal select:focus { outline: none; background: var(--white); }
-.modal .emoji-grid {
-  display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-bottom: 14px;
-}
-.modal .emoji-grid button {
-  font-size: 20px; background: var(--blue-bg); border: 2px solid transparent;
-  border-radius: 8px; padding: 6px; cursor: pointer; font-family: inherit;
-}
-.modal .emoji-grid button:hover { background: var(--blue-pale); }
-.modal .emoji-grid button.selected { border-color: var(--blue); background: var(--blue-pale); }
-.modal .modal-btns { display: flex; gap: 10px; }
-.modal .modal-btns button {
-  flex: 1; border: 2px solid var(--outline); border-radius: var(--radius-sm);
-  padding: 10px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
-  box-shadow: var(--shadow-sm);
-}
-.modal .btn-confirm { background: var(--blue); color: var(--white); }
-.modal .btn-cancel { background: var(--white); color: var(--text); }
-.modal .modal-btns button:active { transform: translate(2px,2px); box-shadow: none; }
+.acct-summary span { color: var(--blue-deep); }
 
 /* ─── 日历 ─── */
 .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.cal-header .cal-month { font-size: 18px; font-weight: 900; color: var(--blue); }
+.cal-header .cal-month { font-size: 18px; font-weight: 900; color: var(--blue-deep); }
 .cal-header button {
   background: var(--white); border: 2px solid var(--outline);
-  border-radius: 10px; padding: 5px 12px; font-family: inherit;
-  font-weight: 800; color: var(--blue); cursor: pointer; box-shadow: var(--shadow-sm);
-  font-size: 14px;
+  border-radius: 10px; padding: 5px 14px; font-family: inherit;
+  font-weight: 800; color: var(--blue-deep); cursor: pointer; box-shadow: var(--shadow-sm);
+  font-size: 16px;
 }
 .cal-header button:active { transform: translate(1px,1px); box-shadow: none; }
 .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
@@ -417,10 +439,11 @@ body {
 .cal-day.today { background: var(--blue); color: var(--white); border: 2px solid var(--outline); box-shadow: var(--shadow-sm); }
 .cal-day.has-event::after {
   content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
-  width: 5px; height: 5px; border-radius: 50%; background: #e53e3e;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--red);
 }
 .cal-day.today.has-event::after { background: var(--yellow); }
-.cal-day.selected { border-color: var(--blue); border-width: 2.5px; }
+.cal-day.selected { border-color: var(--blue); border-width: 2.5px; background: var(--blue-pale); }
+.cal-day.today.selected { background: var(--blue); color: var(--white); }
 .cal-events { margin-top: 16px; }
 .cal-events h4 { font-size: 14px; font-weight: 900; color: var(--text); margin-bottom: 10px; }
 .cal-event-item {
@@ -446,6 +469,123 @@ body {
 }
 .cal-event-add button:active { transform: translate(2px,2px); box-shadow: none; }
 
+/* ─── 模态框 ─── */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,62,80,0.45); display: none;
+  align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--white); border: 3px solid var(--outline);
+  border-radius: var(--radius); padding: 24px; max-width: 380px; width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+.modal h3 { color: var(--blue-deep); margin-bottom: 14px; font-size: 18px; font-weight: 900; }
+.modal input, .modal select {
+  width: 100%; background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px;
+  color: var(--text); font-family: inherit; font-weight: 600; margin-bottom: 10px;
+}
+.modal input:focus, .modal select:focus { outline: none; background: var(--white); }
+.modal .emoji-grid {
+  display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-bottom: 14px;
+}
+.modal .emoji-grid button {
+  font-size: 20px; background: var(--blue-bg); border: 2px solid transparent;
+  border-radius: 8px; padding: 6px; cursor: pointer; font-family: inherit;
+}
+.modal .emoji-grid button:hover { background: var(--blue-pale); }
+.modal .emoji-grid button.selected { border-color: var(--blue); background: var(--blue-pale); }
+.modal .modal-btns { display: flex; gap: 10px; }
+.modal .modal-btns button {
+  flex: 1; border: 2px solid var(--outline); border-radius: var(--radius-sm);
+  padding: 10px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
+  box-shadow: var(--shadow-sm);
+}
+.modal .btn-confirm { background: var(--blue); color: var(--white); }
+.modal .btn-cancel { background: var(--white); color: var(--text); }
+.modal .modal-btns button:active { transform: translate(2px,2px); box-shadow: none; }
+
+/* ─── 学生管理 ─── */
+.stu-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.stu-search {
+  flex: 1; min-width: 140px; background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px;
+  color: var(--text); font-family: inherit; font-weight: 600;
+}
+.stu-search:focus { outline: none; background: var(--white); border-color: var(--blue); }
+.stu-add-btn {
+  background: var(--blue); color: var(--white); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 10px 18px; font-size: 14px;
+  font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+.stu-add-btn:active { transform: translate(2px,2px); box-shadow: none; }
+
+.stu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.stu-card {
+  background: var(--white); border: 2.5px solid var(--outline);
+  border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow);
+  transition: transform .1s; position: relative;
+}
+.stu-card:active { transform: translate(1px,1px); }
+.stu-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.stu-avatar {
+  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+  border: 2.5px solid var(--outline); display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 900; color: var(--white);
+}
+.stu-info { flex: 1; min-width: 0; }
+.stu-name { font-size: 16px; font-weight: 900; color: var(--text); }
+.stu-meta { font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 600; }
+.stu-actions { display: flex; gap: 6px; }
+.stu-actions button {
+  background: var(--blue-bg); border: 1.5px solid var(--outline);
+  border-radius: 8px; padding: 4px 8px; font-size: 11px; font-weight: 800;
+  cursor: pointer; font-family: inherit; color: var(--text);
+}
+.stu-actions button:hover { background: var(--blue-pale); }
+.stu-actions button.danger:hover { background: #fee2e2; color: #e53e3e; }
+
+.stu-records { margin-top: 10px; border-top: 2px dashed var(--blue-pale); padding-top: 10px; }
+.stu-records-title { font-size: 11px; font-weight: 800; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; }
+.stu-record-item {
+  background: var(--blue-bg); border: 1.5px solid var(--outline);
+  border-radius: 8px; padding: 8px 10px; margin-bottom: 4px; font-size: 12px; font-weight: 600;
+  display: flex; align-items: flex-start; gap: 6px;
+}
+.stu-record-item .rec-date { color: var(--blue-deep); font-weight: 800; font-size: 10px; flex-shrink: 0; min-width: 72px; }
+.stu-record-item .rec-text { flex: 1; color: var(--text); }
+.stu-record-item .rec-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 13px; flex-shrink: 0; }
+.stu-record-item .rec-del:hover { color: #e53e3e; }
+.stu-record-add { display: flex; gap: 6px; margin-top: 6px; }
+.stu-record-add input {
+  flex: 1; background: var(--blue-soft); border: 1.5px solid var(--outline);
+  border-radius: 8px; padding: 7px 10px; font-size: 12px; color: var(--text);
+  font-family: inherit; font-weight: 600;
+}
+.stu-record-add input:focus { outline: none; background: var(--white); }
+.stu-record-add button {
+  background: var(--blue); color: var(--white); border: 1.5px solid var(--outline);
+  border-radius: 8px; padding: 7px 10px; font-size: 11px; font-weight: 800;
+  cursor: pointer; font-family: inherit; white-space: nowrap;
+}
+.stu-record-add button:active { transform: translate(1px,1px); }
+.stu-empty { text-align: center; color: var(--text-dim); padding: 40px 20px; font-size: 14px; font-weight: 700; }
+
+/* 学生编辑模态框 */
+.stu-modal-fields { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.stu-modal-fields .field-row { display: flex; gap: 10px; }
+.stu-modal-fields .field-row > * { flex: 1; }
+.stu-modal-fields label { font-size: 11px; font-weight: 800; color: var(--text-secondary); margin-bottom: 3px; display: block; }
+.stu-color-pick { display: flex; gap: 6px; flex-wrap: wrap; }
+.stu-color-pick button {
+  width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--outline);
+  cursor: pointer; padding: 0;
+}
+.stu-color-pick button.selected { box-shadow: 0 0 0 3px var(--blue); }
+
 /* ─── 滚动条 ─── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -454,15 +594,23 @@ body {
 /* ─── 响应式（侧边栏始终在左侧） ─── */
 @media (max-width: 900px) {
   .sidebar { width: 200px; }
-  .shinchan-header { padding: 14px 10px 10px; }
-  .shinchan-avatar { width: 44px; height: 44px; }
-  .shinchan-face { width: 44px; height: 44px; }
-  .shinchan-face::before { top: 11px; left: 8px; width: 10px; box-shadow: 17px 0 0 var(--outline); }
-  .shinchan-face::after { top: 16px; left: 13px; width: 4px; height: 4px; box-shadow: 14px 0 0 var(--outline); }
-  .shinchan-mouth { bottom: 10px; width: 12px; }
-  .shinchan-hair { width: 24px; }
-  .shinchan-name { font-size: 17px; }
-  .shinchan-quote { font-size: 9px; }
+  .shinchan-header { padding: 16px 10px 12px; }
+  .shinchan-avatar { width: 56px; height: 56px; }
+  .sc-face { width: 56px; height: 56px; }
+  .sc-brow { width: 12px; height: 4px; top: 10px; }
+  .sc-brow.left { left: 8px; }
+  .sc-brow.right { right: 8px; }
+  .sc-eye { width: 5px; height: 5px; top: 18px; }
+  .sc-eye.left { left: 14px; }
+  .sc-eye.right { right: 14px; }
+  .sc-nose { top: 26px; width: 8px; height: 5px; }
+  .sc-mouth { bottom: 10px; width: 13px; height: 6px; }
+  .sc-cheek { top: 32px; width: 10px; height: 6px; }
+  .sc-cheek.left { left: 4px; }
+  .sc-cheek.right { right: 4px; }
+  .sc-hair { width: 36px; height: 14px; top: -6px; }
+  .shinchan-name { font-size: 18px; }
+  .shinchan-quote { font-size: 9px; max-width: 150px; }
   .nav-item { padding: 9px 10px; font-size: 13px; gap: 7px; }
   .nav-item .nav-icon { font-size: 16px; width: 18px; }
   .nav-item .nav-name { font-size: 13px; }
@@ -474,8 +622,6 @@ body {
   .content { padding: 0 14px 20px; }
   .stats-row { flex-direction: column; }
   .progress-ring-card { flex: 0 0 auto; }
-  .week-grid { grid-template-columns: 1fr; }
-  .insp-row { flex-direction: column; }
 }
 </style>
 </head>
@@ -485,12 +631,19 @@ body {
 <div class="sidebar">
   <div class="shinchan-header">
     <div class="shinchan-avatar">
-      <div class="shinchan-face">
-        <div class="shinchan-hair"></div>
-        <div class="shinchan-mouth"></div>
+      <div class="sc-face">
+        <div class="sc-hair"></div>
+        <div class="sc-brow left"></div>
+        <div class="sc-brow right"></div>
+        <div class="sc-eye left"></div>
+        <div class="sc-eye right"></div>
+        <div class="sc-nose"></div>
+        <div class="sc-cheek left"></div>
+        <div class="sc-cheek right"></div>
+        <div class="sc-mouth"></div>
       </div>
     </div>
-    <div class="shinchan-name">zuzu</div>
+    <div class="shinchan-name">zuzu的工作台</div>
     <div class="shinchan-sub">个人工作台</div>
     <div class="shinchan-quote" id="quote">动感超人！</div>
   </div>
@@ -539,6 +692,41 @@ body {
   </div>
 </div>
 
+<!-- 学生编辑模态框 -->
+<div class="modal-overlay" id="stuModal">
+  <div class="modal" style="max-width:420px">
+    <h3 id="stuModalTitle">👤 添加学生</h3>
+    <div class="stu-modal-fields">
+      <div>
+        <label>学生姓名</label>
+        <input type="text" id="stuName" placeholder="如：张小明" maxlength="10">
+      </div>
+      <div class="field-row">
+        <div>
+          <label>年级/班级</label>
+          <input type="text" id="stuGrade" placeholder="如：六年级" maxlength="12">
+        </div>
+        <div>
+          <label>科目</label>
+          <input type="text" id="stuSubject" placeholder="如：钢琴" maxlength="10">
+        </div>
+      </div>
+      <div>
+        <label>头像颜色</label>
+        <div class="stu-color-pick" id="stuColorPick"></div>
+      </div>
+      <div>
+        <label>备注</label>
+        <input type="text" id="stuNote" placeholder="如：每周二、四上课" maxlength="30">
+      </div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeStuModal()">取消</button>
+      <button class="btn-confirm" onclick="saveStudent()">保存</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ═══════════════════════════════════════
 //  默认板块
@@ -549,14 +737,14 @@ const DEFAULT_SECTIONS = [
   { id: "diet",     name: "饮食",     icon: "🍱", sub: "记录三餐饮食", type: "note" },
   { id: "piano",    name: "练琴",     icon: "🎹", sub: "练琴记录", type: "note" },
   { id: "account",  name: "账本",     icon: "💰", sub: "记账本", type: "account" },
-  { id: "work",     name: "工作",     icon: "💼", sub: "工作记录", type: "note" },
+  { id: "work",     name: "工作",     icon: "💼", sub: "学生管理工作台", type: "student" },
   { id: "life",     name: "生活",     icon: "🌿", sub: "生活点滴", type: "note" },
   { id: "exercise", name: "运动",     icon: "🏃", sub: "运动打卡", type: "note" },
   { id: "memo",     name: "备忘录",   icon: "📌", sub: "别忘了这些事", type: "note" },
 ];
 
 const EMOJI_CHOICES = ['📋','💡','💼','🌿','📚','📖','✨','🏃','📝','🌈','📅','🎹','💰','🍱','📌','🎨','🎵','✈️','🎮','🏠','❤️','⭐','🔥','🍀','🎯','📱','💻','🛒','☕','🌸','🐶','🐱'];
-const QUOTES = ['动感超人！','我要吃小熊饼干！','大姐姐你好漂亮！','今天也要加油！','不肥不行啊！','懒懒散散才是人生！'];
+const QUOTES = ['动感超人！','我要吃小熊饼干！','大姐姐你好漂亮！','今天也要加油！','不肥不行啊！','懒懒散散才是人生！','小白！过来！','哈哈哈～'];
 let selectedEmoji = '📌';
 let currentSection = "plan";
 
@@ -579,26 +767,6 @@ function getSections() {
   return s;
 }
 function saveSections(s) { saveData('zuzu_sections', s); }
-
-// 周编号
-function getWeekId(date) {
-  const d = new Date(date); d.setHours(0,0,0,0);
-  const day = d.getDay(); const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  const monday = new Date(d.setDate(diff));
-  const year = monday.getFullYear(); const jan1 = new Date(year, 0, 1);
-  const firstMonday = new Date(jan1); firstMonday.setDate(jan1.getDate() - (jan1.getDay() || 7) + 1);
-  const weekNum = Math.floor((monday - firstMonday) / 604800000) + 1;
-  return `${year}-W${String(weekNum).padStart(2,'0')}`;
-}
-function getCurrentWeekId() { return getWeekId(new Date()); }
-function getWeekRange(weekId) {
-  const [year, w] = weekId.split('-W'); const jan1 = new Date(parseInt(year), 0, 1);
-  const firstMonday = new Date(jan1); firstMonday.setDate(jan1.getDate() - (jan1.getDay() || 7) + 1);
-  const monday = new Date(firstMonday); monday.setDate(firstMonday.getDate() + (parseInt(w) - 1) * 7);
-  const sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
-  const fmt = d => `${d.getMonth()+1}月${d.getDate()}日`;
-  return `${fmt(monday)} ~ ${fmt(sunday)}`;
-}
 
 // ═══════════════════════════════════════
 //  侧边栏渲染
@@ -623,9 +791,6 @@ function switchSection(id) { currentSection = id; renderNav(); renderContent(); 
 // 板块拖拽
 let navDragId = null;
 function navDragStart(e) {
-  if (e.target.classList.contains('nav-delete') || e.target.classList.contains('drag-handle')) {
-    // 允许从手柄或整行拖
-  }
   navDragId = e.target.dataset.id || e.target.closest('.nav-item').dataset.id;
   const item = e.target.closest('.nav-item');
   if (item) item.classList.add('dragging');
@@ -709,6 +874,7 @@ function renderContent() {
     case 'plan': renderPlan(content); break;
     case 'calendar': renderCalendar(content); break;
     case 'account': renderAccount(content); break;
+    case 'student': renderStudent(content); break;
     default: renderNote(content, s); break;
   }
 }
@@ -744,7 +910,7 @@ function renderPlan(el) {
       </div>
       <div class="stat-card">
         <div class="stat-label">已完成</div>
-        <div class="stat-value" style="color:#f59e0b">${done}</div>
+        <div class="stat-value" style="color:#f5b800">${done}</div>
         <div class="stat-sub">任务数</div>
       </div>
       <div class="stat-card progress-ring-card">
@@ -843,22 +1009,18 @@ function renderCalendar(el) {
 
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
-  const startWeekday = firstDay.getDay(); // 0=周日
+  const startWeekday = firstDay.getDay();
   const daysInMonth = lastDay.getDate();
   const prevMonthLast = new Date(year, month, 0).getDate();
 
-  // 生成日历格子
   let cells = [];
-  // 上月尾巴
   for (let i = startWeekday - 1; i >= 0; i--) {
     cells.push({ day: prevMonthLast - i, otherMonth: true, date: null });
   }
-  // 本月
   for (let d = 1; d <= daysInMonth; d++) {
     const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     cells.push({ day: d, otherMonth: false, date: ds });
   }
-  // 下月开头补满
   const remaining = 7 - (cells.length % 7);
   if (remaining < 7) {
     for (let d = 1; d <= remaining; d++) {
@@ -927,21 +1089,9 @@ function calRenderEvents(events) {
   `).join('');
 }
 
-function calSelectDate(date) {
-  calSelectedDate = date;
-  renderCalendar(document.getElementById('content'));
-}
-
-function calPrevMonth() {
-  calDate.setMonth(calDate.getMonth() - 1);
-  renderCalendar(document.getElementById('content'));
-}
-
-function calNextMonth() {
-  calDate.setMonth(calDate.getMonth() + 1);
-  renderCalendar(document.getElementById('content'));
-}
-
+function calSelectDate(date) { calSelectedDate = date; renderCalendar(document.getElementById('content')); }
+function calPrevMonth() { calDate.setMonth(calDate.getMonth() - 1); renderCalendar(document.getElementById('content')); }
+function calNextMonth() { calDate.setMonth(calDate.getMonth() + 1); renderCalendar(document.getElementById('content')); }
 function calAddEvent() {
   const input = document.getElementById('calEventInput');
   const text = input.value.trim();
@@ -953,7 +1103,6 @@ function calAddEvent() {
   input.value = '';
   renderCalendar(document.getElementById('content'));
 }
-
 function calDelEvent(idx) {
   let events = loadData('zuzu_calendar_events') || {};
   if (!events[calSelectedDate]) return;
@@ -961,6 +1110,175 @@ function calDelEvent(idx) {
   if (events[calSelectedDate].length === 0) delete events[calSelectedDate];
   saveData('zuzu_calendar_events', events);
   renderCalendar(document.getElementById('content'));
+}
+
+// ═══════════════════════════════════════
+//  学生管理
+// ═══════════════════════════════════════
+const STU_COLORS = ['#5b9bd5','#ff9eb5','#95e1b8','#ffd966','#ffa94d','#c89bef','#6fc8e8','#ff8e7a'];
+let stuEditingId = null;
+let stuSelectedColor = STU_COLORS[0];
+
+function getStudents() { return loadData('zuzu_students') || []; }
+function saveStudents(list) { saveData('zuzu_students', list); }
+
+function renderStudent(el) {
+  const students = getStudents();
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title">💼 学生管理工作台</div>
+      <div class="stu-toolbar">
+        <input type="text" class="stu-search" id="stuSearch" placeholder="🔍 搜索学生姓名..." oninput="filterStudents()">
+        <button class="stu-add-btn" onclick="openStuModal()">➕ 添加学生</button>
+      </div>
+      <div class="stu-grid" id="stuGrid"></div>
+    </div>
+  `;
+  renderStudentGrid(students);
+}
+
+function renderStudentGrid(students) {
+  const grid = document.getElementById('stuGrid');
+  if (!grid) return;
+  if (!students.length) {
+    grid.innerHTML = `<div class="stu-empty">📭 还没有学生档案<br><span style="font-size:12px;color:var(--text-dim)">点击「添加学生」开始记录</span></div>`;
+    return;
+  }
+  grid.innerHTML = students.map(s => {
+    const initial = s.name ? s.name.charAt(0) : '?';
+    const records = loadData(`zuzu_stu_records_${s.id}`) || [];
+    const recHtml = records.map((r, i) => `
+      <div class="stu-record-item">
+        <span class="rec-date">${r.date}</span>
+        <span class="rec-text">${escapeHtml(r.text)}</span>
+        <button class="rec-del" onclick="delStuRecord('${s.id}',${i})">✕</button>
+      </div>
+    `).join('');
+    return `
+      <div class="stu-card">
+        <div class="stu-card-header">
+          <div class="stu-avatar" style="background:${s.color || STU_COLORS[0]}">${escapeHtml(initial)}</div>
+          <div class="stu-info">
+            <div class="stu-name">${escapeHtml(s.name)}</div>
+            <div class="stu-meta">${escapeHtml(s.grade||'未设置')} · ${escapeHtml(s.subject||'未设置科目')}</div>
+            ${s.note ? `<div class="stu-meta" style="margin-top:1px">📝 ${escapeHtml(s.note)}</div>` : ''}
+          </div>
+          <div class="stu-actions">
+            <button onclick="openStuModal('${s.id}')">✏️</button>
+            <button class="danger" onclick="delStudent('${s.id}')">🗑</button>
+          </div>
+        </div>
+        <div class="stu-records">
+          <div class="stu-records-title">📚 学习记录 (${records.length})</div>
+          ${recHtml || '<div style="font-size:12px;color:var(--text-dim);padding:6px 0">暂无学习记录</div>'}
+          <div class="stu-record-add">
+            <input type="text" placeholder="记录学习情况..." onkeypress="if(event.key==='Enter')addStuRecord('${s.id}',this)"
+              onclick="event.stopPropagation()">
+            <button onclick="addStuRecordFromBtn('${s.id}')">记录</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterStudents() {
+  const q = (document.getElementById('stuSearch')?.value || '').trim().toLowerCase();
+  let students = getStudents();
+  if (q) students = students.filter(s => s.name.toLowerCase().includes(q));
+  renderStudentGrid(students);
+}
+
+function openStuModal(id) {
+  stuEditingId = id || null;
+  document.getElementById('stuModalTitle').textContent = id ? '✏️ 编辑学生' : '👤 添加学生';
+  // 渲染颜色选择器
+  const pick = document.getElementById('stuColorPick');
+  pick.innerHTML = STU_COLORS.map(c =>
+    `<button class="${c===stuSelectedColor?'selected':''}" style="background:${c}" onclick="selectStuColor('${c}')"></button>`
+  ).join('');
+
+  if (id) {
+    const s = getStudents().find(x => x.id === id);
+    if (s) {
+      document.getElementById('stuName').value = s.name || '';
+      document.getElementById('stuGrade').value = s.grade || '';
+      document.getElementById('stuSubject').value = s.subject || '';
+      document.getElementById('stuNote').value = s.note || '';
+      stuSelectedColor = s.color || STU_COLORS[0];
+      pick.innerHTML = STU_COLORS.map(c =>
+        `<button class="${c===stuSelectedColor?'selected':''}" style="background:${c}" onclick="selectStuColor('${c}')"></button>`
+      ).join('');
+    }
+  } else {
+    document.getElementById('stuName').value = '';
+    document.getElementById('stuGrade').value = '';
+    document.getElementById('stuSubject').value = '';
+    document.getElementById('stuNote').value = '';
+    stuSelectedColor = STU_COLORS[0];
+  }
+  document.getElementById('stuModal').classList.add('show');
+}
+
+function closeStuModal() { document.getElementById('stuModal').classList.remove('show'); }
+
+function selectStuColor(c) {
+  stuSelectedColor = c;
+  document.querySelectorAll('#stuColorPick button').forEach(b => b.classList.remove('selected'));
+  event.target.classList.add('selected');
+}
+
+function saveStudent() {
+  const name = document.getElementById('stuName').value.trim();
+  if (!name) { showModal('⚠️', '请输入学生姓名'); return; }
+  const grade = document.getElementById('stuGrade').value.trim();
+  const subject = document.getElementById('stuSubject').value.trim();
+  const note = document.getElementById('stuNote').value.trim();
+  let students = getStudents();
+  if (stuEditingId) {
+    students = students.map(s => s.id === stuEditingId
+      ? { ...s, name, grade, subject, note, color: stuSelectedColor } : s);
+  } else {
+    students.push({ id: 'stu_' + Date.now(), name, grade, subject, note, color: stuSelectedColor });
+  }
+  saveStudents(students);
+  closeStuModal();
+  renderStudent(document.getElementById('content'));
+}
+
+function delStudent(id) {
+  if (!confirm('删除这个学生档案吗？学习记录也会一起删除。')) return;
+  let students = getStudents().filter(s => s.id !== id);
+  saveStudents(students);
+  localStorage.removeItem(`zuzu_stu_records_${id}`);
+  renderStudent(document.getElementById('content'));
+}
+
+function addStuRecord(id, inputEl) {
+  const text = inputEl.value.trim();
+  if (!text) return;
+  const key = `zuzu_stu_records_${id}`;
+  let records = loadData(key) || [];
+  records.unshift({ date: todayStr(), text });
+  saveData(key, records);
+  inputEl.value = '';
+  renderStudent(document.getElementById('content'));
+}
+
+function addStuRecordFromBtn(id) {
+  const cards = document.querySelectorAll('.stu-card');
+  for (const card of cards) {
+    const input = card.querySelector('.stu-record-add input');
+    if (input) { addStuRecord(id, input); break; }
+  }
+}
+
+function delStuRecord(stuId, idx) {
+  const key = `zuzu_stu_records_${stuId}`;
+  let records = loadData(key) || [];
+  records.splice(idx, 1);
+  saveData(key, records);
+  renderStudent(document.getElementById('content'));
 }
 
 // ═══════════════════════════════════════
@@ -978,7 +1296,7 @@ function renderAccount(el) {
     <div class="stats-row">
       <div class="stat-card"><div class="stat-label">收入</div><div class="stat-value" style="color:#059669">+${income}</div></div>
       <div class="stat-card"><div class="stat-label">支出</div><div class="stat-value" style="color:#e53e3e">-${expense}</div></div>
-      <div class="stat-card"><div class="stat-label">结余</div><div class="stat-value">${balance>=0?balance:balance}</div></div>
+      <div class="stat-card"><div class="stat-label">结余</div><div class="stat-value">${balance}</div></div>
     </div>
     <div class="white-card">
       <div class="card-title">💰 记一笔 · ${today}</div>
@@ -1089,56 +1407,24 @@ async function requestWakeLock() {
   try {
     wakeLock = await navigator.wakeLock.request('screen');
     wakeLockOn = true;
-    wakeLock.addEventListener('release', () => {
-      wakeLockOn = false;
-      updateWakeBtn();
-    });
+    wakeLock.addEventListener('release', () => { wakeLockOn = false; updateWakeBtn(); });
     updateWakeBtn();
-  } catch(err) {
-    // Wake Lock 请求失败（可能浏览器不支持）
-    wakeLockOn = false;
-    updateWakeBtn();
-  }
+  } catch(err) { wakeLockOn = false; updateWakeBtn(); }
 }
-
 function releaseWakeLock() {
   if (wakeLock) {
-    wakeLock.release().then(() => {
-      wakeLock = null;
-      wakeLockOn = false;
-      updateWakeBtn();
-    }).catch(() => {});
-  } else {
-    wakeLockOn = false;
-    updateWakeBtn();
-  }
+    wakeLock.release().then(() => { wakeLock = null; wakeLockOn = false; updateWakeBtn(); }).catch(() => {});
+  } else { wakeLockOn = false; updateWakeBtn(); }
 }
-
 function updateWakeBtn() {
   const btn = document.getElementById('wakeBtn');
   if (!btn) return;
-  if (wakeLockOn) {
-    btn.classList.add('active');
-    btn.textContent = '☕ 不休眠中';
-  } else {
-    btn.classList.remove('active');
-    btn.textContent = '☕ 不休眠';
-  }
+  if (wakeLockOn) { btn.classList.add('active'); btn.textContent = '☕ 不休眠中'; }
+  else { btn.classList.remove('active'); btn.textContent = '☕ 不休眠'; }
 }
-
-function toggleWakeLock() {
-  if (wakeLockOn) {
-    releaseWakeLock();
-  } else {
-    requestWakeLock();
-  }
-}
-
-// 页面重新可见时，如果之前开着 Wake Lock，自动重新申请
+function toggleWakeLock() { if (wakeLockOn) releaseWakeLock(); else requestWakeLock(); }
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && wakeLockOn && !wakeLock) {
-    requestWakeLock();
-  }
+  if (document.visibilityState === 'visible' && wakeLockOn && !wakeLock) requestWakeLock();
 });
 
 // ═══════════════════════════════════════
@@ -1146,28 +1432,21 @@ document.addEventListener('visibilitychange', () => {
 // ═══════════════════════════════════════
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=5').then(reg => {
-      // 检测到新 SW 就自动激活
+    navigator.serviceWorker.register('sw.js?v=7').then(reg => {
       reg.addEventListener('updatefound', () => {
         const newSW = reg.installing;
         if (newSW) {
           newSW.addEventListener('statechange', () => {
             if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-              // 新版本已下载，通知 SW 立即接管
               newSW.postMessage('skipWaiting');
             }
           });
         }
       });
     }).catch(() => {});
-
-    // SW 接管后自动刷新页面，加载新资源
     let refreshing = false;
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!refreshing) {
-        refreshing = true;
-        window.location.reload();
-      }
+      if (!refreshing) { refreshing = true; window.location.reload(); }
     });
   });
 }
