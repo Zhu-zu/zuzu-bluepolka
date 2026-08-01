@@ -7,35 +7,35 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="zuzu的工作台">
-<meta name="theme-color" content="#5b9bd5">
-<link rel="manifest" href="manifest.json?v=7">
-<link rel="apple-touch-icon" href="icon-192.png?v=7">
-<link rel="icon" href="icon-192.png?v=7">
+<meta name="theme-color" content="#6bb6ff">
+<link rel="manifest" href="manifest.json?v=8">
+<link rel="apple-touch-icon" href="icon-192.png?v=8">
+<link rel="icon" href="icon-192.png?v=8">
 <title>zuzu的工作台 · 蜡笔小新</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 :root {
-  --blue: #5b9bd5;
-  --blue-deep: #3a7bbf;
-  --blue-light: #8ec5e8;
-  --blue-pale: #d6ebfa;
-  --blue-bg: #eef7fd;
+  --blue: #6bb6ff;
+  --blue-deep: #4a90d9;
+  --blue-light: #9fd4ff;
+  --blue-pale: #d6eeff;
+  --blue-bg: #eef7ff;
   --blue-soft: #f5fbff;
   --white: #ffffff;
-  --cream: #fff9f0;
-  --cream-pink: #fff0f3;
+  --cream: #fffaf0;
+  --cream-pink: #fff0f5;
   --pink: #ff9eb5;
-  --pink-soft: #ffd6df;
+  --pink-soft: #ffd6e3;
   --green: #95e1b8;
-  --yellow: #ffd966;
+  --yellow: #ffe066;
   --yellow-deep: #f5b800;
-  --orange: #ffa94d;
+  --orange: #ffb366;
   --red: #ff6b6b;
   --text: #2c3e50;
   --text-secondary: #5a6c7d;
-  --text-dim: #b0c0d0;
+  --text-dim: #a0b8cc;
   --outline: #2c3e50;
   --shadow: 3px 3px 0px rgba(44,62,80,0.18);
   --shadow-sm: 2px 2px 0px rgba(44,62,80,0.12);
@@ -51,18 +51,18 @@ body {
   font-family: 'Nunito', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
   background:
     /* 白色波点 */
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.9) 2.5px, transparent 2.5px),
-    radial-gradient(circle at 50% 10%, rgba(255,255,255,0.8) 2px, transparent 2px),
-    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.9) 2.5px, transparent 2.5px),
-    radial-gradient(circle at 25% 60%, rgba(255,255,255,0.8) 2px, transparent 2px),
-    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.9) 2.5px, transparent 2.5px),
-    radial-gradient(circle at 40% 90%, rgba(255,255,255,0.8) 2px, transparent 2px),
-    radial-gradient(circle at 90% 50%, rgba(255,255,255,0.7) 1.5px, transparent 1.5px),
-    /* 小新腮红装饰 */
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.95) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 50% 10%, rgba(255,255,255,0.85) 2px, transparent 2px),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.95) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 25% 60%, rgba(255,255,255,0.85) 2px, transparent 2px),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.95) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 40% 90%, rgba(255,255,255,0.85) 2px, transparent 2px),
+    radial-gradient(circle at 90% 50%, rgba(255,255,255,0.8) 1.5px, transparent 1.5px),
+    /* 小新腮红 */
     radial-gradient(circle at 95% 85%, rgba(255,200,210,0.5) 30px, transparent 30px),
     radial-gradient(circle at 5% 5%, rgba(255,200,210,0.4) 25px, transparent 25px),
-    /* 浅蓝渐变底 */
-    linear-gradient(160deg, #d6ebfa 0%, #eef7fd 40%, #f5fbff 70%, #fff9f0 100%);
+    /* 浅蓝奶油渐变底 */
+    linear-gradient(160deg, #d6eeff 0%, #eef7ff 40%, #f5fbff 70%, #fffaf0 100%);
   background-size: 60px 60px, 80px 80px, 70px 70px, 90px 90px, 65px 65px, 75px 75px, 50px 50px, 100% 100%, 100% 100%, cover;
   background-attachment: fixed;
   color: var(--text);
@@ -72,35 +72,55 @@ body {
   user-select: none; -webkit-user-select: none;
 }
 
+/* 漂浮的蜡笔小新装饰元素 */
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+@keyframes twinkle {
+  0%,100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.15); }
+}
+.deco {
+  position: fixed; pointer-events: none; z-index: 0;
+  animation: float 5s ease-in-out infinite;
+}
+.deco-shiro { top: 12%; right: 3%; width: 55px; opacity: 0.25; animation-delay: 0s; }
+.deco-croc { bottom: 18%; right: 5%; width: 50px; opacity: 0.18; animation-delay: 1s; }
+.deco-burger { top: 22%; right: 8%; width: 40px; opacity: 0.2; animation-delay: 2s; }
+.deco-star1 { top: 8%; left: 48%; width: 28px; opacity: 0.25; animation: twinkle 3s ease-in-out infinite; }
+.deco-star2 { bottom: 25%; left: 30%; width: 22px; opacity: 0.2; animation: twinkle 4s ease-in-out infinite; animation-delay: 1.5s; }
+.deco-heart { top: 35%; right: 2%; width: 24px; opacity: 0.2; animation: twinkle 3.5s ease-in-out infinite; animation-delay: 0.8s; }
+.deco-flower { bottom: 10%; right: 12%; width: 30px; opacity: 0.18; animation: float 6s ease-in-out infinite; animation-delay: 2.5s; }
+.deco-carrot { top: 45%; right: 6%; width: 28px; opacity: 0.15; animation: float 4.5s ease-in-out infinite; animation-delay: 1.2s; }
+
 /* ─── 侧边栏 ─── */
 .sidebar {
   width: 255px; flex-shrink: 0;
   background: linear-gradient(180deg, #ffffff 0%, #f5fbff 100%);
   border-right: 3px solid var(--outline);
   display: flex; flex-direction: column;
-  box-shadow: 4px 0 0 rgba(91,155,213,0.12);
+  box-shadow: 4px 0 0 rgba(107,182,255,0.15);
   z-index: 10;
   position: relative;
 }
-/* 侧边栏底部小新涂鸦 */
 .sidebar::after {
-  content: ''; position: absolute; bottom: 0; right: 8px;
-  width: 40px; height: 40px; opacity: 0.06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='22' r='14' fill='%235b9bd5'/%3E%3Crect x='12' y='6' width='16' height='8' rx='8' fill='%232c3e50'/%3E%3C/svg%3E");
+  content: ''; position: absolute; bottom: 6px; right: 8px;
+  width: 42px; height: 42px; opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='22' r='14' fill='%236bb6ff'/%3E%3Crect x='12' y='6' width='16' height='8' rx='8' fill='%232c3e50'/%3E%3C/svg%3E");
   background-size: contain; background-repeat: no-repeat;
   pointer-events: none;
 }
 
-/* ─── 蜡笔小新头像区 ─── */
+/* 蜡笔小新头像区 */
 .shinchan-header {
   padding: 22px 16px 16px;
   border-bottom: 3px solid var(--outline);
-  background: linear-gradient(135deg, var(--blue-pale), var(--cream-pink));
+  background: linear-gradient(135deg, #d6eeff, #fff0f5);
   text-align: center;
   position: relative;
   overflow: hidden;
 }
-/* 头像区背景装饰 */
 .shinchan-header::before {
   content: ''; position: absolute; top: -10px; left: -10px;
   width: 50px; height: 50px; border-radius: 50%;
@@ -112,100 +132,46 @@ body {
   background: rgba(255,158,181,0.25);
 }
 
-/* 蜡笔小新头像 — 更还原的大饼脸版 */
 .shinchan-avatar {
-  width: 72px; height: 72px; margin: 0 auto 10px;
+  width: 74px; height: 74px; margin: 0 auto 10px;
   position: relative; z-index: 1;
 }
-/* 大饼脸 */
 .sc-face {
-  width: 72px; height: 72px;
+  width: 74px; height: 74px;
   border-radius: 50%;
   background: #fde68a;
   border: 3px solid var(--outline);
   position: relative;
   box-shadow: var(--shadow-sm);
 }
-/* 腮红 */
-.sc-cheek {
-  position: absolute; top: 40px;
-  width: 12px; height: 7px; border-radius: 50%;
-  background: rgba(255,158,181,0.6);
-}
+.sc-cheek { position: absolute; top: 42px; width: 12px; height: 7px; border-radius: 50%; background: rgba(255,158,181,0.6); }
 .sc-cheek.left { left: 6px; }
 .sc-cheek.right { right: 6px; }
-/* 粗眉毛 */
-.sc-brow {
-  position: absolute; top: 12px;
-  width: 16px; height: 5px; background: var(--outline);
-  border-radius: 3px; transform: rotate(-5deg);
-}
-.sc-brow.left { left: 10px; }
-.sc-brow.right { right: 10px; transform: rotate(5deg); }
-/* 眼睛 */
-.sc-eye {
-  position: absolute; top: 22px;
-  width: 6px; height: 6px; background: var(--outline);
-  border-radius: 50%;
-}
-.sc-eye.left { left: 18px; }
-.sc-eye.right { right: 18px; }
-/* 土豆鼻子 */
-.sc-nose {
-  position: absolute; top: 32px; left: 50%; transform: translateX(-50%);
-  width: 10px; height: 6px; background: var(--outline);
-  border-radius: 50% 50% 60% 60%;
-}
-/* 嘴巴 */
-.sc-mouth {
-  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-  width: 16px; height: 7px; border: 2.5px solid var(--outline);
-  border-top: none; border-radius: 0 0 16px 16px; background: var(--red);
-}
-/* 头发 — 萝莉头 */
-.sc-hair {
-  position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
-  width: 44px; height: 16px; background: var(--outline);
-  border-radius: 22px 22px 4px 4px; z-index: -1;
-}
-/* 头发两侧翘起 */
-.sc-hair::before, .sc-hair::after {
-  content: ''; position: absolute; top: 8px;
-  width: 8px; height: 10px; background: var(--outline);
-  border-radius: 50%;
-}
+.sc-brow { position: absolute; top: 13px; width: 17px; height: 5px; background: var(--outline); border-radius: 3px; }
+.sc-brow.left { left: 11px; transform: rotate(-5deg); }
+.sc-brow.right { right: 11px; transform: rotate(5deg); }
+.sc-eye { position: absolute; top: 23px; width: 6px; height: 6px; background: var(--outline); border-radius: 50%; }
+.sc-eye.left { left: 19px; }
+.sc-eye.right { right: 19px; }
+.sc-nose { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); width: 10px; height: 6px; background: var(--outline); border-radius: 50% 50% 60% 60%; }
+.sc-mouth { position: absolute; bottom: 13px; left: 50%; transform: translateX(-50%); width: 16px; height: 7px; border: 2.5px solid var(--outline); border-top: none; border-radius: 0 0 16px 16px; background: var(--red); }
+.sc-hair { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 46px; height: 16px; background: var(--outline); border-radius: 23px 23px 4px 4px; z-index: -1; }
+.sc-hair::before, .sc-hair::after { content: ''; position: absolute; top: 8px; width: 8px; height: 10px; background: var(--outline); border-radius: 50%; }
 .sc-hair::before { left: -5px; transform: rotate(-20deg); }
 .sc-hair::after { right: -5px; transform: rotate(20deg); }
 
-.shinchan-name {
-  font-size: 21px; font-weight: 900; color: var(--blue-deep);
-  letter-spacing: -0.5px; position: relative; z-index: 1;
-}
-.shinchan-sub {
-  font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 700;
-  position: relative; z-index: 1;
-}
-/* 蜡笔小新台词气泡 */
+.shinchan-name { font-size: 19px; font-weight: 900; color: var(--blue-deep); letter-spacing: -0.5px; position: relative; z-index: 1; }
+.shinchan-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 700; position: relative; z-index: 1; }
 .shinchan-quote {
   font-size: 10px; color: var(--blue-deep); margin-top: 8px; font-weight: 800;
   background: var(--white); padding: 4px 12px; border-radius: 12px;
   border: 2px solid var(--outline); display: inline-block;
-  box-shadow: var(--shadow-sm);
-  position: relative; z-index: 1;
-  max-width: 180px;
+  box-shadow: var(--shadow-sm); position: relative; z-index: 1; max-width: 180px;
 }
-.shinchan-quote::before {
-  content: ''; position: absolute; bottom: -7px; left: 20px;
-  width: 0; height: 0; border-left: 6px solid transparent;
-  border-right: 6px solid transparent; border-top: 7px solid var(--outline);
-}
-.shinchan-quote::after {
-  content: ''; position: absolute; bottom: -4px; left: 22px;
-  width: 0; height: 0; border-left: 4px solid transparent;
-  border-right: 4px solid transparent; border-top: 5px solid var(--white);
-}
+.shinchan-quote::before { content: ''; position: absolute; bottom: -7px; left: 20px; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid var(--outline); }
+.shinchan-quote::after { content: ''; position: absolute; bottom: -4px; left: 22px; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid var(--white); }
 
-/* ─── 导航 ─── */
+/* 导航 */
 .nav { padding: 10px 10px; flex: 1; overflow-y: auto; }
 .nav-item {
   display: flex; align-items: center; gap: 10px;
@@ -223,10 +189,7 @@ body {
   border: 2.5px solid var(--outline);
   box-shadow: var(--shadow-sm);
 }
-.nav-item .drag-handle {
-  cursor: grab; color: var(--text-dim); font-size: 14px;
-  flex-shrink: 0; user-select: none;
-}
+.nav-item .drag-handle { cursor: grab; color: var(--text-dim); font-size: 14px; flex-shrink: 0; user-select: none; }
 .nav-item.active .drag-handle { color: rgba(255,255,255,0.6); }
 .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; flex-shrink: 0; }
 .nav-item .nav-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -265,18 +228,10 @@ body {
 .sidebar-footer .wake-toggle.active { background: var(--yellow); color: var(--outline); }
 
 /* ─── 主内容区 ─── */
-.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; position: relative; }
-/* 主内容区右上角小新装饰 */
-.main::before {
-  content: ''; position: absolute; top: 10px; right: 20px;
-  width: 60px; height: 60px; opacity: 0.04; z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='32' r='20' fill='%235b9bd5'/%3E%3Crect x='18' y='6' width='24' height='12' rx='6' fill='%232c3e50'/%3E%3C/svg%3E");
-  background-size: contain; background-repeat: no-repeat;
-  pointer-events: none;
-}
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; position: relative; z-index: 1; }
 .main-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 24px; flex-shrink: 0; position: relative; z-index: 1;
+  padding: 18px 24px; flex-shrink: 0;
 }
 .main-header .page-title { font-size: 24px; font-weight: 900; color: var(--text); }
 .main-header .page-sub { font-size: 13px; color: var(--text-secondary); margin-top: 2px; font-weight: 700; }
@@ -285,7 +240,7 @@ body {
   padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 800;
   color: var(--blue-deep); box-shadow: var(--shadow-sm);
 }
-.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 24px 24px; position: relative; z-index: 1; }
+.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 24px 24px; }
 
 /* ─── 统计卡片 ─── */
 .stats-row { display: flex; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
@@ -357,10 +312,7 @@ body {
   background: var(--yellow); color: #92400e; border: 1.5px solid var(--outline);
   pointer-events: none;
 }
-.task-item .task-delete {
-  background: none; border: none; color: #cbd5e0; font-size: 18px;
-  cursor: pointer; padding: 2px 6px; flex-shrink: 0;
-}
+.task-item .task-delete { background: none; border: none; color: #cbd5e0; font-size: 18px; cursor: pointer; padding: 2px 6px; flex-shrink: 0; }
 .task-item .task-delete:hover { color: #e53e3e; }
 .drag-hint { font-size: 11px; color: var(--text-dim); text-align: center; padding: 4px 0; }
 
@@ -397,10 +349,7 @@ body {
   background: var(--blue-bg); border: 2px solid var(--outline);
   border-radius: var(--radius-sm); font-size: 13px; font-weight: 700;
 }
-.acct-item .acct-type {
-  font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 8px;
-  border: 1.5px solid var(--outline);
-}
+.acct-item .acct-type { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 8px; border: 1.5px solid var(--outline); }
 .acct-item .acct-type.in { background: var(--green); }
 .acct-item .acct-type.out { background: var(--pink-soft); }
 .acct-item .acct-amount { font-weight: 900; margin-left: auto; }
@@ -408,66 +357,119 @@ body {
 .acct-item .acct-amount.out { color: #e53e3e; }
 .acct-item .acct-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 16px; }
 .acct-item .acct-del:hover { color: #e53e3e; }
-.acct-summary {
-  display: flex; gap: 16px; margin-top: 14px; padding: 12px 16px;
-  background: var(--cream); border: 2px solid var(--outline);
-  border-radius: var(--radius-sm); font-weight: 800; font-size: 14px;
-}
+.acct-summary { display: flex; gap: 16px; margin-top: 14px; padding: 12px 16px; background: var(--cream); border: 2px solid var(--outline); border-radius: var(--radius-sm); font-weight: 800; font-size: 14px; }
 .acct-summary span { color: var(--blue-deep); }
 
 /* ─── 日历 ─── */
 .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .cal-header .cal-month { font-size: 18px; font-weight: 900; color: var(--blue-deep); }
-.cal-header button {
-  background: var(--white); border: 2px solid var(--outline);
-  border-radius: 10px; padding: 5px 14px; font-family: inherit;
-  font-weight: 800; color: var(--blue-deep); cursor: pointer; box-shadow: var(--shadow-sm);
-  font-size: 16px;
-}
+.cal-header button { background: var(--white); border: 2px solid var(--outline); border-radius: 10px; padding: 5px 14px; font-family: inherit; font-weight: 800; color: var(--blue-deep); cursor: pointer; box-shadow: var(--shadow-sm); font-size: 16px; }
 .cal-header button:active { transform: translate(1px,1px); box-shadow: none; }
 .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
 .cal-weekdays div { text-align: center; font-size: 11px; font-weight: 800; color: var(--text-dim); }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-.cal-day {
-  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; border-radius: 10px; cursor: pointer;
-  border: 2px solid transparent; transition: all .12s; position: relative;
-  color: var(--text);
-}
+.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: all .12s; position: relative; color: var(--text); }
 .cal-day:hover { background: var(--blue-pale); border-color: var(--blue-light); }
 .cal-day.other-month { color: var(--text-dim); opacity: 0.4; }
 .cal-day.today { background: var(--blue); color: var(--white); border: 2px solid var(--outline); box-shadow: var(--shadow-sm); }
-.cal-day.has-event::after {
-  content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
-  width: 5px; height: 5px; border-radius: 50%; background: var(--red);
-}
+.cal-day.has-event::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--red); }
 .cal-day.today.has-event::after { background: var(--yellow); }
 .cal-day.selected { border-color: var(--blue); border-width: 2.5px; background: var(--blue-pale); }
 .cal-day.today.selected { background: var(--blue); color: var(--white); }
 .cal-events { margin-top: 16px; }
 .cal-events h4 { font-size: 14px; font-weight: 900; color: var(--text); margin-bottom: 10px; }
-.cal-event-item {
-  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-  background: var(--blue-bg); border: 2px solid var(--outline); border-radius: var(--radius-sm);
-  margin-bottom: 6px; font-size: 13px; font-weight: 700;
-}
+.cal-event-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--blue-bg); border: 2px solid var(--outline); border-radius: var(--radius-sm); margin-bottom: 6px; font-size: 13px; font-weight: 700; }
 .cal-event-item .ev-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
 .cal-event-item .ev-text { flex: 1; }
 .cal-event-item .ev-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 15px; }
 .cal-event-item .ev-del:hover { color: #e53e3e; }
 .cal-event-add { display: flex; gap: 8px; margin-top: 10px; }
-.cal-event-add input {
-  flex: 1; background: var(--blue-bg); border: 2px solid var(--outline);
-  border-radius: var(--radius-sm); padding: 9px 12px; font-size: 13px;
-  color: var(--text); font-family: inherit; font-weight: 600;
-}
+.cal-event-add input { flex: 1; background: var(--blue-soft); border: 1.5px solid var(--outline); border-radius: 8px; padding: 7px 10px; font-size: 12px; color: var(--text); font-family: inherit; font-weight: 600; }
 .cal-event-add input:focus { outline: none; background: var(--white); }
-.cal-event-add button {
-  background: var(--blue); color: var(--white); border: 2px solid var(--outline);
-  border-radius: var(--radius-sm); padding: 9px 16px; font-size: 13px;
-  font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm);
+.cal-event-add button { background: var(--blue); color: var(--white); border: 1.5px solid var(--outline); border-radius: 8px; padding: 7px 10px; font-size: 11px; font-weight: 800; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.cal-event-add button:active { transform: translate(1px,1px); }
+
+/* ─── 学生管理 ─── */
+.stu-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.stu-search { flex: 1; min-width: 140px; background: var(--blue-bg); border: 2px solid var(--outline); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px; color: var(--text); font-family: inherit; font-weight: 600; }
+.stu-search:focus { outline: none; background: var(--white); border-color: var(--blue); }
+.stu-add-btn { background: var(--blue); color: var(--white); border: 2px solid var(--outline); border-radius: var(--radius-sm); padding: 10px 18px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm); white-space: nowrap; }
+.stu-add-btn:active { transform: translate(2px,2px); box-shadow: none; }
+.stu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.stu-card { background: var(--white); border: 2.5px solid var(--outline); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); transition: transform .1s; position: relative; }
+.stu-card:active { transform: translate(1px,1px); }
+.stu-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.stu-avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; border: 2.5px solid var(--outline); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: var(--white); }
+.stu-info { flex: 1; min-width: 0; }
+.stu-name { font-size: 16px; font-weight: 900; color: var(--text); }
+.stu-meta { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.stu-actions { display: flex; gap: 6px; }
+.stu-actions button { background: var(--blue-bg); border: 1.5px solid var(--outline); border-radius: 8px; padding: 4px 8px; font-size: 11px; font-weight: 800; cursor: pointer; font-family: inherit; color: var(--text); }
+.stu-actions button:hover { background: var(--blue-pale); }
+.stu-actions button.danger:hover { background: #fee2e2; color: #e53e3e; }
+.stu-records { margin-top: 10px; border-top: 2px dashed var(--blue-pale); padding-top: 10px; }
+.stu-records-title { font-size: 11px; font-weight: 800; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; }
+.stu-record-item { background: var(--blue-bg); border: 1.5px solid var(--outline); border-radius: 8px; padding: 8px 10px; margin-bottom: 4px; font-size: 12px; font-weight: 600; display: flex; align-items: flex-start; gap: 6px; }
+.stu-record-item .rec-date { color: var(--blue-deep); font-weight: 800; font-size: 10px; flex-shrink: 0; min-width: 72px; }
+.stu-record-item .rec-text { flex: 1; color: var(--text); }
+.stu-record-item .rec-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 13px; flex-shrink: 0; }
+.stu-record-item .rec-del:hover { color: #e53e3e; }
+.stu-record-add { display: flex; gap: 6px; margin-top: 6px; }
+.stu-record-add input { flex: 1; background: var(--blue-soft); border: 1.5px solid var(--outline); border-radius: 8px; padding: 7px 10px; font-size: 12px; color: var(--text); font-family: inherit; font-weight: 600; }
+.stu-record-add input:focus { outline: none; background: var(--white); }
+.stu-record-add button { background: var(--blue); color: var(--white); border: 1.5px solid var(--outline); border-radius: 8px; padding: 7px 10px; font-size: 11px; font-weight: 800; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.stu-record-add button:active { transform: translate(1px,1px); }
+.stu-empty { text-align: center; color: var(--text-dim); padding: 40px 20px; font-size: 14px; font-weight: 700; }
+.stu-modal-fields { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.stu-modal-fields .field-row { display: flex; gap: 10px; }
+.stu-modal-fields .field-row > * { flex: 1; }
+.stu-modal-fields label { font-size: 11px; font-weight: 800; color: var(--text-secondary); margin-bottom: 3px; display: block; }
+.stu-color-pick { display: flex; gap: 6px; flex-wrap: wrap; }
+.stu-color-pick button { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--outline); cursor: pointer; padding: 0; }
+.stu-color-pick button.selected { box-shadow: 0 0 0 3px var(--blue); }
+
+/* ─── 练琴模块 ─── */
+.piano-week-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.piano-week-bar button {
+  background: var(--white); border: 2px solid var(--outline); border-radius: 10px;
+  padding: 6px 12px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit;
+  box-shadow: var(--shadow-sm); color: var(--text);
 }
-.cal-event-add button:active { transform: translate(2px,2px); box-shadow: none; }
+.piano-week-bar button.active { background: var(--blue); color: var(--white); }
+.piano-week-bar button:active { transform: translate(1px,1px); box-shadow: none; }
+
+.piano-block { background: var(--white); border: 2.5px solid var(--outline); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); }
+.piano-block-title { font-size: 15px; font-weight: 900; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.piano-block-sub { font-size: 11px; color: var(--text-secondary); font-weight: 700; margin-bottom: 12px; }
+.piano-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px; background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); margin-bottom: 8px; transition: all .1s;
+}
+.piano-item.done { opacity: 0.55; background: #f0f4f8; }
+.piano-item.done .pi-text { text-decoration: line-through; color: var(--text-dim); }
+.piano-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+.piano-item .pi-content { flex: 1; }
+.piano-item .pi-title { font-size: 13px; font-weight: 800; color: var(--text); }
+.piano-item .pi-desc { font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 600; line-height: 1.4; }
+.piano-item .pi-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 16px; flex-shrink: 0; }
+.piano-item .pi-del:hover { color: #e53e3e; }
+
+.piano-add-row { display: flex; gap: 8px; margin-top: 10px; }
+.piano-add-row input { flex: 1; background: var(--blue-soft); border: 1.5px solid var(--outline); border-radius: 8px; padding: 8px 12px; font-size: 13px; color: var(--text); font-family: inherit; font-weight: 600; }
+.piano-add-row input:focus { outline: none; background: var(--white); }
+.piano-add-row button { background: var(--blue); color: var(--white); border: 1.5px solid var(--outline); border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit; }
+.piano-add-row button:active { transform: translate(1px,1px); }
+
+.piano-progress-card { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.piano-piece {
+  flex: 1; min-width: 150px; background: var(--white); border: 2.5px solid var(--outline);
+  border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow);
+}
+.piano-piece .pp-name { font-size: 13px; font-weight: 900; color: var(--text); }
+.piano-piece .pp-status { font-size: 11px; color: var(--text-secondary); margin-top: 4px; font-weight: 700; }
+.piano-piece .pp-bar { height: 8px; background: var(--blue-pale); border-radius: 4px; margin-top: 8px; border: 1px solid var(--outline); overflow: hidden; }
+.piano-piece .pp-fill { height: 100%; background: var(--blue); border-radius: 4px; transition: width .3s; }
 
 /* ─── 模态框 ─── */
 .modal-overlay {
@@ -488,103 +490,15 @@ body {
   color: var(--text); font-family: inherit; font-weight: 600; margin-bottom: 10px;
 }
 .modal input:focus, .modal select:focus { outline: none; background: var(--white); }
-.modal .emoji-grid {
-  display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-bottom: 14px;
-}
-.modal .emoji-grid button {
-  font-size: 20px; background: var(--blue-bg); border: 2px solid transparent;
-  border-radius: 8px; padding: 6px; cursor: pointer; font-family: inherit;
-}
+.modal .emoji-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-bottom: 14px; }
+.modal .emoji-grid button { font-size: 20px; background: var(--blue-bg); border: 2px solid transparent; border-radius: 8px; padding: 6px; cursor: pointer; font-family: inherit; }
 .modal .emoji-grid button:hover { background: var(--blue-pale); }
 .modal .emoji-grid button.selected { border-color: var(--blue); background: var(--blue-pale); }
 .modal .modal-btns { display: flex; gap: 10px; }
-.modal .modal-btns button {
-  flex: 1; border: 2px solid var(--outline); border-radius: var(--radius-sm);
-  padding: 10px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
-  box-shadow: var(--shadow-sm);
-}
+.modal .modal-btns button { flex: 1; border: 2px solid var(--outline); border-radius: var(--radius-sm); padding: 10px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm); }
 .modal .btn-confirm { background: var(--blue); color: var(--white); }
 .modal .btn-cancel { background: var(--white); color: var(--text); }
 .modal .modal-btns button:active { transform: translate(2px,2px); box-shadow: none; }
-
-/* ─── 学生管理 ─── */
-.stu-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
-.stu-search {
-  flex: 1; min-width: 140px; background: var(--blue-bg); border: 2px solid var(--outline);
-  border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px;
-  color: var(--text); font-family: inherit; font-weight: 600;
-}
-.stu-search:focus { outline: none; background: var(--white); border-color: var(--blue); }
-.stu-add-btn {
-  background: var(--blue); color: var(--white); border: 2px solid var(--outline);
-  border-radius: var(--radius-sm); padding: 10px 18px; font-size: 14px;
-  font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm);
-  white-space: nowrap;
-}
-.stu-add-btn:active { transform: translate(2px,2px); box-shadow: none; }
-
-.stu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-.stu-card {
-  background: var(--white); border: 2.5px solid var(--outline);
-  border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow);
-  transition: transform .1s; position: relative;
-}
-.stu-card:active { transform: translate(1px,1px); }
-.stu-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.stu-avatar {
-  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
-  border: 2.5px solid var(--outline); display: flex; align-items: center; justify-content: center;
-  font-size: 22px; font-weight: 900; color: var(--white);
-}
-.stu-info { flex: 1; min-width: 0; }
-.stu-name { font-size: 16px; font-weight: 900; color: var(--text); }
-.stu-meta { font-size: 11px; color: var(--text-secondary); margin-top: 2px; font-weight: 600; }
-.stu-actions { display: flex; gap: 6px; }
-.stu-actions button {
-  background: var(--blue-bg); border: 1.5px solid var(--outline);
-  border-radius: 8px; padding: 4px 8px; font-size: 11px; font-weight: 800;
-  cursor: pointer; font-family: inherit; color: var(--text);
-}
-.stu-actions button:hover { background: var(--blue-pale); }
-.stu-actions button.danger:hover { background: #fee2e2; color: #e53e3e; }
-
-.stu-records { margin-top: 10px; border-top: 2px dashed var(--blue-pale); padding-top: 10px; }
-.stu-records-title { font-size: 11px; font-weight: 800; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; }
-.stu-record-item {
-  background: var(--blue-bg); border: 1.5px solid var(--outline);
-  border-radius: 8px; padding: 8px 10px; margin-bottom: 4px; font-size: 12px; font-weight: 600;
-  display: flex; align-items: flex-start; gap: 6px;
-}
-.stu-record-item .rec-date { color: var(--blue-deep); font-weight: 800; font-size: 10px; flex-shrink: 0; min-width: 72px; }
-.stu-record-item .rec-text { flex: 1; color: var(--text); }
-.stu-record-item .rec-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 13px; flex-shrink: 0; }
-.stu-record-item .rec-del:hover { color: #e53e3e; }
-.stu-record-add { display: flex; gap: 6px; margin-top: 6px; }
-.stu-record-add input {
-  flex: 1; background: var(--blue-soft); border: 1.5px solid var(--outline);
-  border-radius: 8px; padding: 7px 10px; font-size: 12px; color: var(--text);
-  font-family: inherit; font-weight: 600;
-}
-.stu-record-add input:focus { outline: none; background: var(--white); }
-.stu-record-add button {
-  background: var(--blue); color: var(--white); border: 1.5px solid var(--outline);
-  border-radius: 8px; padding: 7px 10px; font-size: 11px; font-weight: 800;
-  cursor: pointer; font-family: inherit; white-space: nowrap;
-}
-.stu-record-add button:active { transform: translate(1px,1px); }
-.stu-empty { text-align: center; color: var(--text-dim); padding: 40px 20px; font-size: 14px; font-weight: 700; }
-
-/* 学生编辑模态框 */
-.stu-modal-fields { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-.stu-modal-fields .field-row { display: flex; gap: 10px; }
-.stu-modal-fields .field-row > * { flex: 1; }
-.stu-modal-fields label { font-size: 11px; font-weight: 800; color: var(--text-secondary); margin-bottom: 3px; display: block; }
-.stu-color-pick { display: flex; gap: 6px; flex-wrap: wrap; }
-.stu-color-pick button {
-  width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--outline);
-  cursor: pointer; padding: 0;
-}
-.stu-color-pick button.selected { box-shadow: 0 0 0 3px var(--blue); }
 
 /* ─── 滚动条 ─── */
 ::-webkit-scrollbar { width: 5px; }
@@ -594,22 +508,21 @@ body {
 /* ─── 响应式（侧边栏始终在左侧） ─── */
 @media (max-width: 900px) {
   .sidebar { width: 200px; }
+  .deco { display: none; }
   .shinchan-header { padding: 16px 10px 12px; }
-  .shinchan-avatar { width: 56px; height: 56px; }
-  .sc-face { width: 56px; height: 56px; }
-  .sc-brow { width: 12px; height: 4px; top: 10px; }
-  .sc-brow.left { left: 8px; }
-  .sc-brow.right { right: 8px; }
+  .shinchan-avatar { width: 58px; height: 58px; }
+  .sc-face { width: 58px; height: 58px; }
+  .sc-brow { width: 13px; height: 4px; top: 10px; }
+  .sc-brow.left { left: 9px; }
+  .sc-brow.right { right: 9px; }
   .sc-eye { width: 5px; height: 5px; top: 18px; }
-  .sc-eye.left { left: 14px; }
-  .sc-eye.right { right: 14px; }
-  .sc-nose { top: 26px; width: 8px; height: 5px; }
+  .sc-eye.left { left: 15px; }
+  .sc-eye.right { right: 15px; }
+  .sc-nose { top: 27px; width: 8px; height: 5px; }
   .sc-mouth { bottom: 10px; width: 13px; height: 6px; }
-  .sc-cheek { top: 32px; width: 10px; height: 6px; }
-  .sc-cheek.left { left: 4px; }
-  .sc-cheek.right { right: 4px; }
-  .sc-hair { width: 36px; height: 14px; top: -6px; }
-  .shinchan-name { font-size: 18px; }
+  .sc-cheek { top: 33px; width: 10px; height: 6px; }
+  .sc-hair { width: 38px; height: 14px; top: -6px; }
+  .shinchan-name { font-size: 16px; }
   .shinchan-quote { font-size: 9px; max-width: 150px; }
   .nav-item { padding: 9px 10px; font-size: 13px; gap: 7px; }
   .nav-item .nav-icon { font-size: 16px; width: 18px; }
@@ -622,10 +535,56 @@ body {
   .content { padding: 0 14px 20px; }
   .stats-row { flex-direction: column; }
   .progress-ring-card { flex: 0 0 auto; }
+  .piano-progress-card { flex-direction: column; }
 }
 </style>
 </head>
 <body>
+
+<!-- 漂浮装饰元素 -->
+<svg class="deco deco-shiro" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="30" cy="38" rx="18" ry="14" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+  <ellipse cx="22" cy="30" rx="8" ry="10" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+  <ellipse cx="38" cy="30" rx="8" ry="10" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+  <circle cx="20" cy="32" r="2" fill="#2c3e50"/><circle cx="24" cy="32" r="2" fill="#2c3e50"/>
+  <circle cx="36" cy="32" r="2" fill="#2c3e50"/><circle cx="40" cy="32" r="2" fill="#2c3e50"/>
+  <ellipse cx="30" cy="38" rx="4" ry="3" fill="#ff9eb5"/>
+</svg>
+<svg class="deco deco-croc" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="24" width="40" height="20" rx="10" fill="#95e1b8" stroke="#2c3e50" stroke-width="2"/>
+  <circle cx="22" cy="26" r="3" fill="#2c3e50"/><circle cx="38" cy="26" r="3" fill="#2c3e50"/>
+  <path d="M18 38 L24 38 L24 42 L18 42 Z" fill="#fff" stroke="#2c3e50" stroke-width="1.5"/>
+  <path d="M28 38 L34 38 L34 42 L28 42 Z" fill="#fff" stroke="#2c3e50" stroke-width="1.5"/>
+  <path d="M38 38 L44 38 L44 42 L38 42 Z" fill="#fff" stroke="#2c3e50" stroke-width="1.5"/>
+  <circle cx="50" cy="30" r="5" fill="#ff6b6b" stroke="#2c3e50" stroke-width="1.5"/>
+</svg>
+<svg class="deco deco-burger" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="25" cy="14" rx="18" ry="7" fill="#ff8c42" stroke="#2c3e50" stroke-width="2"/>
+  <rect x="8" y="18" width="34" height="6" rx="3" fill="#ffe066" stroke="#2c3e50" stroke-width="2"/>
+  <rect x="7" y="25" width="36" height="8" rx="4" fill="#6b8c42" stroke="#2c3e50" stroke-width="2"/>
+  <ellipse cx="25" cy="38" rx="18" ry="7" fill="#ff8c42" stroke="#2c3e50" stroke-width="2"/>
+</svg>
+<svg class="deco deco-star1" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 2 L18 11 L27 11 L20 17 L23 26 L15 21 L7 26 L10 17 L3 11 L12 11 Z" fill="#ffd966" stroke="#2c3e50" stroke-width="1.5"/>
+</svg>
+<svg class="deco deco-star2" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 2 L18 11 L27 11 L20 17 L23 26 L15 21 L7 26 L10 17 L3 11 L12 11 Z" fill="#ff9eb5" stroke="#2c3e50" stroke-width="1.5"/>
+</svg>
+<svg class="deco deco-heart" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 26 C15 26 3 18 3 10 C3 6 6 3 10 3 C12 3 14 4 15 6 C16 4 18 3 20 3 C24 3 27 6 27 10 C27 18 15 26 15 26 Z" fill="#ff9eb5" stroke="#2c3e50" stroke-width="1.5"/>
+</svg>
+<svg class="deco deco-flower" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="15" cy="15" r="5" fill="#ffd966" stroke="#2c3e50" stroke-width="1.5"/>
+  <ellipse cx="15" cy="6" rx="4" ry="5" fill="#ff9eb5" stroke="#2c3e50" stroke-width="1.5"/>
+  <ellipse cx="15" cy="24" rx="4" ry="5" fill="#ff9eb5" stroke="#2c3e50" stroke-width="1.5"/>
+  <ellipse cx="6" cy="15" rx="5" ry="4" fill="#ff9eb5" stroke="#2c3e50" stroke-width="1.5"/>
+  <ellipse cx="24" cy="15" rx="5" ry="4" fill="#ff9eb5" stroke="#2c3e50" stroke-width="1.5"/>
+</svg>
+<svg class="deco deco-carrot" viewBox="0 0 30 50" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 5 Q15 0 22 5 L25 40 Q15 50 5 40 Z" fill="#ff8c42" stroke="#2c3e50" stroke-width="1.5"/>
+  <path d="M12 5 L10 0 M15 5 L15 0 M18 5 L20 0" stroke="#6b8c42" stroke-width="2" fill="none"/>
+  <path d="M10 20 L20 20 M10 30 L20 30" stroke="#2c3e50" stroke-width="1" opacity="0.3"/>
+</svg>
 
 <!-- 侧边栏 -->
 <div class="sidebar">
@@ -697,28 +656,13 @@ body {
   <div class="modal" style="max-width:420px">
     <h3 id="stuModalTitle">👤 添加学生</h3>
     <div class="stu-modal-fields">
-      <div>
-        <label>学生姓名</label>
-        <input type="text" id="stuName" placeholder="如：张小明" maxlength="10">
-      </div>
+      <div><label>学生姓名</label><input type="text" id="stuName" placeholder="如：张小明" maxlength="10"></div>
       <div class="field-row">
-        <div>
-          <label>年级/班级</label>
-          <input type="text" id="stuGrade" placeholder="如：六年级" maxlength="12">
-        </div>
-        <div>
-          <label>科目</label>
-          <input type="text" id="stuSubject" placeholder="如：钢琴" maxlength="10">
-        </div>
+        <div><label>年级/班级</label><input type="text" id="stuGrade" placeholder="如：六年级" maxlength="12"></div>
+        <div><label>科目</label><input type="text" id="stuSubject" placeholder="如：钢琴" maxlength="10"></div>
       </div>
-      <div>
-        <label>头像颜色</label>
-        <div class="stu-color-pick" id="stuColorPick"></div>
-      </div>
-      <div>
-        <label>备注</label>
-        <input type="text" id="stuNote" placeholder="如：每周二、四上课" maxlength="30">
-      </div>
+      <div><label>头像颜色</label><div class="stu-color-pick" id="stuColorPick"></div></div>
+      <div><label>备注</label><input type="text" id="stuNote" placeholder="如：每周二、四上课" maxlength="30"></div>
     </div>
     <div class="modal-btns">
       <button class="btn-cancel" onclick="closeStuModal()">取消</button>
@@ -734,8 +678,8 @@ body {
 const DEFAULT_SECTIONS = [
   { id: "plan",     name: "每日计划", icon: "📋", sub: "完成今天的任务！", type: "plan" },
   { id: "calendar", name: "日历",     icon: "📅", sub: "查看日期与事件", type: "calendar" },
+  { id: "piano",    name: "练琴",     icon: "🎹", sub: "每日练琴计划", type: "piano" },
   { id: "diet",     name: "饮食",     icon: "🍱", sub: "记录三餐饮食", type: "note" },
-  { id: "piano",    name: "练琴",     icon: "🎹", sub: "练琴记录", type: "note" },
   { id: "account",  name: "账本",     icon: "💰", sub: "记账本", type: "account" },
   { id: "work",     name: "工作",     icon: "💼", sub: "学生管理工作台", type: "student" },
   { id: "life",     name: "生活",     icon: "🌿", sub: "生活点滴", type: "note" },
@@ -759,6 +703,7 @@ function todayStr() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
+function getWeekday() { return new Date().getDay(); }
 
 // 板块管理
 function getSections() {
@@ -873,6 +818,7 @@ function renderContent() {
   switch(s.type) {
     case 'plan': renderPlan(content); break;
     case 'calendar': renderCalendar(content); break;
+    case 'piano': renderPiano(content); break;
     case 'account': renderAccount(content); break;
     case 'student': renderStudent(content); break;
     default: renderNote(content, s); break;
@@ -903,29 +849,13 @@ function renderPlan(el) {
 
   el.innerHTML = `
     <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">完成率</div>
-        <div class="stat-value">${pct}%</div>
-        <div class="stat-sub">${done}/${tasks.length} 项</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">已完成</div>
-        <div class="stat-value" style="color:#f5b800">${done}</div>
-        <div class="stat-sub">任务数</div>
-      </div>
-      <div class="stat-card progress-ring-card">
-        <svg class="progress-ring" viewBox="0 0 100 100">
-          <circle class="progress-ring-bg" cx="50" cy="50" r="42"></circle>
-          <circle class="progress-ring-fill" cx="50" cy="50" r="42" stroke-dasharray="${C}" stroke-dashoffset="${offset}"></circle>
-        </svg>
-      </div>
+      <div class="stat-card"><div class="stat-label">完成率</div><div class="stat-value">${pct}%</div><div class="stat-sub">${done}/${tasks.length} 项</div></div>
+      <div class="stat-card"><div class="stat-label">已完成</div><div class="stat-value" style="color:#f5b800">${done}</div><div class="stat-sub">任务数</div></div>
+      <div class="stat-card progress-ring-card"><svg class="progress-ring" viewBox="0 0 100 100"><circle class="progress-ring-bg" cx="50" cy="50" r="42"></circle><circle class="progress-ring-fill" cx="50" cy="50" r="42" stroke-dasharray="${C}" stroke-dashoffset="${offset}"></circle></svg></div>
     </div>
     <div class="white-card">
       <div class="card-title">📝 任务清单</div>
-      <div class="add-row">
-        <input type="text" id="newTaskInput" placeholder="添加新任务..." onkeypress="if(event.key==='Enter')addTask()">
-        <button onclick="addTask()">添加</button>
-      </div>
+      <div class="add-row"><input type="text" id="newTaskInput" placeholder="添加新任务..." onkeypress="if(event.key==='Enter')addTask()"><button onclick="addTask()">添加</button></div>
       <div class="task-list" id="taskList"></div>
     </div>
   `;
@@ -997,6 +927,295 @@ function taskDragEnd(e) {
 }
 
 // ═══════════════════════════════════════
+//  练琴计划
+// ═══════════════════════════════════════
+let pianoCurrentWeek = 1;
+const PIANO_PLAN = {
+  1: {
+    scale: { key: '降G大调 + 降e小调', note: '对应黑键练习曲' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '右手前16小节慢练 ♩=60，手腕放平贴键', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '攻克最弱段落 + 旋律rubato', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '完整演奏一遍 + 力度对比打磨', time: '10-15分钟' }
+    ],
+    chord: 'C调5条基础和弦进行：① I-V-vi-IV ② I-vi-IV-V ③ vi-IV-I-V ④ I-IV-V-I ⑤ IV-V-iii-vi',
+    accompaniment: '伴奏型①八度根音交替 + ②分解1-5-10，用进行①循环',
+    song: '《月亮代表我的心》建立信心',
+    rhythm: '节拍器♩=60~100，弹和弦拍子踩准',
+    sight: '10分钟陌生和弦谱视奏，不许停'
+  },
+  2: {
+    scale: { key: '降A大调 + f小调', note: '对应降A大调即兴曲' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '右手通篇慢速流畅，难点段落反复', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '旋律线条流畅 + 装饰音处理', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '维持手感 + 音乐表现', time: '10-15分钟' }
+    ],
+    chord: 'C调5条进行转位连接，追求最近距离；每条3种弹法',
+    accompaniment: '伴奏型③分解1-3-5-3 + ④琶音上下行',
+    song: '《小幸运》+《好久不见》两首不同风格',
+    rhythm: '节拍器继续，加入八分音符切分',
+    sight: '随机和弦谱视奏10分钟'
+  },
+  3: {
+    scale: { key: 'D大调 + b小调', note: '对应D大调奏鸣曲' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '左手单独练熟：柱式和弦 + 八度跳进', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '中段跑动段落 + 踏板呼吸', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '阿尔贝蒂低音模式观察', time: '10-15分钟' }
+    ],
+    chord: '加入七和弦：Cmaj7/Dm7/Em7/Fmaj7/G7/Am7/Bm7b5；练习原位+转位',
+    accompaniment: '伴奏型⑤半分解（根+柱式）+ ⑥摇滚八度',
+    song: '《童话》副歌情绪推进',
+    rhythm: '十六分音符 Funk 节奏',
+    sight: '视奏10分钟'
+  },
+  4: {
+    scale: { key: '自由复习弱项调', note: '周日重点' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '双手慢合开始，段落衔接处', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '完整演奏 + 录音打磨', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '打磨完成', time: '10-15分钟' }
+    ],
+    chord: '挂留和弦 Csus4/Gsus4；七和弦转位连接',
+    accompaniment: '伴奏型⑦切分节奏 + 复习①~④，一首歌内切换2种型',
+    song: '《那些年》前奏间奏处理',
+    rhythm: '反拍（雷鬼/Ska）',
+    sight: '视奏10分钟'
+  },
+  5: {
+    scale: { key: 'G调、F调、D调', note: '12调移调开始' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '中速合手，逐步提速至♩=72', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '难点攻克，完整有音乐性', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '维持 + 细节打磨', time: '10-15分钟' }
+    ],
+    chord: '用 I→V→vi→IV 攻克 G/F/D 调；嘴唱级数',
+    accompaniment: '七种伴奏型混合练习',
+    song: '《演员》Bb调实战',
+    rhythm: '跟鼓机/drum track 100bpm',
+    sight: '视奏10分钟'
+  },
+  6: {
+    scale: { key: 'Bb调、A调、Eb调', note: '累计6个调' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '提速至♩=72，追求流畅', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '完整演奏录音', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '打磨完成', time: '10-15分钟' }
+    ],
+    chord: 'Bb/A/Eb调 I→V→vi→IV，三个调之间不中断切换',
+    accompaniment: '七种伴奏型 + 风格切换',
+    song: '《说好不哭》+ 自选1首',
+    rhythm: '三连音 Shuffle 感',
+    sight: '视奏10分钟'
+  },
+  7: {
+    scale: { key: 'E调、Ab调、B调', note: '累计9个调' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '提速打磨，接近♩=80', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '有音乐性的完整演奏', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '最终打磨', time: '10-15分钟' }
+    ],
+    chord: 'E/Ab/B调进行，挑战多升降号',
+    accompaniment: '全部七种 + 移调',
+    song: '《起风了》多调性切换',
+    rhythm: '节拍器只响2、4拍',
+    sight: '新歌和弦谱10分钟上手'
+  },
+  8: {
+    scale: { key: 'Db调、Gb/F#调 + 复习全部', note: '12调通关' },
+    classical: [
+      { title: '黑键练习曲 Op.10 No.5', focus: '接近原速80%（♩=80~90）', time: '25-30分钟' },
+      { title: '降A大调即兴曲 Op.29', focus: '完成 ✅', time: '15-20分钟' },
+      { title: '贝多芬 D大调奏鸣曲', focus: '完成 ✅', time: '10-15分钟' }
+    ],
+    chord: 'Db/Gb/F#调，12调全部通关',
+    accompaniment: '全部七种在不同调上熟练切换',
+    song: '自选3首复习 + 综合验收',
+    rhythm: '节拍器只响第1拍',
+    sight: '视奏10分钟'
+  }
+};
+
+const PIANO_PROGRESS = [
+  { id: 'blackkey', name: '黑键练习曲', weeks: 8, color: '#6bb6ff' },
+  { id: 'impromptu', name: '降A大调即兴曲', weeks: 8, color: '#ffd966' },
+  { id: 'sonata', name: '贝多芬 D大调奏鸣曲', weeks: 8, color: '#95e1b8' }
+];
+
+function getPianoState() { return loadData('zuzu_piano_state') || { week: 1, records: {} }; }
+function savePianoState(state) { saveData('zuzu_piano_state', state); }
+
+function renderPiano(el) {
+  const state = getPianoState();
+  pianoCurrentWeek = state.week || 1;
+  const plan = PIANO_PLAN[pianoCurrentWeek];
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key);
+
+  if (tasks === null) {
+    tasks = buildPianoTasks(plan, pianoCurrentWeek, today);
+    saveData(key, tasks);
+  }
+
+  const done = tasks.filter(t => t.done).length;
+  const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
+
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title">🎹 第 ${pianoCurrentWeek} 周练琴计划</div>
+      <div class="piano-week-bar" id="weekBar"></div>
+      <div class="piano-progress-card" id="pianoProgress"></div>
+      <div class="piano-block">
+        <div class="piano-block-title">🎼 古典维持（60~75分钟）</div>
+        <div class="piano-block-sub">今日调性：${plan.scale.key} — ${plan.scale.note}</div>
+        <div id="classicalList"></div>
+      </div>
+      <div class="piano-block">
+        <div class="piano-block-title">🎛️ 和弦 + 移调（60~75分钟）</div>
+        <div id="chordList"></div>
+      </div>
+      <div class="piano-block">
+        <div class="piano-block-title">🥁 伴奏 / 扒歌 / 实战 / 节奏</div>
+        <div id="otherList"></div>
+      </div>
+      <div class="white-card" style="margin-top:14px">
+        <div class="card-title">✅ 今日完成 ${done}/${tasks.length} 项 · ${pct}%</div>
+        <div id="pianoTaskList"></div>
+      </div>
+    </div>
+  `;
+
+  // 周选择按钮
+  const bar = document.getElementById('weekBar');
+  bar.innerHTML = Array.from({length:8}, (_, i) => i+1).map(w =>
+    `<button class="${w===pianoCurrentWeek?'active':''}" onclick="setPianoWeek(${w})">第${w}周</button>`
+  ).join('');
+
+  // 进度卡片
+  document.getElementById('pianoProgress').innerHTML = PIANO_PROGRESS.map(p => {
+    const pct = Math.min(100, Math.round((pianoCurrentWeek / p.weeks) * 100));
+    return `
+      <div class="piano-piece">
+        <div class="pp-name">${p.name}</div>
+        <div class="pp-status">第 ${pianoCurrentWeek}/8 周</div>
+        <div class="pp-bar"><div class="pp-fill" style="width:${pct}%;background:${p.color}"></div></div>
+      </div>`;
+  }).join('');
+
+  // 分类渲染任务
+  renderPianoTasksByCategory(tasks, key, plan);
+}
+
+function buildPianoTasks(plan, week, date) {
+  const tasks = [];
+  plan.classical.forEach(c => {
+    tasks.push({ id: 'cls_'+Date.now()+Math.random(), cat:'classical', title: c.title, desc: `${c.focus} · ${c.time}`, done: false });
+  });
+  tasks.push({ id: 'chord_'+Date.now(), cat:'chord', title: '和弦/移调训练', desc: plan.chord, done: false });
+  tasks.push({ id: 'acc_'+Date.now(), cat:'other', title: '左手伴奏型', desc: plan.accompaniment, done: false });
+  tasks.push({ id: 'song_'+Date.now(), cat:'other', title: '歌曲实战', desc: plan.song, done: false });
+  tasks.push({ id: 'rhythm_'+Date.now(), cat:'other', title: '节奏训练', desc: plan.rhythm, done: false });
+  tasks.push({ id: 'sight_'+Date.now(), cat:'other', title: '视奏训练', desc: plan.sight, done: false });
+  return tasks;
+}
+
+function renderPianoTasksByCategory(tasks, key, plan) {
+  const classicalList = document.getElementById('classicalList');
+  const chordList = document.getElementById('chordList');
+  const otherList = document.getElementById('otherList');
+  const pianoTaskList = document.getElementById('pianoTaskList');
+
+  classicalList.innerHTML = plan.classical.map(c => `
+    <div class="piano-item">
+      <input type="checkbox" onchange="togglePianoByText('${escapeHtml(c.title)}')">
+      <div class="pi-content"><div class="pi-title">${escapeHtml(c.title)}</div><div class="pi-desc">${escapeHtml(c.focus)} · ${escapeHtml(c.time)}</div></div>
+    </div>
+  `).join('');
+
+  chordList.innerHTML = `<div class="piano-item"><input type="checkbox" onchange="togglePianoByText('和弦/移调训练')"><div class="pi-content"><div class="pi-title">和弦与移调</div><div class="pi-desc">${escapeHtml(plan.chord)}</div></div></div>`;
+
+  otherList.innerHTML = [
+    { title: '左手伴奏型', desc: plan.accompaniment },
+    { title: '歌曲实战', desc: plan.song },
+    { title: '节奏训练', desc: plan.rhythm },
+    { title: '视奏训练', desc: plan.sight }
+  ].map(o => `
+    <div class="piano-item"><input type="checkbox" onchange="togglePianoByText('${escapeHtml(o.title)}')">
+      <div class="pi-content"><div class="pi-title">${escapeHtml(o.title)}</div><div class="pi-desc">${escapeHtml(o.desc)}</div></div>
+    </div>
+  `).join('');
+
+  if (!tasks.length) {
+    pianoTaskList.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:13px">✨ 暂无任务</div>`;
+    return;
+  }
+  pianoTaskList.innerHTML = tasks.map(t => `
+    <div class="piano-item ${t.done?'done':''}" data-id="${t.id}">
+      <input type="checkbox" ${t.done?'checked':''} onchange="togglePianoTask('${t.id}')">
+      <div class="pi-content"><div class="pi-title">${escapeHtml(t.title)}</div><div class="pi-desc">${escapeHtml(t.desc)}</div></div>
+      <button class="pi-del" onclick="deletePianoTask('${t.id}')">✕</button>
+    </div>
+  `).join('') + `
+    <div class="piano-add-row">
+      <input type="text" id="pianoCustomInput" placeholder="添加自定义练习..." onkeypress="if(event.key==='Enter')addPianoCustom()">
+      <button onclick="addPianoCustom()">添加</button>
+    </div>
+  `;
+}
+
+function togglePianoByText(title) {
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  const found = tasks.find(t => t.title === title);
+  if (found) {
+    found.done = !found.done;
+  } else {
+    tasks.push({ id: 'custom_'+Date.now(), cat:'custom', title, desc:'从分类区勾选', done:true });
+  }
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function togglePianoTask(id) {
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  tasks = tasks.map(t => t.id === id ? {...t, done: !t.done} : t);
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function deletePianoTask(id) {
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  tasks = tasks.filter(t => t.id !== id);
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function addPianoCustom() {
+  const input = document.getElementById('pianoCustomInput');
+  const text = input.value.trim(); if (!text) return;
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  tasks.push({ id: 'custom_'+Date.now(), cat:'custom', title: text, desc:'自定义练习', done:false });
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function setPianoWeek(w) {
+  let state = getPianoState();
+  state.week = w;
+  savePianoState(state);
+  renderPiano(document.getElementById('content'));
+}
+
+// ═══════════════════════════════════════
 //  日历
 // ═══════════════════════════════════════
 let calDate = new Date();
@@ -1006,7 +1225,6 @@ function renderCalendar(el) {
   const year = calDate.getFullYear();
   const month = calDate.getMonth();
   const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const startWeekday = firstDay.getDay();
@@ -1014,19 +1232,13 @@ function renderCalendar(el) {
   const prevMonthLast = new Date(year, month, 0).getDate();
 
   let cells = [];
-  for (let i = startWeekday - 1; i >= 0; i--) {
-    cells.push({ day: prevMonthLast - i, otherMonth: true, date: null });
-  }
+  for (let i = startWeekday - 1; i >= 0; i--) cells.push({ day: prevMonthLast - i, otherMonth: true, date: null });
   for (let d = 1; d <= daysInMonth; d++) {
     const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     cells.push({ day: d, otherMonth: false, date: ds });
   }
   const remaining = 7 - (cells.length % 7);
-  if (remaining < 7) {
-    for (let d = 1; d <= remaining; d++) {
-      cells.push({ day: d, otherMonth: true, date: null });
-    }
-  }
+  if (remaining < 7) for (let d = 1; d <= remaining; d++) cells.push({ day: d, otherMonth: true, date: null });
 
   const today = todayStr();
   const events = loadData('zuzu_calendar_events') || {};
@@ -1034,68 +1246,38 @@ function renderCalendar(el) {
 
   el.innerHTML = `
     <div class="white-card">
-      <div class="cal-header">
-        <button onclick="calPrevMonth()">‹</button>
-        <span class="cal-month">${year}年 ${monthNames[month]}</span>
-        <button onclick="calNextMonth()">›</button>
-      </div>
-      <div class="cal-weekdays">
-        ${weekdays.map(w => `<div>${w}</div>`).join('')}
-      </div>
-      <div class="cal-grid">
-        ${cells.map(c => {
-          const isToday = c.date === today;
-          const isSelected = c.date === calSelectedDate;
-          const hasEvent = c.date && events[c.date] && events[c.date].length > 0;
-          const cls = [
-            'cal-day',
-            c.otherMonth ? 'other-month' : '',
-            isToday ? 'today' : '',
-            isSelected ? 'selected' : '',
-            hasEvent ? 'has-event' : ''
-          ].filter(Boolean).join(' ');
-          return `<div class="${cls}" ${c.date ? `onclick="calSelectDate('${c.date}')"` : ''}>${c.day}</div>`;
-        }).join('')}
-      </div>
+      <div class="cal-header"><button onclick="calPrevMonth()">‹</button><span class="cal-month">${year}年 ${monthNames[month]}</span><button onclick="calNextMonth()">›</button></div>
+      <div class="cal-weekdays">${weekdays.map(w => `<div>${w}</div>`).join('')}</div>
+      <div class="cal-grid">${cells.map(c => {
+        const isToday = c.date === today;
+        const isSelected = c.date === calSelectedDate;
+        const hasEvent = c.date && events[c.date] && events[c.date].length > 0;
+        const cls = ['cal-day', c.otherMonth ? 'other-month' : '', isToday ? 'today' : '', isSelected ? 'selected' : '', hasEvent ? 'has-event' : ''].filter(Boolean).join(' ');
+        return `<div class="${cls}" ${c.date ? `onclick="calSelectDate('${c.date}')"` : ''}>${c.day}</div>`;
+      }).join('')}</div>
     </div>
     <div class="white-card">
-      <div class="cal-events">
-        <h4>📌 ${calSelectedDate} 的事件</h4>
-        <div id="calEventList"></div>
-        <div class="cal-event-add">
-          <input type="text" id="calEventInput" placeholder="添加事件（如：练琴2小时）" onkeypress="if(event.key==='Enter')calAddEvent()">
-          <button onclick="calAddEvent()">添加</button>
-        </div>
+      <div class="cal-events"><h4>📌 ${calSelectedDate} 的事件</h4><div id="calEventList"></div>
+        <div class="cal-event-add"><input type="text" id="calEventInput" placeholder="添加事件（如：练琴2小时）" onkeypress="if(event.key==='Enter')calAddEvent()"><button onclick="calAddEvent()">添加</button></div>
       </div>
-    </div>
-  `;
+    </div>`;
   calRenderEvents(events);
 }
-
 function calRenderEvents(events) {
   const list = document.getElementById('calEventList');
   if (!list) return;
   const evs = events[calSelectedDate] || [];
-  if (!evs.length) {
-    list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:16px;font-size:13px">✨ 这天暂无事件</div>`;
-    return;
-  }
+  if (!evs.length) { list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:16px;font-size:13px">✨ 这天暂无事件</div>`; return; }
   list.innerHTML = evs.map((e, i) => `
-    <div class="cal-event-item">
-      <span class="ev-dot"></span>
-      <span class="ev-text">${escapeHtml(e)}</span>
-      <button class="ev-del" onclick="calDelEvent(${i})">✕</button>
-    </div>
+    <div class="cal-event-item"><span class="ev-dot"></span><span class="ev-text">${escapeHtml(e)}</span><button class="ev-del" onclick="calDelEvent(${i})">✕</button></div>
   `).join('');
 }
-
 function calSelectDate(date) { calSelectedDate = date; renderCalendar(document.getElementById('content')); }
 function calPrevMonth() { calDate.setMonth(calDate.getMonth() - 1); renderCalendar(document.getElementById('content')); }
 function calNextMonth() { calDate.setMonth(calDate.getMonth() + 1); renderCalendar(document.getElementById('content')); }
 function calAddEvent() {
   const input = document.getElementById('calEventInput');
-  const text = input.value.trim();
-  if (!text) return;
+  const text = input.value.trim(); if (!text) return;
   let events = loadData('zuzu_calendar_events') || {};
   if (!events[calSelectedDate]) events[calSelectedDate] = [];
   events[calSelectedDate].push(text);
@@ -1110,175 +1292,6 @@ function calDelEvent(idx) {
   if (events[calSelectedDate].length === 0) delete events[calSelectedDate];
   saveData('zuzu_calendar_events', events);
   renderCalendar(document.getElementById('content'));
-}
-
-// ═══════════════════════════════════════
-//  学生管理
-// ═══════════════════════════════════════
-const STU_COLORS = ['#5b9bd5','#ff9eb5','#95e1b8','#ffd966','#ffa94d','#c89bef','#6fc8e8','#ff8e7a'];
-let stuEditingId = null;
-let stuSelectedColor = STU_COLORS[0];
-
-function getStudents() { return loadData('zuzu_students') || []; }
-function saveStudents(list) { saveData('zuzu_students', list); }
-
-function renderStudent(el) {
-  const students = getStudents();
-  el.innerHTML = `
-    <div class="white-card">
-      <div class="card-title">💼 学生管理工作台</div>
-      <div class="stu-toolbar">
-        <input type="text" class="stu-search" id="stuSearch" placeholder="🔍 搜索学生姓名..." oninput="filterStudents()">
-        <button class="stu-add-btn" onclick="openStuModal()">➕ 添加学生</button>
-      </div>
-      <div class="stu-grid" id="stuGrid"></div>
-    </div>
-  `;
-  renderStudentGrid(students);
-}
-
-function renderStudentGrid(students) {
-  const grid = document.getElementById('stuGrid');
-  if (!grid) return;
-  if (!students.length) {
-    grid.innerHTML = `<div class="stu-empty">📭 还没有学生档案<br><span style="font-size:12px;color:var(--text-dim)">点击「添加学生」开始记录</span></div>`;
-    return;
-  }
-  grid.innerHTML = students.map(s => {
-    const initial = s.name ? s.name.charAt(0) : '?';
-    const records = loadData(`zuzu_stu_records_${s.id}`) || [];
-    const recHtml = records.map((r, i) => `
-      <div class="stu-record-item">
-        <span class="rec-date">${r.date}</span>
-        <span class="rec-text">${escapeHtml(r.text)}</span>
-        <button class="rec-del" onclick="delStuRecord('${s.id}',${i})">✕</button>
-      </div>
-    `).join('');
-    return `
-      <div class="stu-card">
-        <div class="stu-card-header">
-          <div class="stu-avatar" style="background:${s.color || STU_COLORS[0]}">${escapeHtml(initial)}</div>
-          <div class="stu-info">
-            <div class="stu-name">${escapeHtml(s.name)}</div>
-            <div class="stu-meta">${escapeHtml(s.grade||'未设置')} · ${escapeHtml(s.subject||'未设置科目')}</div>
-            ${s.note ? `<div class="stu-meta" style="margin-top:1px">📝 ${escapeHtml(s.note)}</div>` : ''}
-          </div>
-          <div class="stu-actions">
-            <button onclick="openStuModal('${s.id}')">✏️</button>
-            <button class="danger" onclick="delStudent('${s.id}')">🗑</button>
-          </div>
-        </div>
-        <div class="stu-records">
-          <div class="stu-records-title">📚 学习记录 (${records.length})</div>
-          ${recHtml || '<div style="font-size:12px;color:var(--text-dim);padding:6px 0">暂无学习记录</div>'}
-          <div class="stu-record-add">
-            <input type="text" placeholder="记录学习情况..." onkeypress="if(event.key==='Enter')addStuRecord('${s.id}',this)"
-              onclick="event.stopPropagation()">
-            <button onclick="addStuRecordFromBtn('${s.id}')">记录</button>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function filterStudents() {
-  const q = (document.getElementById('stuSearch')?.value || '').trim().toLowerCase();
-  let students = getStudents();
-  if (q) students = students.filter(s => s.name.toLowerCase().includes(q));
-  renderStudentGrid(students);
-}
-
-function openStuModal(id) {
-  stuEditingId = id || null;
-  document.getElementById('stuModalTitle').textContent = id ? '✏️ 编辑学生' : '👤 添加学生';
-  // 渲染颜色选择器
-  const pick = document.getElementById('stuColorPick');
-  pick.innerHTML = STU_COLORS.map(c =>
-    `<button class="${c===stuSelectedColor?'selected':''}" style="background:${c}" onclick="selectStuColor('${c}')"></button>`
-  ).join('');
-
-  if (id) {
-    const s = getStudents().find(x => x.id === id);
-    if (s) {
-      document.getElementById('stuName').value = s.name || '';
-      document.getElementById('stuGrade').value = s.grade || '';
-      document.getElementById('stuSubject').value = s.subject || '';
-      document.getElementById('stuNote').value = s.note || '';
-      stuSelectedColor = s.color || STU_COLORS[0];
-      pick.innerHTML = STU_COLORS.map(c =>
-        `<button class="${c===stuSelectedColor?'selected':''}" style="background:${c}" onclick="selectStuColor('${c}')"></button>`
-      ).join('');
-    }
-  } else {
-    document.getElementById('stuName').value = '';
-    document.getElementById('stuGrade').value = '';
-    document.getElementById('stuSubject').value = '';
-    document.getElementById('stuNote').value = '';
-    stuSelectedColor = STU_COLORS[0];
-  }
-  document.getElementById('stuModal').classList.add('show');
-}
-
-function closeStuModal() { document.getElementById('stuModal').classList.remove('show'); }
-
-function selectStuColor(c) {
-  stuSelectedColor = c;
-  document.querySelectorAll('#stuColorPick button').forEach(b => b.classList.remove('selected'));
-  event.target.classList.add('selected');
-}
-
-function saveStudent() {
-  const name = document.getElementById('stuName').value.trim();
-  if (!name) { showModal('⚠️', '请输入学生姓名'); return; }
-  const grade = document.getElementById('stuGrade').value.trim();
-  const subject = document.getElementById('stuSubject').value.trim();
-  const note = document.getElementById('stuNote').value.trim();
-  let students = getStudents();
-  if (stuEditingId) {
-    students = students.map(s => s.id === stuEditingId
-      ? { ...s, name, grade, subject, note, color: stuSelectedColor } : s);
-  } else {
-    students.push({ id: 'stu_' + Date.now(), name, grade, subject, note, color: stuSelectedColor });
-  }
-  saveStudents(students);
-  closeStuModal();
-  renderStudent(document.getElementById('content'));
-}
-
-function delStudent(id) {
-  if (!confirm('删除这个学生档案吗？学习记录也会一起删除。')) return;
-  let students = getStudents().filter(s => s.id !== id);
-  saveStudents(students);
-  localStorage.removeItem(`zuzu_stu_records_${id}`);
-  renderStudent(document.getElementById('content'));
-}
-
-function addStuRecord(id, inputEl) {
-  const text = inputEl.value.trim();
-  if (!text) return;
-  const key = `zuzu_stu_records_${id}`;
-  let records = loadData(key) || [];
-  records.unshift({ date: todayStr(), text });
-  saveData(key, records);
-  inputEl.value = '';
-  renderStudent(document.getElementById('content'));
-}
-
-function addStuRecordFromBtn(id) {
-  const cards = document.querySelectorAll('.stu-card');
-  for (const card of cards) {
-    const input = card.querySelector('.stu-record-add input');
-    if (input) { addStuRecord(id, input); break; }
-  }
-}
-
-function delStuRecord(stuId, idx) {
-  const key = `zuzu_stu_records_${stuId}`;
-  let records = loadData(key) || [];
-  records.splice(idx, 1);
-  saveData(key, records);
-  renderStudent(document.getElementById('content'));
 }
 
 // ═══════════════════════════════════════
@@ -1307,22 +1320,12 @@ function renderAccount(el) {
         <button onclick="addAccount()">记一笔</button>
       </div>
       <div class="acct-list" id="acctList"></div>
-      <div class="acct-summary">
-        <div>收入：<span>+${income}</span></div>
-        <div>支出：<span>-${expense}</span></div>
-        <div>结余：<span>${balance}</span></div>
-      </div>
-    </div>
-  `;
+      <div class="acct-summary"><div>收入：<span>+${income}</span></div><div>支出：<span>-${expense}</span></div><div>结余：<span>${balance}</span></div></div>
+    </div>`;
   const list = document.getElementById('acctList');
   if (!entries.length) { list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:13px">📭 今天还没记账</div>`; return; }
   list.innerHTML = entries.map((e, i) => `
-    <div class="acct-item">
-      <span class="acct-type ${e.type}">${e.type==='in'?'收入':'支出'}</span>
-      <span>${escapeHtml(e.note||'无备注')}</span>
-      <span class="acct-amount ${e.type}">${e.type==='in'?'+':'-'}${e.amount}</span>
-      <button class="acct-del" onclick="delAccount(${i})">✕</button>
-    </div>
+    <div class="acct-item"><span class="acct-type ${e.type}">${e.type==='in'?'收入':'支出'}</span><span>${escapeHtml(e.note||'无备注')}</span><span class="acct-amount ${e.type}">${e.type==='in'?'+':'-'}${e.amount}</span><button class="acct-del" onclick="delAccount(${i})">✕</button></div>
   `).join('');
 }
 function addAccount() {
@@ -1345,6 +1348,125 @@ function delAccount(i) {
 }
 
 // ═══════════════════════════════════════
+//  学生管理
+// ═══════════════════════════════════════
+const STU_COLORS = ['#5b9bd5','#ff9eb5','#95e1b8','#ffd966','#ffa94d','#c89bef','#6fc8e8','#ff8e7a'];
+let stuEditingId = null;
+let stuSelectedColor = STU_COLORS[0];
+
+function getStudents() { return loadData('zuzu_students') || []; }
+function saveStudents(list) { saveData('zuzu_students', list); }
+
+function renderStudent(el) {
+  const students = getStudents();
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="card-title">💼 学生管理工作台</div>
+      <div class="stu-toolbar"><input type="text" class="stu-search" id="stuSearch" placeholder="🔍 搜索学生姓名..." oninput="filterStudents()"><button class="stu-add-btn" onclick="openStuModal()">➕ 添加学生</button></div>
+      <div class="stu-grid" id="stuGrid"></div>
+    </div>`;
+  renderStudentGrid(students);
+}
+function renderStudentGrid(students) {
+  const grid = document.getElementById('stuGrid');
+  if (!grid) return;
+  if (!students.length) { grid.innerHTML = `<div class="stu-empty">📭 还没有学生档案<br><span style="font-size:12px;color:var(--text-dim)">点击「添加学生」开始记录</span></div>`; return; }
+  grid.innerHTML = students.map(s => {
+    const initial = s.name ? s.name.charAt(0) : '?';
+    const records = loadData(`zuzu_stu_records_${s.id}`) || [];
+    const recHtml = records.map((r, i) => `
+      <div class="stu-record-item"><span class="rec-date">${r.date}</span><span class="rec-text">${escapeHtml(r.text)}</span><button class="rec-del" onclick="delStuRecord('${s.id}',${i})">✕</button></div>
+    `).join('');
+    return `
+      <div class="stu-card">
+        <div class="stu-card-header">
+          <div class="stu-avatar" style="background:${s.color || STU_COLORS[0]}">${escapeHtml(initial)}</div>
+          <div class="stu-info"><div class="stu-name">${escapeHtml(s.name)}</div><div class="stu-meta">${escapeHtml(s.grade||'未设置')} · ${escapeHtml(s.subject||'未设置科目')}</div>${s.note ? `<div class="stu-meta" style="margin-top:1px">📝 ${escapeHtml(s.note)}</div>` : ''}</div>
+          <div class="stu-actions"><button onclick="openStuModal('${s.id}')">✏️</button><button class="danger" onclick="delStudent('${s.id}')">🗑</button></div>
+        </div>
+        <div class="stu-records"><div class="stu-records-title">📚 学习记录 (${records.length})</div>${recHtml || '<div style="font-size:12px;color:var(--text-dim);padding:6px 0">暂无学习记录</div>'}
+          <div class="stu-record-add"><input type="text" placeholder="记录学习情况..." onclick="event.stopPropagation()"><button onclick="addStuRecordFromBtn('${s.id}')">记录</button></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+function filterStudents() {
+  const q = (document.getElementById('stuSearch')?.value || '').trim().toLowerCase();
+  let students = getStudents();
+  if (q) students = students.filter(s => s.name.toLowerCase().includes(q));
+  renderStudentGrid(students);
+}
+function openStuModal(id) {
+  stuEditingId = id || null;
+  document.getElementById('stuModalTitle').textContent = id ? '✏️ 编辑学生' : '👤 添加学生';
+  const pick = document.getElementById('stuColorPick');
+  stuSelectedColor = STU_COLORS[0];
+  if (id) {
+    const s = getStudents().find(x => x.id === id);
+    if (s) {
+      document.getElementById('stuName').value = s.name || '';
+      document.getElementById('stuGrade').value = s.grade || '';
+      document.getElementById('stuSubject').value = s.subject || '';
+      document.getElementById('stuNote').value = s.note || '';
+      stuSelectedColor = s.color || STU_COLORS[0];
+    }
+  } else {
+    document.getElementById('stuName').value = '';
+    document.getElementById('stuGrade').value = '';
+    document.getElementById('stuSubject').value = '';
+    document.getElementById('stuNote').value = '';
+  }
+  pick.innerHTML = STU_COLORS.map(c => `<button class="${c===stuSelectedColor?'selected':''}" style="background:${c}" onclick="selectStuColor('${c}')"></button>`).join('');
+  document.getElementById('stuModal').classList.add('show');
+}
+function closeStuModal() { document.getElementById('stuModal').classList.remove('show'); }
+function selectStuColor(c) { stuSelectedColor = c; document.querySelectorAll('#stuColorPick button').forEach(b => b.classList.remove('selected')); event.target.classList.add('selected'); }
+function saveStudent() {
+  const name = document.getElementById('stuName').value.trim();
+  if (!name) { showModal('⚠️', '请输入学生姓名'); return; }
+  const grade = document.getElementById('stuGrade').value.trim();
+  const subject = document.getElementById('stuSubject').value.trim();
+  const note = document.getElementById('stuNote').value.trim();
+  let students = getStudents();
+  if (stuEditingId) students = students.map(s => s.id === stuEditingId ? { ...s, name, grade, subject, note, color: stuSelectedColor } : s);
+  else students.push({ id: 'stu_' + Date.now(), name, grade, subject, note, color: stuSelectedColor });
+  saveStudents(students);
+  closeStuModal();
+  renderStudent(document.getElementById('content'));
+}
+function delStudent(id) {
+  if (!confirm('删除这个学生档案吗？学习记录也会一起删除。')) return;
+  let students = getStudents().filter(s => s.id !== id);
+  saveStudents(students);
+  localStorage.removeItem(`zuzu_stu_records_${id}`);
+  renderStudent(document.getElementById('content'));
+}
+function addStuRecord(id, inputEl) {
+  const text = inputEl.value.trim();
+  if (!text) return;
+  const key = `zuzu_stu_records_${id}`;
+  let records = loadData(key) || [];
+  records.unshift({ date: todayStr(), text });
+  saveData(key, records);
+  inputEl.value = '';
+  renderStudent(document.getElementById('content'));
+}
+function addStuRecordFromBtn(id) {
+  const cards = document.querySelectorAll('.stu-card');
+  for (const card of cards) {
+    const input = card.querySelector('.stu-record-add input');
+    if (input) { addStuRecord(id, input); break; }
+  }
+}
+function delStuRecord(stuId, idx) {
+  const key = `zuzu_stu_records_${stuId}`;
+  let records = loadData(key) || [];
+  records.splice(idx, 1);
+  saveData(key, records);
+  renderStudent(document.getElementById('content'));
+}
+
+// ═══════════════════════════════════════
 //  通用笔记
 // ═══════════════════════════════════════
 function renderNote(el, section) {
@@ -1353,17 +1475,11 @@ function renderNote(el, section) {
   el.innerHTML = `
     <div class="white-card">
       <div class="card-title">${section.icon} ${section.name} · ${todayStr()}</div>
-      <div class="note-editor">
-        <textarea id="noteArea" placeholder="${ph}" oninput="saveText('${key}',this.value);updateNoteStat()">${escapeHtml(loadText(key))}</textarea>
-      </div>
+      <div class="note-editor"><textarea id="noteArea" placeholder="${ph}" oninput="saveText('${key}',this.value);updateNoteStat()">${escapeHtml(loadText(key))}</textarea></div>
       <div style="margin-top:8px;font-size:12px;color:var(--text-dim);text-align:right" id="noteStat">${loadText(key).length} 字</div>
-    </div>
-  `;
+    </div>`;
 }
-function updateNoteStat() {
-  const ta = document.getElementById('noteArea');
-  if (ta) document.getElementById('noteStat').textContent = `${ta.value.length} 字`;
-}
+function updateNoteStat() { const ta = document.getElementById('noteArea'); if (ta) document.getElementById('noteStat').textContent = `${ta.value.length} 字`; }
 
 // ═══════════════════════════════════════
 //  工具
@@ -1432,37 +1548,19 @@ document.addEventListener('visibilitychange', () => {
 // ═══════════════════════════════════════
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    // 1. 先注销所有旧的 SW（防止旧缓存拦截）
-    navigator.serviceWorker.getRegistrations().then(regs => {
-      regs.forEach(r => r.unregister());
-    });
-
-    // 2. 注册新 SW（用新文件名，确保不被旧缓存拦截）
+    navigator.serviceWorker.getRegistrations().then(regs => { regs.forEach(r => r.unregister()); });
     navigator.serviceWorker.register('sw7.js').then(reg => {
       reg.addEventListener('updatefound', () => {
         const newSW = reg.installing;
         if (newSW) {
           newSW.addEventListener('statechange', () => {
-            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-              newSW.postMessage('skipWaiting');
-            }
+            if (newSW.state === 'installed' && navigator.serviceWorker.controller) newSW.postMessage('skipWaiting');
           });
         }
       });
     }).catch(() => {});
-
-    // 3. SW 接管后自动刷新
     let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!refreshing) { refreshing = true; window.location.reload(); }
-    });
-
-    // 4. 如果 3 秒内没有 controllerchange，强制刷新一次页面
-    setTimeout(() => {
-      if (!navigator.serviceWorker.controller) {
-        // 没有 SW 控制页面，正常加载
-      }
-    }, 3000);
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (!refreshing) { refreshing = true; window.location.reload(); } });
   });
 }
 
