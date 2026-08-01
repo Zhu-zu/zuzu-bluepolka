@@ -1,4 +1,4 @@
-const CACHE = 'zuzu-shinchan-v4';
+const CACHE = 'zuzu-shinchan-v5';
 const ASSETS = [
   './',
   './index.html',

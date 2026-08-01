@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="zuzu工作台">
 <meta name="theme-color" content="#4a90d9">
-<link rel="manifest" href="manifest.json?v=4">
-<link rel="apple-touch-icon" href="icon-192.png?v=4">
-<link rel="icon" href="icon-192.png?v=4">
+<link rel="manifest" href="manifest.json?v=5">
+<link rel="apple-touch-icon" href="icon-192.png?v=5">
+<link rel="icon" href="icon-192.png?v=5">
 <title>zuzu 工作台 · 蜡笔小新</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
@@ -393,27 +393,85 @@ body {
 .modal .btn-cancel { background: var(--white); color: var(--text); }
 .modal .modal-btns button:active { transform: translate(2px,2px); box-shadow: none; }
 
+/* ─── 日历 ─── */
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-header .cal-month { font-size: 18px; font-weight: 900; color: var(--blue); }
+.cal-header button {
+  background: var(--white); border: 2px solid var(--outline);
+  border-radius: 10px; padding: 5px 12px; font-family: inherit;
+  font-weight: 800; color: var(--blue); cursor: pointer; box-shadow: var(--shadow-sm);
+  font-size: 14px;
+}
+.cal-header button:active { transform: translate(1px,1px); box-shadow: none; }
+.cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
+.cal-weekdays div { text-align: center; font-size: 11px; font-weight: 800; color: var(--text-dim); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-day {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; border-radius: 10px; cursor: pointer;
+  border: 2px solid transparent; transition: all .12s; position: relative;
+  color: var(--text);
+}
+.cal-day:hover { background: var(--blue-pale); border-color: var(--blue-light); }
+.cal-day.other-month { color: var(--text-dim); opacity: 0.4; }
+.cal-day.today { background: var(--blue); color: var(--white); border: 2px solid var(--outline); box-shadow: var(--shadow-sm); }
+.cal-day.has-event::after {
+  content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+  width: 5px; height: 5px; border-radius: 50%; background: #e53e3e;
+}
+.cal-day.today.has-event::after { background: var(--yellow); }
+.cal-day.selected { border-color: var(--blue); border-width: 2.5px; }
+.cal-events { margin-top: 16px; }
+.cal-events h4 { font-size: 14px; font-weight: 900; color: var(--text); margin-bottom: 10px; }
+.cal-event-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+  background: var(--blue-bg); border: 2px solid var(--outline); border-radius: var(--radius-sm);
+  margin-bottom: 6px; font-size: 13px; font-weight: 700;
+}
+.cal-event-item .ev-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+.cal-event-item .ev-text { flex: 1; }
+.cal-event-item .ev-del { background: none; border: none; color: #cbd5e0; cursor: pointer; font-size: 15px; }
+.cal-event-item .ev-del:hover { color: #e53e3e; }
+.cal-event-add { display: flex; gap: 8px; margin-top: 10px; }
+.cal-event-add input {
+  flex: 1; background: var(--blue-bg); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 9px 12px; font-size: 13px;
+  color: var(--text); font-family: inherit; font-weight: 600;
+}
+.cal-event-add input:focus { outline: none; background: var(--white); }
+.cal-event-add button {
+  background: var(--blue); color: var(--white); border: 2px solid var(--outline);
+  border-radius: var(--radius-sm); padding: 9px 16px; font-size: 13px;
+  font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: var(--shadow-sm);
+}
+.cal-event-add button:active { transform: translate(2px,2px); box-shadow: none; }
+
 /* ─── 滚动条 ─── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 3px; }
 
-/* ─── 响应式 ─── */
+/* ─── 响应式（侧边栏始终在左侧） ─── */
 @media (max-width: 900px) {
-  body { flex-direction: column; }
-  .sidebar {
-    width: 100%; height: auto; flex-direction: row; overflow-x: auto;
-    border-right: none; border-bottom: 3px solid var(--outline); padding: var(--safe-top) 0 0;
-  }
-  .shinchan-header { display: none; }
-  .sidebar-footer { display: none; }
-  .nav { display: flex; padding: 8px 6px; gap: 6px; }
-  .nav-item { margin-bottom: 0; padding: 10px 14px; white-space: nowrap; font-size: 13px; flex-shrink: 0; }
-  .nav-item .drag-handle { font-size: 12px; }
-  .nav-add { margin: 0 4px; padding: 10px 14px; white-space: nowrap; flex-shrink: 0; }
-  .main-header { padding: 14px 18px; }
+  .sidebar { width: 200px; }
+  .shinchan-header { padding: 14px 10px 10px; }
+  .shinchan-avatar { width: 44px; height: 44px; }
+  .shinchan-face { width: 44px; height: 44px; }
+  .shinchan-face::before { top: 11px; left: 8px; width: 10px; box-shadow: 17px 0 0 var(--outline); }
+  .shinchan-face::after { top: 16px; left: 13px; width: 4px; height: 4px; box-shadow: 14px 0 0 var(--outline); }
+  .shinchan-mouth { bottom: 10px; width: 12px; }
+  .shinchan-hair { width: 24px; }
+  .shinchan-name { font-size: 17px; }
+  .shinchan-quote { font-size: 9px; }
+  .nav-item { padding: 9px 10px; font-size: 13px; gap: 7px; }
+  .nav-item .nav-icon { font-size: 16px; width: 18px; }
+  .nav-item .nav-name { font-size: 13px; }
+  .nav-add { font-size: 12px; padding: 8px; }
+  .sidebar-footer { flex-direction: column; gap: 4px; }
+  .sidebar-footer button { font-size: 10px; padding: 5px 6px; }
+  .main-header { padding: 12px 14px; }
   .main-header .page-title { font-size: 18px; }
-  .content { padding: 0 16px 20px; }
+  .content { padding: 0 14px 20px; }
   .stats-row { flex-direction: column; }
   .progress-ring-card { flex: 0 0 auto; }
   .week-grid { grid-template-columns: 1fr; }
@@ -487,6 +545,7 @@ body {
 // ═══════════════════════════════════════
 const DEFAULT_SECTIONS = [
   { id: "plan",     name: "每日计划", icon: "📋", sub: "完成今天的任务！", type: "plan" },
+  { id: "calendar", name: "日历",     icon: "📅", sub: "查看日期与事件", type: "calendar" },
   { id: "diet",     name: "饮食",     icon: "🍱", sub: "记录三餐饮食", type: "note" },
   { id: "piano",    name: "练琴",     icon: "🎹", sub: "练琴记录", type: "note" },
   { id: "account",  name: "账本",     icon: "💰", sub: "记账本", type: "account" },
@@ -648,6 +707,7 @@ function renderContent() {
 
   switch(s.type) {
     case 'plan': renderPlan(content); break;
+    case 'calendar': renderCalendar(content); break;
     case 'account': renderAccount(content); break;
     default: renderNote(content, s); break;
   }
@@ -768,6 +828,139 @@ function taskDrop(e) {
 function taskDragEnd(e) {
   document.querySelectorAll('.task-item').forEach(el => { el.classList.remove('dragging'); el.classList.remove('drag-over'); });
   taskDragId = null;
+}
+
+// ═══════════════════════════════════════
+//  日历
+// ═══════════════════════════════════════
+let calDate = new Date();
+let calSelectedDate = todayStr();
+
+function renderCalendar(el) {
+  const year = calDate.getFullYear();
+  const month = calDate.getMonth();
+  const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const startWeekday = firstDay.getDay(); // 0=周日
+  const daysInMonth = lastDay.getDate();
+  const prevMonthLast = new Date(year, month, 0).getDate();
+
+  // 生成日历格子
+  let cells = [];
+  // 上月尾巴
+  for (let i = startWeekday - 1; i >= 0; i--) {
+    cells.push({ day: prevMonthLast - i, otherMonth: true, date: null });
+  }
+  // 本月
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    cells.push({ day: d, otherMonth: false, date: ds });
+  }
+  // 下月开头补满
+  const remaining = 7 - (cells.length % 7);
+  if (remaining < 7) {
+    for (let d = 1; d <= remaining; d++) {
+      cells.push({ day: d, otherMonth: true, date: null });
+    }
+  }
+
+  const today = todayStr();
+  const events = loadData('zuzu_calendar_events') || {};
+  const weekdays = ['日','一','二','三','四','五','六'];
+
+  el.innerHTML = `
+    <div class="white-card">
+      <div class="cal-header">
+        <button onclick="calPrevMonth()">‹</button>
+        <span class="cal-month">${year}年 ${monthNames[month]}</span>
+        <button onclick="calNextMonth()">›</button>
+      </div>
+      <div class="cal-weekdays">
+        ${weekdays.map(w => `<div>${w}</div>`).join('')}
+      </div>
+      <div class="cal-grid">
+        ${cells.map(c => {
+          const isToday = c.date === today;
+          const isSelected = c.date === calSelectedDate;
+          const hasEvent = c.date && events[c.date] && events[c.date].length > 0;
+          const cls = [
+            'cal-day',
+            c.otherMonth ? 'other-month' : '',
+            isToday ? 'today' : '',
+            isSelected ? 'selected' : '',
+            hasEvent ? 'has-event' : ''
+          ].filter(Boolean).join(' ');
+          return `<div class="${cls}" ${c.date ? `onclick="calSelectDate('${c.date}')"` : ''}>${c.day}</div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="white-card">
+      <div class="cal-events">
+        <h4>📌 ${calSelectedDate} 的事件</h4>
+        <div id="calEventList"></div>
+        <div class="cal-event-add">
+          <input type="text" id="calEventInput" placeholder="添加事件（如：练琴2小时）" onkeypress="if(event.key==='Enter')calAddEvent()">
+          <button onclick="calAddEvent()">添加</button>
+        </div>
+      </div>
+    </div>
+  `;
+  calRenderEvents(events);
+}
+
+function calRenderEvents(events) {
+  const list = document.getElementById('calEventList');
+  if (!list) return;
+  const evs = events[calSelectedDate] || [];
+  if (!evs.length) {
+    list.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:16px;font-size:13px">✨ 这天暂无事件</div>`;
+    return;
+  }
+  list.innerHTML = evs.map((e, i) => `
+    <div class="cal-event-item">
+      <span class="ev-dot"></span>
+      <span class="ev-text">${escapeHtml(e)}</span>
+      <button class="ev-del" onclick="calDelEvent(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+function calSelectDate(date) {
+  calSelectedDate = date;
+  renderCalendar(document.getElementById('content'));
+}
+
+function calPrevMonth() {
+  calDate.setMonth(calDate.getMonth() - 1);
+  renderCalendar(document.getElementById('content'));
+}
+
+function calNextMonth() {
+  calDate.setMonth(calDate.getMonth() + 1);
+  renderCalendar(document.getElementById('content'));
+}
+
+function calAddEvent() {
+  const input = document.getElementById('calEventInput');
+  const text = input.value.trim();
+  if (!text) return;
+  let events = loadData('zuzu_calendar_events') || {};
+  if (!events[calSelectedDate]) events[calSelectedDate] = [];
+  events[calSelectedDate].push(text);
+  saveData('zuzu_calendar_events', events);
+  input.value = '';
+  renderCalendar(document.getElementById('content'));
+}
+
+function calDelEvent(idx) {
+  let events = loadData('zuzu_calendar_events') || {};
+  if (!events[calSelectedDate]) return;
+  events[calSelectedDate].splice(idx, 1);
+  if (events[calSelectedDate].length === 0) delete events[calSelectedDate];
+  saveData('zuzu_calendar_events', events);
+  renderCalendar(document.getElementById('content'));
 }
 
 // ═══════════════════════════════════════
@@ -953,7 +1146,7 @@ document.addEventListener('visibilitychange', () => {
 // ═══════════════════════════════════════
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=4').then(reg => {
+    navigator.serviceWorker.register('sw.js?v=5').then(reg => {
       // 检测到新 SW 就自动激活
       reg.addEventListener('updatefound', () => {
         const newSW = reg.installing;
