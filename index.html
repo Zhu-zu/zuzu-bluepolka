@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="zuzu工作台">
 <meta name="theme-color" content="#4a90d9">
-<link rel="manifest" href="manifest.json?v=3">
-<link rel="apple-touch-icon" href="icon-192.png?v=3">
-<link rel="icon" href="icon-192.png?v=3">
+<link rel="manifest" href="manifest.json?v=4">
+<link rel="apple-touch-icon" href="icon-192.png?v=4">
+<link rel="icon" href="icon-192.png?v=4">
 <title>zuzu 工作台 · 蜡笔小新</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
@@ -148,12 +148,12 @@ body {
 .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; flex-shrink: 0; }
 .nav-item .nav-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nav-item .nav-delete {
-  background: none; border: none; color: var(--text-dim);
-  font-size: 14px; cursor: pointer; padding: 2px 4px;
-  opacity: 0; transition: opacity .15s;
+  background: var(--white); border: 1.5px solid var(--outline);
+  color: #e53e3e; font-size: 12px; cursor: pointer;
+  padding: 1px 5px; border-radius: 6px; flex-shrink: 0;
+  opacity: 0.5; transition: opacity .15s; line-height: 1.2;
 }
-.nav-item:hover .nav-delete { opacity: 1; }
-.nav-item .nav-delete:hover { color: #e53e3e; }
+.nav-item .nav-delete:hover { opacity: 1; background: #fee2e2; }
 .nav-item.dragging { opacity: 0.4; border-style: dashed; }
 .nav-item.drag-over { border-color: var(--blue); background: var(--blue-pale); }
 
@@ -178,6 +178,8 @@ body {
   box-shadow: var(--shadow-sm);
 }
 .sidebar-footer button:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 rgba(45,55,72,0.1); }
+.sidebar-footer button.active { background: var(--blue); color: var(--white); }
+.sidebar-footer .wake-toggle.active { background: var(--yellow); color: var(--outline); }
 
 /* ─── 主内容区 ─── */
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
@@ -407,7 +409,7 @@ body {
   .sidebar-footer { display: none; }
   .nav { display: flex; padding: 8px 6px; gap: 6px; }
   .nav-item { margin-bottom: 0; padding: 10px 14px; white-space: nowrap; font-size: 13px; flex-shrink: 0; }
-  .nav-item .drag-handle, .nav-item .nav-delete { display: none; }
+  .nav-item .drag-handle { font-size: 12px; }
   .nav-add { margin: 0 4px; padding: 10px 14px; white-space: nowrap; flex-shrink: 0; }
   .main-header { padding: 14px 18px; }
   .main-header .page-title { font-size: 18px; }
@@ -437,6 +439,7 @@ body {
   <div class="nav" id="nav"></div>
   <div class="nav-add" onclick="openAddSectionModal()">➕ 添加板块</div>
   <div class="sidebar-footer">
+    <button class="wake-toggle" id="wakeBtn" onclick="toggleWakeLock()">☕ 不休眠</button>
     <button onclick="exportAll()">📤 导出</button>
     <button onclick="importAll()">📥 导入</button>
   </div>
@@ -884,14 +887,105 @@ function importAll() {
 }
 
 // ═══════════════════════════════════════
+//  屏幕不休眠（Wake Lock API）
+// ═══════════════════════════════════════
+let wakeLock = null;
+let wakeLockOn = false;
+
+async function requestWakeLock() {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLockOn = true;
+    wakeLock.addEventListener('release', () => {
+      wakeLockOn = false;
+      updateWakeBtn();
+    });
+    updateWakeBtn();
+  } catch(err) {
+    // Wake Lock 请求失败（可能浏览器不支持）
+    wakeLockOn = false;
+    updateWakeBtn();
+  }
+}
+
+function releaseWakeLock() {
+  if (wakeLock) {
+    wakeLock.release().then(() => {
+      wakeLock = null;
+      wakeLockOn = false;
+      updateWakeBtn();
+    }).catch(() => {});
+  } else {
+    wakeLockOn = false;
+    updateWakeBtn();
+  }
+}
+
+function updateWakeBtn() {
+  const btn = document.getElementById('wakeBtn');
+  if (!btn) return;
+  if (wakeLockOn) {
+    btn.classList.add('active');
+    btn.textContent = '☕ 不休眠中';
+  } else {
+    btn.classList.remove('active');
+    btn.textContent = '☕ 不休眠';
+  }
+}
+
+function toggleWakeLock() {
+  if (wakeLockOn) {
+    releaseWakeLock();
+  } else {
+    requestWakeLock();
+  }
+}
+
+// 页面重新可见时，如果之前开着 Wake Lock，自动重新申请
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && wakeLockOn && !wakeLock) {
+    requestWakeLock();
+  }
+});
+
+// ═══════════════════════════════════════
+//  Service Worker 注册 + 自动更新
+// ═══════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js?v=4').then(reg => {
+      // 检测到新 SW 就自动激活
+      reg.addEventListener('updatefound', () => {
+        const newSW = reg.installing;
+        if (newSW) {
+          newSW.addEventListener('statechange', () => {
+            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+              // 新版本已下载，通知 SW 立即接管
+              newSW.postMessage('skipWaiting');
+            }
+          });
+        }
+      });
+    }).catch(() => {});
+
+    // SW 接管后自动刷新页面，加载新资源
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    });
+  });
+}
+
+// ═══════════════════════════════════════
 //  初始化
 // ═══════════════════════════════════════
 document.getElementById('headerDate').textContent = new Date().toLocaleDateString('zh-CN', {month:'short',day:'numeric',weekday:'short'});
 document.getElementById('quote').textContent = QUOTES[Math.floor(Math.random()*QUOTES.length)];
 renderNav();
 renderContent();
-
-if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(() => {}); }
 </script>
 </body>
 </html>
