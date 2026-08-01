@@ -1544,18 +1544,13 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // ═══════════════════════════════════════
-//  Service Worker — 仅用于 PWA 安装支持，不做缓存
+//  清理旧 Service Worker（不注册新的，避免缓存问题）
+//  PWA 添加到桌面只需要 manifest.json，不需要 SW
 // ═══════════════════════════════════════
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    // 先注销所有旧 SW
-    navigator.serviceWorker.getRegistrations().then(regs => {
-      return Promise.all(regs.map(r => r.unregister()));
-    }).then(() => {
-      // 注册新的无害 SW（仅用于 PWA 安装）
-      return navigator.serviceWorker.register('sw.js?v=9');
-    }).catch(() => {});
-  });
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
+  }).catch(() => {});
 }
 
 // ═══════════════════════════════════════
