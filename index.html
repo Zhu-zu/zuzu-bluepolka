@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="zuzu的工作台">
 <meta name="theme-color" content="#6bb6ff">
-<link rel="manifest" href="manifest.json?v=9">
-<link rel="apple-touch-icon" href="icon-192.png?v=9">
-<link rel="icon" href="icon-192.png?v=9">
+<link rel="manifest" href="manifest.json?v=12">
+<link rel="apple-touch-icon" href="icon-192.png?v=12">
+<link rel="icon" href="icon-192.png?v=12">
 <title>zuzu的工作台 · 蜡笔小新</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
@@ -50,6 +50,13 @@ html, body { height: 100%; overflow: hidden; }
 body {
   font-family: 'Nunito', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
   background:
+    /* 蜡笔小新配色大圆点装饰 */
+    radial-gradient(circle at 8% 12%, rgba(255,230,102,0.35) 35px, transparent 35px),
+    radial-gradient(circle at 92% 18%, rgba(255,158,181,0.3) 28px, transparent 28px),
+    radial-gradient(circle at 95% 82%, rgba(107,182,255,0.3) 40px, transparent 40px),
+    radial-gradient(circle at 5% 78%, rgba(255,140,42,0.25) 32px, transparent 32px),
+    radial-gradient(circle at 50% 5%, rgba(255,107,107,0.25) 25px, transparent 25px),
+    radial-gradient(circle at 48% 95%, rgba(149,225,184,0.3) 30px, transparent 30px),
     /* 白色波点 */
     radial-gradient(circle at 15% 20%, rgba(255,255,255,0.95) 2.5px, transparent 2.5px),
     radial-gradient(circle at 50% 10%, rgba(255,255,255,0.85) 2px, transparent 2px),
@@ -58,12 +65,9 @@ body {
     radial-gradient(circle at 70% 70%, rgba(255,255,255,0.95) 2.5px, transparent 2.5px),
     radial-gradient(circle at 40% 90%, rgba(255,255,255,0.85) 2px, transparent 2px),
     radial-gradient(circle at 90% 50%, rgba(255,255,255,0.8) 1.5px, transparent 1.5px),
-    /* 小新腮红 */
-    radial-gradient(circle at 95% 85%, rgba(255,200,210,0.5) 30px, transparent 30px),
-    radial-gradient(circle at 5% 5%, rgba(255,200,210,0.4) 25px, transparent 25px),
     /* 浅蓝奶油渐变底 */
     linear-gradient(160deg, #d6eeff 0%, #eef7ff 40%, #f5fbff 70%, #fffaf0 100%);
-  background-size: 60px 60px, 80px 80px, 70px 70px, 90px 90px, 65px 65px, 75px 75px, 50px 50px, 100% 100%, 100% 100%, cover;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 60px 60px, 80px 80px, 70px 70px, 90px 90px, 65px 65px, 75px 75px, 50px 50px, cover;
   background-attachment: fixed;
   color: var(--text);
   display: flex;
@@ -82,21 +86,22 @@ body {
   50% { opacity: 0.8; transform: scale(1.15); }
 }
 .deco {
-  position: fixed; pointer-events: none; z-index: 0;
+  position: fixed; pointer-events: none; z-index: 100;
   animation: float 5s ease-in-out infinite;
-  font-size: 36px;
+  font-size: 44px;
+  text-shadow: 2px 2px 0 rgba(44,62,80,0.2);
 }
-.deco-shiro { top: 8%; right: 2%; opacity: 0.6; animation-delay: 0s; }
-.deco-croc { bottom: 14%; right: 3%; opacity: 0.55; animation-delay: 1s; }
-.deco-burger { top: 18%; right: 6%; opacity: 0.55; animation-delay: 2s; }
-.deco-star1 { top: 6%; left: 46%; opacity: 0.6; animation: twinkle 3s ease-in-out infinite; }
-.deco-star2 { bottom: 20%; left: 28%; opacity: 0.55; animation: twinkle 4s ease-in-out infinite; animation-delay: 1.5s; }
-.deco-heart { top: 30%; right: 1%; opacity: 0.6; animation: twinkle 3.5s ease-in-out infinite; animation-delay: 0.8s; }
-.deco-flower { bottom: 8%; right: 10%; opacity: 0.5; animation: float 6s ease-in-out infinite; animation-delay: 2.5s; }
-.deco-carrot { top: 40%; right: 4%; opacity: 0.5; animation: float 4.5s ease-in-out infinite; animation-delay: 1.2s; }
-.deco-chocobi { top: 55%; right: 8%; opacity: 0.55; animation: float 5.5s ease-in-out infinite; animation-delay: 3s; }
-.deco-dino { bottom: 35%; left: 3%; opacity: 0.5; animation: float 7s ease-in-out infinite; animation-delay: 0.5s; }
-.deco-sun { top: 3%; left: 5%; opacity: 0.5; animation: twinkle 5s ease-in-out infinite; }
+.deco-shiro { top: 10%; right: 2%; opacity: 0.85; animation-delay: 0s; }
+.deco-croc { bottom: 12%; right: 3%; opacity: 0.8; animation-delay: 1s; }
+.deco-burger { top: 22%; right: 7%; opacity: 0.8; animation-delay: 2s; }
+.deco-star1 { top: 5%; left: 45%; opacity: 0.85; animation: twinkle 3s ease-in-out infinite; }
+.deco-star2 { bottom: 18%; left: 26%; opacity: 0.8; animation: twinkle 4s ease-in-out infinite; animation-delay: 1.5s; }
+.deco-heart { top: 34%; right: 1%; opacity: 0.85; animation: twinkle 3.5s ease-in-out infinite; animation-delay: 0.8s; }
+.deco-flower { bottom: 6%; right: 10%; opacity: 0.8; animation: float 6s ease-in-out infinite; animation-delay: 2.5s; }
+.deco-carrot { top: 46%; right: 4%; opacity: 0.8; animation: float 4.5s ease-in-out infinite; animation-delay: 1.2s; }
+.deco-chocobi { top: 58%; right: 8%; opacity: 0.8; animation: float 5.5s ease-in-out infinite; animation-delay: 3s; }
+.deco-dino { bottom: 32%; left: 2%; opacity: 0.8; animation: float 7s ease-in-out infinite; animation-delay: 0.5s; }
+.deco-sun { top: 2%; left: 4%; opacity: 0.8; animation: twinkle 5s ease-in-out infinite; }
 
 /* ─── 侧边栏 ─── */
 .sidebar {
@@ -118,22 +123,25 @@ body {
 
 /* 蜡笔小新头像区 */
 .shinchan-header {
-  padding: 22px 16px 16px;
+  padding: 26px 16px 16px;
   border-bottom: 3px solid var(--outline);
-  background: linear-gradient(135deg, #d6eeff, #fff0f5);
+  background: linear-gradient(135deg, #d6eeff 0%, #fff0f5 50%, #fff8d6 100%);
   text-align: center;
   position: relative;
   overflow: hidden;
 }
 .shinchan-header::before {
-  content: ''; position: absolute; top: -10px; left: -10px;
-  width: 50px; height: 50px; border-radius: 50%;
-  background: rgba(255,217,102,0.3);
+  content: '🖍️'; position: absolute; top: 10px; right: 10px;
+  font-size: 20px; opacity: 0.8; z-index: 2;
 }
 .shinchan-header::after {
-  content: ''; position: absolute; bottom: -15px; right: -10px;
-  width: 40px; height: 40px; border-radius: 50%;
-  background: rgba(255,158,181,0.25);
+  content: '🌟'; position: absolute; top: 10px; left: 10px;
+  font-size: 20px; opacity: 0.8; z-index: 2;
+}
+.shinchan-topbar {
+  position: absolute; top: 0; left: 0; right: 0; height: 8px;
+  background: linear-gradient(90deg, #ff6b6b 25%, #ffd966 25%, #ffd966 50%, #6bb6ff 50%, #6bb6ff 75%, #95e1b8 75%);
+  z-index: 1;
 }
 
 .shinchan-avatar {
@@ -269,6 +277,12 @@ body {
   border-radius: var(--radius); padding: 20px;
   box-shadow: var(--shadow); margin-bottom: 16px;
   position: relative;
+}
+.white-card::before {
+  content: '✨'; position: absolute; top: -12px; right: 16px;
+  font-size: 22px; background: var(--white); padding: 0 6px;
+  border: 2px solid var(--outline); border-radius: 50%;
+  line-height: 1; z-index: 2;
 }
 .white-card .card-title {
   font-size: 16px; font-weight: 900; color: var(--text);
@@ -444,6 +458,13 @@ body {
 
 .piano-block { background: var(--white); border: 2.5px solid var(--outline); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); }
 .piano-block-title { font-size: 15px; font-weight: 900; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.piano-block-title .small-add {
+  margin-left: auto; background: var(--white); border: 2px solid var(--outline);
+  border-radius: 8px; width: 26px; height: 26px; font-size: 16px; font-weight: 900;
+  color: var(--blue-deep); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+.piano-block-title .small-add:active { transform: translate(1px,1px); box-shadow: none; }
 .piano-block-sub { font-size: 11px; color: var(--text-secondary); font-weight: 700; margin-bottom: 12px; }
 .piano-item {
   display: flex; align-items: flex-start; gap: 10px;
@@ -561,6 +582,7 @@ body {
 <!-- 侧边栏 -->
 <div class="sidebar">
   <div class="shinchan-header">
+    <div class="shinchan-topbar"></div>
     <div class="shinchan-avatar">
       <div class="sc-face">
         <div class="sc-hair"></div>
@@ -1036,20 +1058,20 @@ function renderPiano(el) {
 
   el.innerHTML = `
     <div class="white-card">
-      <div class="card-title">🎹 第 ${pianoCurrentWeek} 周练琴计划</div>
+      <div class="card-title" style="justify-content:space-between">🎹 第 ${pianoCurrentWeek} 周练琴计划 <button class="small-add" onclick="resetPianoDay()" style="width:auto;padding:0 10px;font-size:12px">🔄 重置今日</button></div>
       <div class="piano-week-bar" id="weekBar"></div>
       <div class="piano-progress-card" id="pianoProgress"></div>
       <div class="piano-block">
-        <div class="piano-block-title">🎼 古典维持（60~75分钟）</div>
+        <div class="piano-block-title">🎼 古典维持（60~75分钟）<button class="small-add" onclick="addPianoItemPrompt('classical')">+</button></div>
         <div class="piano-block-sub">今日调性：${plan.scale.key} — ${plan.scale.note}</div>
         <div id="classicalList"></div>
       </div>
       <div class="piano-block">
-        <div class="piano-block-title">🎛️ 和弦 + 移调（60~75分钟）</div>
+        <div class="piano-block-title">🎛️ 和弦 + 移调（60~75分钟）<button class="small-add" onclick="addPianoItemPrompt('chord')">+</button></div>
         <div id="chordList"></div>
       </div>
       <div class="piano-block">
-        <div class="piano-block-title">🥁 伴奏 / 扒歌 / 实战 / 节奏</div>
+        <div class="piano-block-title">🥁 伴奏 / 扒歌 / 实战 / 节奏<button class="small-add" onclick="addPianoItemPrompt('other')">+</button></div>
         <div id="otherList"></div>
       </div>
       <div class="white-card" style="margin-top:14px">
@@ -1099,26 +1121,29 @@ function renderPianoTasksByCategory(tasks, key, plan) {
   const otherList = document.getElementById('otherList');
   const pianoTaskList = document.getElementById('pianoTaskList');
 
-  classicalList.innerHTML = plan.classical.map(c => `
-    <div class="piano-item">
-      <input type="checkbox" onchange="togglePianoByText('${escapeHtml(c.title)}')">
-      <div class="pi-content"><div class="pi-title">${escapeHtml(c.title)}</div><div class="pi-desc">${escapeHtml(c.focus)} · ${escapeHtml(c.time)}</div></div>
-    </div>
-  `).join('');
+  // 按分类分组
+  const byCat = { classical: [], chord: [], other: [] };
+  tasks.forEach(t => { if (byCat[t.cat]) byCat[t.cat].push(t); });
 
-  chordList.innerHTML = `<div class="piano-item"><input type="checkbox" onchange="togglePianoByText('和弦/移调训练')"><div class="pi-content"><div class="pi-title">和弦与移调</div><div class="pi-desc">${escapeHtml(plan.chord)}</div></div></div>`;
+  function renderGroup(listEl, catTasks) {
+    if (!catTasks.length) {
+      listEl.innerHTML = `<div style="font-size:12px;color:var(--text-dim);padding:8px 0">暂无内容，点击 + 添加</div>`;
+      return;
+    }
+    listEl.innerHTML = catTasks.map(t => `
+      <div class="piano-item ${t.done?'done':''}">
+        <input type="checkbox" ${t.done?'checked':''} onchange="togglePianoTask('${t.id}')">
+        <div class="pi-content"><div class="pi-title">${escapeHtml(t.title)}</div><div class="pi-desc">${escapeHtml(t.desc)}</div></div>
+        <button class="pi-del" onclick="deletePianoTask('${t.id}')">✕</button>
+      </div>
+    `).join('');
+  }
 
-  otherList.innerHTML = [
-    { title: '左手伴奏型', desc: plan.accompaniment },
-    { title: '歌曲实战', desc: plan.song },
-    { title: '节奏训练', desc: plan.rhythm },
-    { title: '视奏训练', desc: plan.sight }
-  ].map(o => `
-    <div class="piano-item"><input type="checkbox" onchange="togglePianoByText('${escapeHtml(o.title)}')">
-      <div class="pi-content"><div class="pi-title">${escapeHtml(o.title)}</div><div class="pi-desc">${escapeHtml(o.desc)}</div></div>
-    </div>
-  `).join('');
+  renderGroup(classicalList, byCat.classical);
+  renderGroup(chordList, byCat.chord);
+  renderGroup(otherList, byCat.other);
 
+  // 底部汇总任务列表（和分类区同步）
   if (!tasks.length) {
     pianoTaskList.innerHTML = `<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:13px">✨ 暂无任务</div>`;
     return;
@@ -1177,6 +1202,27 @@ function addPianoCustom() {
   let tasks = loadData(key) || [];
   tasks.push({ id: 'custom_'+Date.now(), cat:'custom', title: text, desc:'自定义练习', done:false });
   saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function addPianoItemPrompt(cat) {
+  const title = prompt('练习名称：');
+  if (!title || !title.trim()) return;
+  const desc = prompt('练习说明（可选）：') || '';
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  let tasks = loadData(key) || [];
+  tasks.push({ id: 'custom_'+Date.now(), cat, title: title.trim(), desc: desc.trim(), done:false });
+  saveData(key, tasks);
+  renderPiano(document.getElementById('content'));
+}
+
+function resetPianoDay() {
+  if (!confirm('重置今天的练琴计划为默认？')) return;
+  const today = todayStr();
+  const key = `zuzu_piano_tasks_${today}_w${pianoCurrentWeek}`;
+  const plan = PIANO_PLAN[pianoCurrentWeek];
+  saveData(key, buildPianoTasks(plan, pianoCurrentWeek, today));
   renderPiano(document.getElementById('content'));
 }
 
