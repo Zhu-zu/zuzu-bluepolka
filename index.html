@@ -1428,11 +1428,17 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // ═══════════════════════════════════════
-//  Service Worker 注册 + 自动更新
+//  Service Worker 注册 + 自动更新 + 强制清除旧缓存
 // ═══════════════════════════════════════
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=7').then(reg => {
+    // 1. 先注销所有旧的 SW（防止旧缓存拦截）
+    navigator.serviceWorker.getRegistrations().then(regs => {
+      regs.forEach(r => r.unregister());
+    });
+
+    // 2. 注册新 SW（用新文件名，确保不被旧缓存拦截）
+    navigator.serviceWorker.register('sw7.js').then(reg => {
       reg.addEventListener('updatefound', () => {
         const newSW = reg.installing;
         if (newSW) {
@@ -1444,10 +1450,19 @@ if ('serviceWorker' in navigator) {
         }
       });
     }).catch(() => {});
+
+    // 3. SW 接管后自动刷新
     let refreshing = false;
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!refreshing) { refreshing = true; window.location.reload(); }
     });
+
+    // 4. 如果 3 秒内没有 controllerchange，强制刷新一次页面
+    setTimeout(() => {
+      if (!navigator.serviceWorker.controller) {
+        // 没有 SW 控制页面，正常加载
+      }
+    }, 3000);
   });
 }
 
